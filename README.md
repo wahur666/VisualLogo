@@ -1,0 +1,2 @@
+# szakdoli
+Szakdolgozat Verizókezelt Változata
