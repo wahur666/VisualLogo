@@ -1,6 +1,6 @@
-from classes import GUI
+from classes.GUI import GUI
 
-app = GUI.GUI()
+app = GUI()
 app.runMainLoop()
 '''
 import pygame

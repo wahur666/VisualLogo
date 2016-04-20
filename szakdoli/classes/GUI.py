@@ -1,29 +1,41 @@
 import tkinter as tk
 import os
 import pygame
-from classes import Rect
+from classes import UpDirection, DownDirection, RotateLeft, RotateRight
 
 class GUI:
     def __init__(self):
         self.root = tk.Tk()
         self.canvasSize = 580
+        self.commands = []
         self.initFrames()
+
 
     def _initMenuFrame(self):
         self.frame4 = tk.Frame(self.root, height=100, width=1000)
 
-        self.photo = tk.PhotoImage(file="resources/play-button.gif")
-        self.button1 = tk.Button(self.frame4, width=50, height=50, image=self.photo)
-        self.button1.image = self.photo
-        self.button1.pack(padx=25, pady=25, side='left')
+        photo_play = tk.PhotoImage(file="resources/play-button.gif")
+        self.button1 = tk.Button(self.frame4, width=50, height=50, image=photo_play)
+        self.button1.image = photo_play
+        self.button1.pack(padx=10, pady=25, side='left')
 
         self.button2 = tk.Button(self.frame4, text="DrawRectPygame", command=self.DrawOnPygame)
         self.button2.pack(side='left')
         self.button3 = tk.Button(self.frame4, text="DrawRectCanvas", command=self.DrawOnCanvas)
         self.button3.pack(side='left')
 
-        self.button4 = tk.Button(self.frame4, text="Extend canvas", command=self.extendCanvas)
-        self.button4.pack(side='left')
+        #self.button4 = tk.Button(self.frame4, text="Extend canvas", command=self.extendCanvas)
+        #self.button4.pack(side='left')
+
+        photo_cogs = tk.PhotoImage(file="resources/cogs.gif")
+        self.button5 = tk.Button(self.frame4, width=50, height=50, image=photo_cogs)
+        self.button5.image = photo_cogs
+        self.button5.pack(padx=10, pady=25,side='left')
+
+        self.button6 = tk.Button(self.frame4, text="Hidden Command")
+        self.button6.pack(side='left')
+
+        self.visibity = True
 
         self.frame4.pack(side='top', fill='x')
 
@@ -78,6 +90,9 @@ class GUI:
         self._initStoryboardFrame()
         self._initPygameFrame()
 
+        self._initBinds()
+        self._print()
+
     def runMainLoop(self):
         self.root.mainloop()
 
@@ -95,14 +110,50 @@ class GUI:
     def DrawOnCanvas(self):
         if self.canvasSize < self.Y + 80:
             self.extendCanvas()
-        rect1 = Rect.Rect(self.X,self.Y,self.H, self.L, 0)
-        rect1.drawrect(self.canvas2)
+        #rect1 = Command.Command(self.X,self.Y,self.H, self.L, 0)
+        #rect1.drawrect(self.canvas2)
         self.Y += 80
 
     def PrepareFunctions(self):
         X = Y = 20
         H = L = 60
-        for i in range(4):
-            rect1 = Rect.Rect(X,Y,H,L,0)
-            rect1.drawrect(self.canvas1)
-            Y += 80
+        rect1 = UpDirection.UpDritection(X,Y,H,L,0)
+        rect1.drawrect(self.canvas1)
+        self.commands.append(rect1)
+        Y += 80
+        rect1 = DownDirection.DownDirection(X, Y, H, L, 0)
+        rect1.drawrect(self.canvas1)
+        self.commands.append(rect1)
+        Y += 80
+        rect1 = RotateLeft.RotateLeft(X, Y, H, L, 0)
+        rect1.drawrect(self.canvas1)
+        self.commands.append(rect1)
+        Y += 80
+        rect1 = RotateRight.RotateRight(X, Y, H, L, 0)
+        rect1.drawrect(self.canvas1)
+        self.commands.append(rect1)
+        Y += 80
+
+    def _initBinds(self):
+        self.button5.bind("<Shift-1>", self._print)
+        self.canvas1.bind("<Button-1>", self.canvas1Bind)
+        self.canvas2.bind("<Button-1>", self.canvas2Bind)
+
+    def _print(self, event=None):
+        print("Valami")
+        if self.visibity :
+            self.button6.pack_forget()
+            self.visibity = False
+        else:
+            self.button6.pack(side='left')
+            self.visibity = True
+
+    def _print2(self):
+        print("Nincs nyomva a shift")
+
+    def canvas1Bind(self, event=None):
+        print("Canvas1")
+        print(self.canvas1.find_withtag("current")[0])
+
+    def canvas2Bind(self, event=None):
+        print("Canvas2")
