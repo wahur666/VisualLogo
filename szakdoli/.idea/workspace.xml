@@ -2,21 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97dffb32-6f29-4edf-9472-f032d61a8c5b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/Down-Arrow.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/Up-Arrow.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/cogs.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/turn-left-arrow.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/turn-right-arrow.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/Command.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/DownDirection.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/RotateLeft.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/RotateRight.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/classes/UpDirection.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/setup.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/Command.py" afterPath="$PROJECT_DIR$/classes/Command.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/DownDirection.py" afterPath="$PROJECT_DIR$/classes/DownDirection.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/GUI.py" afterPath="$PROJECT_DIR$/classes/GUI.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/Rect.py" afterPath="$PROJECT_DIR$/classes/Rect.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/RotateLeft.py" afterPath="$PROJECT_DIR$/classes/RotateLeft.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/RotateRight.py" afterPath="$PROJECT_DIR$/classes/RotateRight.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/UpDirection.py" afterPath="$PROJECT_DIR$/classes/UpDirection.py" />
     </list>
     <ignored path="szakdoli.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,8 +46,8 @@
       <file leaf-file-name="GUI.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/classes/GUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="131" column="39" selection-start-line="131" selection-start-column="39" selection-end-line="131" selection-end-column="39" />
+            <state relative-caret-position="272">
+              <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -66,8 +58,8 @@
       <file leaf-file-name="RotateRight.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/RotateRight.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+            <state relative-caret-position="136">
+              <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -75,21 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rect.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/classes/Rect.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Command.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/Command.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="15" column="25" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -100,8 +82,8 @@
       <file leaf-file-name="UpDirection.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/UpDirection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+            <state relative-caret-position="119">
+              <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -112,8 +94,8 @@
       <file leaf-file-name="RotateLeft.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/RotateLeft.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="28" />
+            <state relative-caret-position="136">
+              <caret line="8" column="38" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="38" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -124,8 +106,8 @@
       <file leaf-file-name="DownDirection.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/DownDirection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="28" />
+            <state relative-caret-position="136">
+              <caret line="8" column="41" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="41" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -161,14 +143,14 @@
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/classes/note.ipynb" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/classes/Command.py" />
         <option value="$PROJECT_DIR$/classes/Fel.py" />
         <option value="$PROJECT_DIR$/classes/Rect.py" />
-        <option value="$PROJECT_DIR$/classes/UpDirection.py" />
-        <option value="$PROJECT_DIR$/classes/DownDirection.py" />
-        <option value="$PROJECT_DIR$/classes/RotateLeft.py" />
         <option value="$PROJECT_DIR$/classes/RotateRigth.py" />
+        <option value="$PROJECT_DIR$/classes/Command.py" />
+        <option value="$PROJECT_DIR$/classes/RotateLeft.py" />
+        <option value="$PROJECT_DIR$/classes/DownDirection.py" />
         <option value="$PROJECT_DIR$/classes/RotateRight.py" />
+        <option value="$PROJECT_DIR$/classes/UpDirection.py" />
         <option value="$PROJECT_DIR$/classes/GUI.py" />
       </list>
     </option>
@@ -180,9 +162,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -225,7 +208,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -274,7 +257,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -490,15 +473,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1047" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20146137" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.100520834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33594978" sideWeight="0.50732064" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.49582464" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3226837" sideWeight="0.49267936" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31962025" sideWeight="0.49267936" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -536,6 +519,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -788,21 +779,21 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/Command.py">
+    <entry file="file://$PROJECT_DIR$/classes/Rect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="408">
+          <caret line="24" column="18" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/Rect.py">
+    <entry file="file://$PROJECT_DIR$/classes/DownDirection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="136">
+          <caret line="8" column="41" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -814,30 +805,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/DownDirection.py">
+    <entry file="file://$PROJECT_DIR$/classes/UpDirection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="28" />
+        <state relative-caret-position="119">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/UpDirection.py">
+    <entry file="file://$PROJECT_DIR$/classes/Command.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+        <state relative-caret-position="255">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="25" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/RotateLeft.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="28" />
+        <state relative-caret-position="136">
+          <caret line="8" column="38" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="38" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -846,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/RotateRight.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+        <state relative-caret-position="136">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -856,8 +847,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/GUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="131" column="39" selection-start-line="131" selection-start-column="39" selection-end-line="131" selection-end-column="39" />
+        <state relative-caret-position="272">
+          <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

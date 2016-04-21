@@ -1,11 +1,12 @@
 from classes.Command import Command
 from tkinter import PhotoImage
 
-class UpDritection(Command):
+class UpDirection(Command):
 
     def __init__(self, X, Y, H, L, indetLevel):
         super().__init__(X, Y, H, L, indetLevel)
         self.images = []
+        self.commandName = "UpDirection"
 
     def runCommand(self):
         super().runCommand()
@@ -22,3 +23,4 @@ class UpDritection(Command):
         self.images.append(image)
         self.itemList.append((canvasimage,"image"))
         print(self.itemList)
+

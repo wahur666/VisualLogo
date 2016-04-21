@@ -9,6 +9,7 @@ class GUI:
         self.canvasSize = 580
         self.commands = []
         self.initFrames()
+        self.source = []
 
 
     def _initMenuFrame(self):
@@ -21,8 +22,8 @@ class GUI:
 
         self.button2 = tk.Button(self.frame4, text="DrawRectPygame", command=self.DrawOnPygame)
         self.button2.pack(side='left')
-        self.button3 = tk.Button(self.frame4, text="DrawRectCanvas", command=self.DrawOnCanvas)
-        self.button3.pack(side='left')
+        #self.button3 = tk.Button(self.frame4, text="DrawRectCanvas")#, command=self.DrawOnCanvas)
+        #self.button3.pack(side='left')
 
         #self.button4 = tk.Button(self.frame4, text="Extend canvas", command=self.extendCanvas)
         #self.button4.pack(side='left')
@@ -72,7 +73,11 @@ class GUI:
     def _initPygameFrame(self):
         self.frame3 = tk.Frame(self.root, height=600, width=600)
         os.environ['SDL_WINDOWID'] = str(self.frame3.winfo_id())
-        os.environ['SDL_VIDEODRIVER'] = 'windib'
+        from platform import system
+        if system() == "Windows":
+            os.environ['SDL_VIDEODRIVER'] = 'windib'
+
+        self.root.update()
         self.screen = pygame.display.set_mode((560, 560))
         self.screen.fill(pygame.Color(255, 255, 255))
         pygame.display.init()
@@ -89,6 +94,8 @@ class GUI:
         self._initFunctuinonsFrame()
         self._initStoryboardFrame()
         self._initPygameFrame()
+
+        
 
         self._initBinds()
         self._print()
@@ -107,17 +114,20 @@ class GUI:
         pygame.draw.rect(self.screen, (0,0,0), (10,10,400,400))
         pygame.display.update()
 
-    def DrawOnCanvas(self):
+    def DrawOnCanvas(self, command):
         if self.canvasSize < self.Y + 80:
             self.extendCanvas()
+        #rect1 = command.__init__(self.X, self.Y, self.H, self.L, 0)
+        command.drawrect(self.canvas2)
         #rect1 = Command.Command(self.X,self.Y,self.H, self.L, 0)
         #rect1.drawrect(self.canvas2)
         self.Y += 80
+        self.canvas2.yview_moveto(1.0)
 
     def PrepareFunctions(self):
         X = Y = 20
         H = L = 60
-        rect1 = UpDirection.UpDritection(X,Y,H,L,0)
+        rect1 = UpDirection.UpDirection(X,Y,H,L,0)
         rect1.drawrect(self.canvas1)
         self.commands.append(rect1)
         Y += 80
@@ -153,6 +163,25 @@ class GUI:
 
     def canvas1Bind(self, event=None):
         print("Canvas1")
+        for elem in self.commands:
+            if elem.returnList()[1][0] == self.canvas1.find_withtag("current")[0]:
+                name = elem.returnCommandName()
+                if name == "UpDirection":
+                    temp = UpDirection.UpDirection(self.X,self.Y,self.H,self.L,0)
+                    self.DrawOnCanvas(temp)
+                    self.source.append(temp)
+                if name == "RotateLeft":
+                    temp = RotateLeft.RotateLeft(self.X, self.Y, self.H, self.L, 0)
+                    self.DrawOnCanvas(temp)
+                    self.source.append(temp)
+                if name == "DownDirection":
+                    temp = DownDirection.DownDirection(self.X, self.Y, self.H, self.L, 0)
+                    self.DrawOnCanvas(temp)
+                    self.source.append(temp)
+                if name == "RotateRight":
+                    temp = RotateRight.RotateRight(self.X, self.Y, self.H, self.L, 0)
+                    self.DrawOnCanvas(temp)
+                    self.source.append(temp)
         print(self.canvas1.find_withtag("current")[0])
 
     def canvas2Bind(self, event=None):

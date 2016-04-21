@@ -6,6 +6,7 @@ class DownDirection(Command):
     def __init__(self, X, Y, H, L, indetLevel):
         super().__init__(X, Y, H, L, indetLevel)
         self.images = []
+        self.commandName = "DownDirection"
 
     def runCommand(self):
         super().runCommand()
