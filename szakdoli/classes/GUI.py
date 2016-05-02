@@ -93,6 +93,10 @@ class GUI:
         self.screen.fill(pygame.Color(255, 255, 255))
         pygame.display.init()
         pygame.display.update()
+        self.drawingPenImage = pygame.image.load("resources/Turtle.png")
+        self.pencilX = 200
+        self.pencilY = 200
+        #self.drawingPenImageRect = self.drawingPenImage.get_rect()
         self.frame3.pack(side='left', fill='y', pady=20, padx=20, expand='yes')
 
     def initFrames(self):
@@ -111,6 +115,13 @@ class GUI:
         self._initBinds()
         self._print()
 
+        self.defaultPygameInit()
+
+    def defaultPygameInit(self):
+        self.screen.fill(pygame.Color(255,255,255))
+        self.screen.blit(self.drawingPenImage, [self.pencilX,self.pencilY])
+        pygame.display.update()
+
     def runMainLoop(self):
         self.root.mainloop()
 
@@ -122,7 +133,10 @@ class GUI:
         # print(canvasSize)
 
     def DrawOnPygame(self):
-        pygame.draw.rect(self.screen, (0,0,0), (10,10,400,400))
+        self.pencilX += 20
+        self.screen.fill(pygame.Color(255, 255, 255))
+        self.screen.blit(self.drawingPenImage, [self.pencilX, self.pencilY])
+        #pygame.draw.rect(self.screen, (0,0,0), (10,10,400,400))
         pygame.display.update()
 
     def DrawOnCanvas(self, command):
@@ -161,7 +175,7 @@ class GUI:
         self.canvas2.bind("<Button-1>", self.canvas2Bind)
 
     def _print(self, event=None):
-        print("Valami")
+        #print("Valami")
         if self.visibity :
             self.button6.pack_forget()
             self.visibity = False
