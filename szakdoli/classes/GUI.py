@@ -2,28 +2,32 @@ import tkinter as tk
 import os
 import pygame
 from classes import UpDirection, DownDirection, RotateLeft, RotateRight
+import time
 
 class GUI:
     def __init__(self):
         self.root = tk.Tk()
-        self.canvasSize = 580
+        self.canvasSize = 560
         self.commands = []
         self.initFrames()
         self.source = []
 
 
     def _initMenuFrame(self):
-        self.frame4 = tk.Frame(self.root, height=100, width=1000)
+        self.frame4 = tk.LabelFrame(self.root, height=100, width=1000,text="Stuff")
 
         photo_play = tk.PhotoImage(file="resources/play-button.gif")
-        self.button1 = tk.Button(self.frame4, width=50, height=50, image=photo_play)
+        self.button1 = tk.Button(self.frame4, width=50, height=50, image=photo_play, command=self.play)
         self.button1.image = photo_play
         self.button1.pack(padx=10, pady=25, side='left')
 
         self.button2 = tk.Button(self.frame4, text="DrawRectPygame", command=self.DrawOnPygame)
         self.button2.pack(side='left')
-        #self.button3 = tk.Button(self.frame4, text="DrawRectCanvas")#, command=self.DrawOnCanvas)
-        #self.button3.pack(side='left')
+
+        photo_new = tk.PhotoImage(file="resources/new-doc-128.gif")
+        self.button3 = tk.Button(self.frame4, text="DrawRectCanvas", command=self.clearCanvas, image=photo_new)
+        self.button3.image = photo_new
+        self.button3.pack(side='left')
 
         #self.button4 = tk.Button(self.frame4, text="Extend canvas", command=self.extendCanvas)
         #self.button4.pack(side='left')
@@ -46,24 +50,31 @@ class GUI:
         #self.canvas1.config(scrollregion=[0, 0, 200, 900])
         self.canvas1.grid(row=0, column=0)
 
+        tk.Grid.rowconfigure(self.frame1, 0, weight=1)
+        tk.Grid.columnconfigure(self.frame1, 0, weight=1)
+
         self.wbar1 = tk.Scrollbar(self.frame1, orient='vertical', command=self.canvas1.yview)
         self.wbar1.grid(row=0, column=1, sticky='ns')
         self.canvas1.config(yscrollcommand=self.wbar1.set)
 
-        self.frame1.pack(side='left', fill='y')
+        self.frame1.pack(side='left', fill='both', expand='yes')
 
         self.PrepareFunctions()
 
     def _initStoryboardFrame(self):
         self.frame2 = tk.LabelFrame(self.root, height=600, width=200, text="Storybord")
+
         self.canvas2 = tk.Canvas(self.frame2, bg="white", width=200, height=580)
         self.canvas2.grid(row=0, column=0)
+
+        tk.Grid.rowconfigure(self.frame2, 0, weight=1)
+        tk.Grid.columnconfigure(self.frame2, 0, weight=1)
 
         self.wbar2 = tk.Scrollbar(self.frame2, orient='vertical', command=self.canvas2.yview)
         self.wbar2.grid(row=0, column=1, sticky='ns')
         self.canvas2.config(yscrollcommand=self.wbar2.set)
 
-        self.frame2.pack(side='left', fill='y')
+        self.frame2.pack(side='left', fill='both', expand='yes')
 
         self.X = 20
         self.Y = 20
@@ -77,16 +88,16 @@ class GUI:
         if system() == "Windows":
             os.environ['SDL_VIDEODRIVER'] = 'windib'
 
-        self.root.update()
+        #self.root.update()
         self.screen = pygame.display.set_mode((560, 560))
         self.screen.fill(pygame.Color(255, 255, 255))
         pygame.display.init()
         pygame.display.update()
-        self.frame3.pack(side='left', fill='y', pady=20, padx=20)
+        self.frame3.pack(side='left', fill='y', pady=20, padx=20, expand='yes')
 
     def initFrames(self):
         self.root.geometry("1050x710")
-        self.root.resizable(width=False, height=False)
+        #self.root.resizable(width=False, height=False)
         self.root.title("Logo rajzolo")
 
 
@@ -95,7 +106,7 @@ class GUI:
         self._initStoryboardFrame()
         self._initPygameFrame()
 
-        
+        self.root.update()
 
         self._initBinds()
         self._print()
@@ -186,3 +197,36 @@ class GUI:
 
     def canvas2Bind(self, event=None):
         print("Canvas2")
+
+    def play(self):
+        self.canvas2.yview_moveto(0.0)
+        currentSize = 560
+        X = 10
+        Y = 50
+        for i in range(len(self.source)):
+            temp = self.canvas2.create_rectangle(X,Y,X+5,Y+5)
+            Y+=80
+            if Y - 80> currentSize:
+                print("Haho")
+                diff = (currentSize - 160)/self.canvasSize
+                if diff > 1:
+                    diff=1.0
+                self.canvas2.yview_moveto(diff)
+                currentSize += 400
+                self.canvas2.update()
+                self.root.after(2000, None)
+
+            self.canvas2.update()
+            self.root.after(1000, None)
+            #time.sleep(1)
+
+            print("wait")
+            self.canvas2.delete(temp)
+
+
+    def clearCanvas(self):
+        self.canvas2.delete("all")
+        self.source.clear()
+        self.canvasSize = 560
+        self.canvas2.config(scrollregion=[0, 0, 200, self.canvasSize])
+        self.Y = 20
