@@ -21,8 +21,8 @@ class GUI:
         self.button1.image = photo_play
         self.button1.pack(padx=10, pady=25, side='left')
 
-        self.button2 = tk.Button(self.frame4, text="DrawRectPygame", command=self.DrawOnPygame)
-        self.button2.pack(side='left')
+        #self.button2 = tk.Button(self.frame4, text="DrawRectPygame", command=self.DrawOnPygame)
+        #self.button2.pack(side='left')
 
         photo_new = tk.PhotoImage(file="resources/new-doc-128.gif")
         self.button3 = tk.Button(self.frame4, text="DrawRectCanvas", command=self.clearCanvas, image=photo_new)
@@ -133,7 +133,7 @@ class GUI:
         # print(canvasSize)
 
     def DrawOnPygame(self):
-        self.pencilX += 20
+        #self.pencilX += 20
         self.screen.fill(pygame.Color(255, 255, 255))
         self.screen.blit(self.drawingPenImage, [self.pencilX, self.pencilY])
         #pygame.draw.rect(self.screen, (0,0,0), (10,10,400,400))
@@ -218,6 +218,18 @@ class GUI:
         X = 10
         Y = 50
         for i in range(len(self.source)):
+            if self.source[i].returnCommandName() == "UpDirection":
+                self.pencilY -= 20
+                self.DrawOnPygame()
+            if self.source[i].returnCommandName() == "RotateLeft":
+                self.drawingPenImage = pygame.transform.rotate(self.drawingPenImage, 90)
+                self.DrawOnPygame()
+            if self.source[i].returnCommandName() == "DownDirection":
+                self.pencilY += 20
+                self.DrawOnPygame()
+            if self.source[i].returnCommandName() == "RotateRight":
+                self.drawingPenImage = pygame.transform.rotate(self.drawingPenImage, -90)
+                self.DrawOnPygame()
             temp = self.canvas2.create_rectangle(X,Y,X+5,Y+5)
             Y+=80
             if Y - 80> currentSize:
