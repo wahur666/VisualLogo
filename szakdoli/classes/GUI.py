@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 import os
 import pygame
 from classes import UpDirection, DownDirection, RotateLeft, RotateRight
@@ -14,7 +15,7 @@ class GUI:
 
 
     def _initMenuFrame(self):
-        self.frame4 = tk.LabelFrame(self.root, height=100, width=1000,text="Stuff")
+        self.frame4 = ttk.LabelFrame(self.root, height=100, width=1000,text="Stuff")
 
         photo_play = tk.PhotoImage(file="resources/play-button.gif")
         self.button1 = tk.Button(self.frame4, width=50, height=50, image=photo_play, command=self.play)
@@ -37,7 +38,9 @@ class GUI:
         self.button5.image = photo_cogs
         self.button5.pack(padx=10, pady=25,side='left')
 
-        self.button6 = tk.Button(self.frame4, text="Hidden Command")
+        photo_camera = tk.PhotoImage(file="resources/icon-camera.gif")
+        self.button6 = tk.Button(self.frame4, width=50, height=50, image=photo_camera, command=self.printScreen)
+        self.button6.image = photo_camera
         self.button6.pack(side='left')
 
         self.visibity = True
@@ -118,6 +121,8 @@ class GUI:
         self.defaultPygameInit()
 
     def defaultPygameInit(self):
+        self.pencilX = 200
+        self.pencilY = 200
         self.screen.fill(pygame.Color(255,255,255))
         self.screen.blit(self.drawingPenImage, [self.pencilX,self.pencilY])
         pygame.display.update()
@@ -213,6 +218,8 @@ class GUI:
         print("Canvas2")
 
     def play(self):
+        self.defaultPygameInit()
+        self.root.after(1000, None)
         self.canvas2.yview_moveto(0.0)
         currentSize = 560
         X = 10
@@ -256,3 +263,6 @@ class GUI:
         self.canvasSize = 560
         self.canvas2.config(scrollregion=[0, 0, 200, self.canvasSize])
         self.Y = 20
+
+    def printScreen(self):
+        pygame.image.save(self.screen, "screenshots/screenshot" + time.strftime("_%Y_%m_%d_%H_%M_%S") + ".jpg")
