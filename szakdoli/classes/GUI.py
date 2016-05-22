@@ -4,6 +4,7 @@ import os
 import pygame
 from classes import UpDirection, DownDirection, RotateLeft, RotateRight
 import time
+from math import sin, cos, floor, radians
 
 class GUI:
     def __init__(self):
@@ -12,7 +13,7 @@ class GUI:
         self.commands = []
         self.initFrames()
         self.source = []
-
+        self.rotation = 0
 
     def _initMenuFrame(self):
         self.frame4 = ttk.LabelFrame(self.root, height=100, width=1000,text="Stuff")
@@ -226,16 +227,20 @@ class GUI:
         Y = 50
         for i in range(len(self.source)):
             if self.source[i].returnCommandName() == "UpDirection":
-                self.pencilY -= 20
+                self.pencilX, self.pencilY = self.move(self.pencilX,self.pencilY, self.rotation, 1)
                 self.DrawOnPygame()
             if self.source[i].returnCommandName() == "RotateLeft":
                 self.drawingPenImage = pygame.transform.rotate(self.drawingPenImage, 90)
+                self.rotation -= 90
+                self.rotation %= 360
                 self.DrawOnPygame()
             if self.source[i].returnCommandName() == "DownDirection":
-                self.pencilY += 20
+                self.pencilX, self.pencilY = self.move(self.pencilX, self.pencilY, self.rotation, -1)
                 self.DrawOnPygame()
             if self.source[i].returnCommandName() == "RotateRight":
                 self.drawingPenImage = pygame.transform.rotate(self.drawingPenImage, -90)
+                self.rotation += 90
+                self.rotation %= 360
                 self.DrawOnPygame()
             temp = self.canvas2.create_rectangle(X,Y,X+5,Y+5)
             Y+=80
@@ -266,3 +271,6 @@ class GUI:
 
     def printScreen(self):
         pygame.image.save(self.screen, "screenshots/screenshot" + time.strftime("_%Y_%m_%d_%H_%M_%S") + ".jpg")
+
+    def move(self, x, y, rotation, direction):
+        return floor(x + (20 * cos(radians(rotation))) * direction), floor(y + (20 * sin(radians(rotation))) * direction)
