@@ -1,14 +1,17 @@
 import pygame
 import Color
+import ConfigParser
 
 class Rect:
-    def __init__(self,x,y,h,w, name):
+    def __init__(self,x,y,h,w,name,color=Color.black,width=0):
         self.x = x
         self.y = y
         self.h = h
         self.w = w
         self.name = name
         self.delta = 0,0
+        self.color = color
+        self.width = width
     
     def jobb(self):
         self.x += 1
@@ -23,7 +26,7 @@ class Rect:
         self.y -= 1
 
     def drawRect(self, screen):
-        pygame.draw.rect(screen, Color.black, (self.x, self.y, self.h, self.w))
+        pygame.draw.rect(screen, self.color , (self.x, self.y, self.h, self.w), self.width)
 
     def print_name(self):
         print self.name + " Clicked"
@@ -41,15 +44,37 @@ class Rect:
     def setDelta(self, mouseposition):
         self.delta = self.deltapos(mouseposition)
 
+def parse_config():
+    config = ConfigParser.RawConfigParser()
+    config.read('settings.ini')
+    config_dict = {}
+    for section in config.sections():
+        dict1 = {}
+        options = config.options(section)
+        for option in options:
+            try:
+                dict1[option] = config.get(section, option)
+                if dict1[option] == -1:
+                    print("skip: %s" % option)
+            except:
+                print("exception on %s!" % option)
+                dict1[option] = None
+        config_dict[section] = dict1
+    return  config_dict
+
+Configuration = parse_config()
+
+
+
 rect1 = Rect(5,5,90,20, "ALak1")
-rect2 = Rect(100,100,100,100, "ALMA")
+rect2 = Rect(100,100,100,100, "ALMA", Color.red, 1)
 
 rects = []
 rects.append(rect1)
 rects.append(rect2)
 
 
-screen = pygame.display.set_mode((500,500))
+screen = pygame.display.set_mode((int(Configuration['Display']['width']),int(Configuration['Display']['height'])))
 screen.fill(Color.white)
 
 
@@ -71,26 +96,34 @@ while not gameExit:
         if event.type == pygame.QUIT:
             gameExit = True
         if event.type == pygame.MOUSEBUTTONDOWN:
-            touching = True
-            for rect in rects:
-                insite, name = rect.isInside(event.pos)
-                if insite:
-                    print 'There is my boi boo ', name
-                    print 'Delta pos' , rect.deltapos(event.pos)
-                    currentRect = rect
-                    currentRect.setDelta(event.pos)
-                else:
-                    print 'njet komrad'
-            print event.pos
+            if event.button == 1:
+                touching = True
+                for rect in rects:
+                    insite, name = rect.isInside(event.pos)
+                    if insite:
+                        print 'There is my boi boo ', name
+                        print 'Delta pos' , rect.deltapos(event.pos)
+                        currentRect = rect
+                        currentRect.setDelta(event.pos)
+                    else:
+                        print 'njet komrad'
+                print event.pos
         if event.type == pygame.MOUSEMOTION:
             if touching and currentRect:
                 #print 'DAGGING'
                 currentRect.drag(event.pos)
         if event.type == pygame.MOUSEBUTTONUP:
-            touching = False
-            currentRect = None
-
-            print 'released'
+            if event.button == 1:
+                touching = False
+                currentRect = None
+                print "Released"
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_ESCAPE:
+                gameExit = True
+            if event.key == pygame.K_KP_PLUS :
+                rects[0].w += 10
+                rects[0].y -= 5
+                print "Itt kellene tortenni valaminek"
     clock.tick(60)
         
 
