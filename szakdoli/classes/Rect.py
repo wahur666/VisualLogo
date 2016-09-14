@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
-class Rect(metaclass=ABCMeta):
+class Rect():
+    __metaclass__ = ABCMeta
 
     def __init__(self, X, Y, H, L, indetLevel):
         self.X = X

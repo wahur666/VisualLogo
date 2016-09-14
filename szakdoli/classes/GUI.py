@@ -1,5 +1,5 @@
-import tkinter as tk
-import tkinter.ttk as ttk
+import Tkinter as tk
+import ttk
 import os
 import pygame
 from classes import UpDirection, DownDirection, RotateLeft, RotateRight
@@ -194,27 +194,30 @@ class GUI:
 
     def canvas1Bind(self, event=None):
         print("Canvas1")
-        for elem in self.commands:
-            if elem.returnList()[1][0] == self.canvas1.find_withtag("current")[0]:
-                name = elem.returnCommandName()
-                if name == "UpDirection":
-                    temp = UpDirection.UpDirection(self.X,self.Y,self.H,self.L,0)
-                    self.DrawOnCanvas(temp)
-                    self.source.append(temp)
-                if name == "RotateLeft":
-                    temp = RotateLeft.RotateLeft(self.X, self.Y, self.H, self.L, 0)
-                    self.DrawOnCanvas(temp)
-                    self.source.append(temp)
-                if name == "DownDirection":
-                    temp = DownDirection.DownDirection(self.X, self.Y, self.H, self.L, 0)
-                    self.DrawOnCanvas(temp)
-                    self.source.append(temp)
-                if name == "RotateRight":
-                    temp = RotateRight.RotateRight(self.X, self.Y, self.H, self.L, 0)
-                    self.DrawOnCanvas(temp)
-                    self.source.append(temp)
-        print(self.canvas1.find_withtag("current")[0])
+        try:
+            for elem in self.commands:
+                if elem.returnList()[1][0] == self.canvas1.find_withtag("current")[0]:
+                    name = elem.returnCommandName()
+                    if name == "UpDirection":
+                        temp = UpDirection.UpDirection(self.X,self.Y,self.H,self.L,0)
+                        self.DrawOnCanvas(temp)
+                        self.source.append(temp)
+                    if name == "RotateLeft":
+                        temp = RotateLeft.RotateLeft(self.X, self.Y, self.H, self.L, 0)
+                        self.DrawOnCanvas(temp)
+                        self.source.append(temp)
+                    if name == "DownDirection":
+                        temp = DownDirection.DownDirection(self.X, self.Y, self.H, self.L, 0)
+                        self.DrawOnCanvas(temp)
+                        self.source.append(temp)
+                    if name == "RotateRight":
+                        temp = RotateRight.RotateRight(self.X, self.Y, self.H, self.L, 0)
+                        self.DrawOnCanvas(temp)
+                        self.source.append(temp)
 
+            print(self.canvas1.find_withtag("current")[0])
+        except IndexError:
+            pass
     def canvas2Bind(self, event=None):
         print("Canvas2")
 
@@ -264,7 +267,7 @@ class GUI:
 
     def clearCanvas(self):
         self.canvas2.delete("all")
-        self.source.clear()
+        self.source = []
         self.canvasSize = 560
         self.canvas2.config(scrollregion=[0, 0, 200, self.canvasSize])
         self.Y = 20
