@@ -1,10 +1,13 @@
 import Tkinter as tk
-import ttk
 import os
-import pygame
-from classes import UpDirection, DownDirection, RotateLeft, RotateRight
 import time
+import ttk
 from math import sin, cos, floor, radians
+
+import pygame
+
+import UpDirection, DownDirection, RotateLeft, RotateRight
+
 
 class GUI:
     def __init__(self):
