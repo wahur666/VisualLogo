@@ -5,5 +5,5 @@ setup(
     name='LogoRajzolo',
     version='0.1',
     executables=[Executable("main.py")],
-    options={"build_exe": {"packages" : ["pygame", "tkinter"]}}
+    options={"build_exe": {"packages" : ["pygame", "Tkinter"]}}
 )
