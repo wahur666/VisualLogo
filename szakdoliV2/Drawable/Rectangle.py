@@ -1,11 +1,8 @@
 import pygame
-from abc import ABCMeta, abstractmethod
 from Util import Color
+from DrawableInterface import DrawableInterface
 
-
-class Rect:
-
-    __metaclass__ = ABCMeta
+class Rect(DrawableInterface):
 
     def __init__(self, x, y, w, h, name, color=Color.BLACK, width=0, movable = False):
         self.x = x
@@ -30,15 +27,13 @@ class Rect:
     def le(self):
         self.y -= 1
 
-    @abstractmethod
-    def drawRect(self, screen):
-        #pass
+    def DrawObject(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.w, self.h), self.width)
 
     def print_name(self):
         print self.name + " Clicked"
 
-    def isInside(self, position):
+    def IsInside(self, position):
         return self.x <= position[0] and self.x + self.h >= position[0] and self.y <= position[1] and self.y + self.w >= \
                position[1], self.name
 

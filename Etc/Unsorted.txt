@@ -1,0 +1,79 @@
+//  Globals which should be set before calling these functions:
+//
+//  int    polyCorners  =  how many corners the polygon has (no repeats)
+//  float  polyX[]      =  horizontal coordinates of corners
+//  float  polyY[]      =  vertical coordinates of corners
+//  float  x, y         =  point to be tested
+//
+//  The following global arrays should be allocated before calling these functions:
+//
+//  float  constant[] = storage for precalculated constants (same size as polyX)
+//  float  multiple[] = storage for precalculated multipliers (same size as polyX)
+//
+//  (Globals are used in this example for purposes of speed.  Change as
+//  desired.)
+//
+//  USAGE:
+//  Call precalc_values() to initialize the constant[] and multiple[] arrays,
+//  then call pointInPolygon(x, y) to determine if the point is in the polygon.
+//
+//  The function will return YES if the point x,y is inside the polygon, or
+//  NO if it is not.  If the point is exactly on the edge of the polygon,
+//  then the function may return YES or NO.
+//
+//  Note that division by zero is avoided because the division is protected
+//  by the "if" clause which surrounds it.
+//  http://alienryderflex.com/polygon/
+void precalc_values() {
+
+  int   i, j=polyCorners-1 ;
+
+  for(i=0; i<polyCorners; i++) {
+    if(polyY[j]==polyY[i]) {
+      constant[i]=polyX[i];
+      multiple[i]=0; }
+    else {
+      constant[i]=polyX[i]-(polyY[i]*polyX[j])/(polyY[j]-polyY[i])+(polyY[i]*polyX[i])/(polyY[j]-polyY[i]);
+      multiple[i]=(polyX[j]-polyX[i])/(polyY[j]-polyY[i]); }
+    j=i; }}
+
+bool pointInPolygon() {
+
+  int   i, j=polyCorners-1 ;
+  bool  oddNodes=NO      ;
+
+  for (i=0; i<polyCorners; i++) {
+    if ((polyY[i]< y && polyY[j]>=y
+    ||   polyY[j]< y && polyY[i]>=y)) {
+      oddNodes^=(y*multiple[i]+constant[i]<x); }
+    j=i; }
+
+  return oddNodes; }
+
+  ///////////////////////////////////
+
+# determine if a point is inside a given polygon or not
+# Polygon is a list of (x,y) pairs.
+
+    """Deciding if a point is inside (True, False otherwise) a polygon,
+    where poly is a list of pairs (x,y) containing the coordinates
+    of the polygon's vertices. The algorithm is called the 'Ray Casting Method'"""
+
+def point_inside_polygon(x,y,poly):
+
+    n = len(poly)
+    inside =False
+
+    p1x,p1y = poly[0]
+    for i in range(n+1):
+        p2x,p2y = poly[i % n]
+        if y > min(p1y,p2y):
+            if y <= max(p1y,p2y):
+                if x <= max(p1x,p2x):
+                    if p1y != p2y:
+                        xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
+                    if p1x == p2x or x <= xinters:
+                        inside = not inside
+        p1x,p1y = p2x,p2y
+
+    return inside
