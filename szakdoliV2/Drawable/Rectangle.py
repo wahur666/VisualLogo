@@ -1,8 +1,8 @@
 import pygame
 from Util import Color
-from DrawableInterface import DrawableInterface
+from AbstractDrawable import AbstractDrawable
 
-class Rect(DrawableInterface):
+class Rect(AbstractDrawable):
 
     def __init__(self, x, y, w, h, name, color=Color.BLACK, width=0, movable = False):
         self.x = x

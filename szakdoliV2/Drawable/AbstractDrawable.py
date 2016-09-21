@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class DrawableInterface:
+class AbstractDrawable:
     __metaclass__ = ABCMeta
 
     @abstractmethod
