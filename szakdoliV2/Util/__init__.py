@@ -1,2 +1,2 @@
-import Color
+from Constants import *
 from ConfigiParser import *

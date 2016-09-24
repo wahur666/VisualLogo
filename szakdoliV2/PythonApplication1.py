@@ -1,6 +1,7 @@
 import pygame
 
-from Util import *
+from Util.ConfigiParser import parse_config
+from Util.Constants import COLOR as Color
 from Drawable import *
 
 
@@ -44,6 +45,7 @@ while not gameExit:
         if event.type == pygame.QUIT:
             gameExit = True
         if event.type == pygame.MOUSEBUTTONDOWN:
+            gui.OnClick(event.button, event.pos)
             if event.button == 1:
                 touching = True
                 for rect in rects:
