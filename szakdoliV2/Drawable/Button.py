@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pygame
 from os import getcwd
 from Rectangle import Rect

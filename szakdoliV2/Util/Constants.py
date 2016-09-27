@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class MOUSE:
     LMB = 1
     RMB = 3

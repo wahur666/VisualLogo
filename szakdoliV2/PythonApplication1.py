@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pygame
 
 from Util.ConfigiParser import parse_config
@@ -49,7 +51,7 @@ while not gameExit:
             if event.button == 1:
                 touching = True
                 for rect in rects:
-                    insite, name = rect.isInside(event.pos)
+                    insite = rect.isInside(event.pos)
                     if insite and rect.isMovable():
                         #print 'There is my boi boo ', name
                         #print 'Delta pos' , rect.deltapos(event.pos)

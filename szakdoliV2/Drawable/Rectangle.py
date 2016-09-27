@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pygame
 from Util.Constants import COLOR as Color
 from Drawable.Base.AbstractDrawable import AbstractDrawable
@@ -41,8 +43,7 @@ class Rect(AbstractDrawable):
         print self.name + " Clicked"
 
     def IsInside(self, position):
-        return self.x <= position[0] and self.x + self.h >= position[0] and self.y <= position[1] and self.y + self.w >= \
-               position[1], self.name
+        return self.x <= position[0] and self.x + self.w >= position[0] and self.y <= position[1] and self.y + self.h >= position[1]
 
     def deltapos(self, position):
         return position[0] - self.x, position[1] - self.y

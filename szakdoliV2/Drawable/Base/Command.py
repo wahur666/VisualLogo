@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from abc import abstractmethod
 
 from Drawable.Base import AbstractDrawable

@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from Button import Button
 
 from Drawable.Rectangle import Rect
+from Drawable.ScrollingPlane import ScrollingPlane
+from Tab import Tab
 from Util.Constants import COLOR as Color, MOUSE
 
 class GUI:
@@ -49,14 +53,32 @@ class GUI:
         buttonExit.bind(self.OnClickExit)
         self.Add(buttonExit)
 
+        #poli = Polygon([[50, 75], [65, 60], [135, 60], [150,75], [150,100], [50,100]])
+        #self.Add(poli)
+
+
+        #tab = Tab(100,100,100,50,width=1)
+        #self.Add(tab)
+
+        scrollplane = ScrollingPlane(820, 20, 263, 600, 3)
+        self.Add(scrollplane)
+
+
 
     def OnClick(self, event_type, event_pos):
         for item in self.items:
             if item.IsInside(event_pos):
                 if isinstance(item, Rect):
                     pass
-                if isinstance(item, Button):
+                elif isinstance(item, Button):
                     item.OnClick(event_type)
+                elif isinstance(item, Tab):
+                    print "Tab"
+                elif isinstance(item, ScrollingPlane):
+                    print "Scrolling"
+                    print item.CLICKED()
+                else:
+                    print "Undefine click", type(item)
 
     def Add(self, item):
         self.items.append(item)
