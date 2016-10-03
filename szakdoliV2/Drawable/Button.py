@@ -1,28 +1,23 @@
 # -*- coding: utf-8 -*-
 
-import pygame
-from os import getcwd
-from Rectangle import Rect
-
 from Drawable.Base.AbstractDrawable import AbstractDrawable
+from Rectangle import Rect
+from Sprite import Spirte
+from System.Vector2 import Vector2
 
 class Button(AbstractDrawable):
 
-    def __init__(self, x, y, w, h, imgpath = "\\Resources\\icon-placeholder.png", description=''):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
+    def __init__(self, x=None, y=None, w=None, h=None, imgpath = "\\Resources\\icon-placeholder.png", descriptor="", size = None, vec2_pos = None):
+        super(Button, self).__init__(x=x, y=y, w=w, h=h, size=size, vec2_pos=vec2_pos, descriptor=descriptor)
         self.imgpath = imgpath
-        self.desctiption = description
-        self.image = None
+        self.sprite = None
 
     def DrawObject(self, screen):
-        if not self.image:
+        if not self.sprite:
             self.LoadImage()
         self.buttonsquircle.DrawObject(screen)      #BASE
                                                     #FEEDBACK
-        screen.blit(self.image, (self.x + 2, self.y + 2))   #IMAGE
+        self.sprite.DrawObject(screen)              #IMAGE
 
 
     def IsInside(self, position):
@@ -36,9 +31,5 @@ class Button(AbstractDrawable):
         raise RuntimeError("Undobund button")
 
     def LoadImage(self):
-        imageRect = pygame.Rect(self.x - 2, self.y - 2, self.w - 5, self.h - 5)
-        f = getcwd()+self.imgpath
-        self.image = pygame.image.load(f)
-        self.image = pygame.transform.scale(self.image, imageRect.size)
-        self.image = self.image.convert_alpha()
+        self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath)
         self.buttonsquircle = Rect(self.x  , self.y , self.w , self.h, width=1)

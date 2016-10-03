@@ -13,14 +13,15 @@ alacsony teljesítményű számítógépeken fusson, Windows és Linux környeze
 
 ## Futtatási infók
 
-- Telepített Python2
+- Telepített [Python2](https://www.python.org/)
 - Telepített PIP
 
 ### Szükséges mudulok
 
 Parancs:
+```sh
 pip install {modul_neve}
-
+```
 #### Verzio 1
 - Tkinter
 - Pygame
@@ -31,4 +32,5 @@ pip install {modul_neve}
 
 ### Futatási parancsok
 
-python PythonApplication1.py
+    python PythonApplication1.py
+

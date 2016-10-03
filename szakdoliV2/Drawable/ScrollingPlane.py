@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from Base import AbstractDrawable
-from Drawable.Tab import Tab
 from Drawable.Rectangle import Rect
+from Drawable.Tab import Tab
+
 
 class ScrollingPlane(AbstractDrawable):
 
-    def __init__(self, x, y, w, h, tabs = 2):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
+    def __init__(self, x, y, w, h, tabs=2, descriptor="", vec2_pos=None, size=None):
+        super(ScrollingPlane, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size, descriptor=descriptor)
         self.tabs = tabs
         self.items = []
 

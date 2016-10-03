@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from Button import Button
-
 from Drawable.Rectangle import Rect
 from Drawable.ScrollingPlane import ScrollingPlane
+from System.Constants import COLOR as Color, MOUSE
 from Tab import Tab
-from Util.Constants import COLOR as Color, MOUSE
 
 class GUI:
 

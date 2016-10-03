@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import pygame
-
 from Polygon import Polygon
-from Util.Constants import COLOR as Color
+from System.Constants import COLOR as Color
 
+
+#TODO: Tényleg újragondolni az egészet, és az AbstractDrawable osztályból származtatni
 class Tab(Polygon):
 
-    def __init__(self, x, y, w, h, color = Color.BLACK , id = None, width = 0, descriptor = ""):
+    def __init__(self, x, y, w, h, color = Color.BLACK , id = None, width = 0, descriptor = "", size = None, vec2_pos = None):
         self.x = x
         self.y = y
         self.w = w

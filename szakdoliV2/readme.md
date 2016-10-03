@@ -11,4 +11,7 @@
 
     python PythonApplication1.py 
 
-[Created with Dillinger](dillinger.io)
+### [_Fejlesztői napló_](changelog.md)
+ 
+
+[Created with Dillinger](http://dillinger.io)

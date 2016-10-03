@@ -2,8 +2,8 @@
 
 import pygame
 
-from Util.Constants import COLOR as Color
 from Base import AbstractDrawable
+from System.Constants import COLOR as Color
 
 class Polygon(AbstractDrawable):
 

@@ -2,9 +2,9 @@
 
 import pygame
 
-from Util.ConfigiParser import parse_config
-from Util.Constants import COLOR as Color
 from Drawable import *
+from System.Constants import COLOR as Color
+from Util.ConfigiParser import parse_config
 
 
 
