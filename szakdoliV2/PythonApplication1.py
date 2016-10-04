@@ -4,13 +4,13 @@ import pygame
 
 from Drawable import *
 from System.Constants import COLOR as Color
-from Util.ConfigiParser import parse_config
 
 
 
-Configuration = parse_config()
+#Configuration = parse_config()
 
-
+SCREEN_WIDHT = 1100
+SCREEN_HEIGHT = 720
 
 #rect1 = Rect(5,5,90,20, "ALak1")
 #rect2 = Rect(100, 100, 100, 100, "ALMA", Color.RED, 1)
@@ -22,7 +22,7 @@ rects = []
 
 gui = GUI()
 
-screen = pygame.display.set_mode((int(Configuration['Display']['width']),int(Configuration['Display']['height'])))
+screen = pygame.display.set_mode((SCREEN_WIDHT,SCREEN_HEIGHT))
 screen.fill(Color.WHITE)
 
 

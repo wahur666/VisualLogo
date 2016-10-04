@@ -1,4 +1,20 @@
-# Changelog
+# Changelog / Fejlesztői napló
+
+
+## 2016.10.04. (Update 33)
++ __ConfigParser__ átkerült az *Etc* mappába, mivel nem volt érdemi haszna ezért került oda, így megszünt a *Utils* mappa. 
++ __PythonApplication1__, a fő program most nem a *settings.ini* fájlból olvassa fel a méreteket, hanem két konstans értéket kapott
++ *Etc* mappa funkciója hogy ott tárolódnak azok az adatok amit már egyszer kikerestem neten, de még nincs berakva a kódba, és további elemzésre vár
++ __Command__ kapott egy konstruktort, és az IsInside művelet is kapott implementációt, mivel mindegyik egy négyzet, és elkerüljük ezzel felesleges kódismétlést
++ *Unittests* kikerült root-ra, mivel nincs szoros kapcsolatban a specifikus verziókkal
++ Új osztályok, és csomag:
+    + *LogoModule* csomag, a progarm modulatritására törekvően jött létre ez. Az osztályok követik a [Model-View-Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) alapelvet.
+    + __Core__, funkciója: Ez a Logo Modulnak a vezérlője, itt dolgozom fel a felhasználó által adott parancsokat, és továbbítom a modelnek
+    + __Turtle__, funkciója: Ez a Logo Modulnak a modellje. Minden mező és leírás itt található meg. Ez az osztály *package-private*. (Mivel pythonvan nincs direkt lehetőség elrejteni dolgokat, ezért itt jegyzem fel ezt. ) 
+    + __DrawableCommands__, funkciója: ez egy gyüjtő osztály, amiben minden egyes lehetséges (eddig tervezett) parancs megjelenítéséhez szükséges osztályt és annak metódusait tárolja. Mivel a __Command__ megváltozott picit, ezért már az IsInside parancsok készen vannak, kivétel __Loop__ osztály, mert az több darabból fog állni, és ott majd külön kell kézileg lekezelni.
++ A *Logo Moduls* még csak a szerkezeti felépítést tartalmazza, amit le kell implementálni!
++ *TODO:* Az UML diagrammot napra készre tenni!
+
 
 ### 2016.10.03. (Commit 32)
 + Törött linkek és elírások javítása a readme és changelog fájlokban, továbbá további hivatkozások hozzáadása
@@ -13,6 +29,8 @@
     + __Spirte__, funkciója: a képekért felelős osztály, ez tölti be és jeleníti meg a képet. Mivel még a megjelenítési felület előbb jön létre mint a *pygame* maga, ezért csak akkor kerül betöltésre a kép, mikor először kirajzolásra kerül. Ez az első kirajzolást lassítja, és a fő program átírása szükséges!
     + __Vector__, funkciója: megadni tömören és egyértelműen a helyét az elemeknek. Továbbá majd szükség lesz a *Lerp(Lineáris interpoláció)* funkcióra a __Scrollplane__ elemei mozgatásakor
     + *Unittests* könyvtár létrehozása, ide került egy __test__ osztály, ami jelenleg a __Vector__ oszály műveleteit teszteli
+
+
 ### 2016.09.27 (Commit 31)
 
 + *Changelog létrehozása*
