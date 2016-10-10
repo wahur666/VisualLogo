@@ -11,7 +11,7 @@ class AbstractDrawable:
             self.x = x
             self.y = y
         elif x is None and y is None and vec2_pos is not None:
-            if type(vec2_pos) != Vector2:
+            if not isinstance(vec2_pos, Vector2):
                 raise TypeError("vec2_pos is not Vector2 type")
             self.x = vec2_pos.x
             self.y = vec2_pos.y
@@ -38,3 +38,7 @@ class AbstractDrawable:
     @abstractmethod
     def IsInside(self, position):
         pass
+
+    def SetPosition(self, x, y):
+        self.x = x
+        self.y = y

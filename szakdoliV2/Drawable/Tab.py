@@ -7,15 +7,20 @@ from System.Constants import COLOR as Color
 #TODO: Tényleg újragondolni az egészet, és az AbstractDrawable osztályból származtatni
 class Tab(Polygon):
 
-    def __init__(self, x, y, w, h, color = Color.BLACK , id = None, width = 0, descriptor = "", size = None, vec2_pos = None):
+    def __init__(self, x, y, w, h, color = Color.BLACK , id = None, width = 0, descriptor = "", size = None, vec2_pos = None, transparent=True):
         self.x = x
         self.y = y
         self.w = w
         self.h = h
         self.id = id
         self.color = color
+        self.darkAccent = Color.GREY
+        self.lightAccent = (200, 200, 200)    #implicit szinmegadás, már már a magic number határát karistolja
+        self.accentColor = None
         self.width = width
         self.descriptor = descriptor
+        self.transparent = transparent
+        self.selected = False
         self.coordinates = self.CalculatePoints()
 
     def IsInside(self, position):
@@ -23,6 +28,11 @@ class Tab(Polygon):
 
     def DrawObject(self, screen):
         #pygame.draw.rect(screen, Color.RED, (self.x, self.y, self.w, self.h))
+        if not self.transparent:
+            if self.selected:
+                self.accentColor = self.lightAccent
+            else:
+                self.accentColor = self.darkAccent
         super(Tab, self).DrawObject(screen)
 
     def GetId(self):

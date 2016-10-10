@@ -11,8 +11,12 @@ class Polygon(AbstractDrawable):
         self.coordinates = cooridantes
         self.color = color
         self.width = width
+        self.accentColor = Color.WHITE
+        self.transparent = False
 
     def DrawObject(self, screen):
+        if not self.transparent:
+            pygame.draw.polygon(screen, self.accentColor, self.coordinates, 0)
         pygame.draw.polygon(screen, self.color, self.coordinates, self.width)
 
     def IsInside(self, position):
