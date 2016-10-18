@@ -40,4 +40,16 @@ class Command(AbstractDrawable):
         self.x = x
         self.y = y
         self.mainRect.SetPosition(x,y)
+        if self.sprite:
+            self.sprite.SetPosition(x,y)
 
+    def deltapos(self, position):
+        return position[0] - self.x, position[1] - self.y
+
+    def drag(self, mouseposition):
+        x = mouseposition[0] - self.delta[0]
+        y = mouseposition[1] - self.delta[1]
+        self.SetPosition(x, y)
+
+    def setDelta(self, mouseposition):
+        self.delta = self.deltapos(mouseposition)

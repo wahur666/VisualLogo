@@ -17,3 +17,7 @@ class COLOR:
     GREY = (127, 127, 127)
     MAGENTA = (255, 0, 255)
     YELLOW = (255, 236, 4)
+    LIGHTBLUE = (168, 244, 255)
+    LIGHTORANGE = (255, 233, 127)
+    KINDAORANGE = (255, 128, 0)
+    LIGHTGRAY = (238, 238, 238)

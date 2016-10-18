@@ -30,9 +30,9 @@ class Tab(Polygon):
         #pygame.draw.rect(screen, Color.RED, (self.x, self.y, self.w, self.h))
         if not self.transparent:
             if self.selected:
-                self.accentColor = self.lightAccent
-            else:
                 self.accentColor = self.darkAccent
+            else:
+                self.accentColor = self.lightAccent
         super(Tab, self).DrawObject(screen)
 
     def GetId(self):

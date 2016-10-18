@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import copy
+
 from Base import AbstractDrawable
 
 from Drawable.Rectangle import Rect
 from Drawable.Tab import Tab
 from Drawable.Base.Command import Command
+from LogoModule.DrawableCommands import *
 
 from System.Vector2 import Vector2
+from System.SupportFunctions import MoveListElement
 
 import Drawable.LogoModule.DrawableCommands as logo
 
@@ -23,8 +27,19 @@ class ScrollingPlane(AbstractDrawable):
         self.InitBefore()
         self.GenerateWindow()
         self.InitAfter()
+        self.selectedCommand = None
 
     def IsInside(self, position):
+        for item in self.grid:
+            if item.IsInside(position):
+                self.clicked = item
+                return True
+
+        for item in self.plateitems[self.currentActivePlane]:
+            if item.IsInside(position):
+                self.clicked = item
+                return True
+
         for item in self.items:
             if item.IsInside(position):
                 self.clicked = item
@@ -42,6 +57,9 @@ class ScrollingPlane(AbstractDrawable):
         for elem in self.grid:
             elem.DrawObject(screen)
 
+        if self.selectedCommand:
+            self.selectedCommand.DrawObject(screen)
+
     def GenerateWindow(self):
         tabwidth = self.w/self.tabs
         tabhight = 30
@@ -49,33 +67,81 @@ class ScrollingPlane(AbstractDrawable):
             tab = Tab(self.x + i * tabwidth, self.y, tabwidth, tabhight, id=i, width=1, transparent=False)
             self.Add(tab)
 
-        sidepanel = Rect(vec2_pos=Vector2(700, 75), size=(127, 520), width=1)
-        sidepanel.SetClickable(False)
+        sidepanel = Rect(vec2_pos=Vector2(700, 75), size=(121, 520), width=1, transparent=False)
+        #sidepanel.SetClickable(False)
         self.Add(sidepanel)
 
         self.PrepareSidePanelForLogo()
 
-        mainpanel = Rect(self.x, self.y + tabhight, self.w, self.h, width=1, transparent=False)
-        self.Add(mainpanel)
+        self.mainpanel = Rect(self.x, self.y + tabhight, self.w, self.h, width=1, transparent=False)
+        self.Add(self.mainpanel)
 
-        rect1 = Rect(self.x+10, self.y + tabhight + 20, 20, 30, width=1)
-        self.AddItemToCurrentPlane(rect1)
+        #rect1 = Rect(self.x+10, self.y + tabhight + 20, 20, 30, width=1)
+        #self.AddItemToCurrentPlane(rect1)
 
 
 
     def Add(self, elem):
         self.items.append(elem)
 
-    def CLICKED(self):
+    def OnDrag(self, event):
+        if self.selectedCommand:
+            self.selectedCommand.drag(event.pos)
+            if self.selectedCommand not in self.plateitems[self.currentActivePlane] and self.mainpanel.IsInside((self.selectedCommand.x, self.selectedCommand.y)):
+                self.AddItemToCurrentPlane(self.selectedCommand)
+            if self.selectedCommand in self.plateitems[self.currentActivePlane] and not self.mainpanel.IsInside((self.selectedCommand.x, self.selectedCommand.y)):
+                self.plateitems[self.currentActivePlane].remove(self.selectedCommand)
+                self.RearrangeCommands()
+            if self.selectedCommand in self.plateitems[self.currentActivePlane]:
+                for item in self.plateitems[self.currentActivePlane]:
+                    if self.selectedCommand is not item:
+                        if item.y - item.h / 2 < self.selectedCommand.y:
+                            MoveListElement(self.plateitems[self.currentActivePlane], self.selectedCommand, self.plateitems[self.currentActivePlane].index(item))
+                            self.RearrangeCommands(ignore=self.selectedCommand)
+
+
+    def OnRelease(self, event):
+        if self.selectedCommand:
+            if self.mainpanel.IsInside(event.pos):
+                self.SetCommandPosition()
+                if not self.selectedCommand in self.plateitems[self.currentActivePlane]:
+                    self.AddItemToCurrentPlane(self.selectedCommand)
+            else:
+                if self.selectedCommand in self.plateitems[self.currentActivePlane]:
+                    self.plateitems[self.currentActivePlane].remove(self.selectedCommand)
+                del self.selectedCommand
+                self.RearrangeCommands()
+        self.selectedCommand = None
+
+    def OnClick(self, event):
         if isinstance(self.clicked, Tab):
             id = self.clicked.GetId()
             self.RepaintTabs(id)
             print id
             self.currentActivePlane = id
         elif isinstance(self.clicked, Command):
-            print type(self.clicked)
+            if not self.mainpanel.IsInside(event.pos):
+                self.selectedCommand = copy.deepcopy(self.clicked)
+                #DeepCopy Eseten muszaly ujra betolteni a kepet!!!
+                self.selectedCommand.LoadSprite()
+            else:
+                self.selectedCommand = self.clicked
+
+            self.selectedCommand.setDelta(event.pos)
+            print "Copied"
         else:
             print self.clicked
+
+    def SetCommandPosition(self):
+        if not self.selectedCommand in self.plateitems[self.currentActivePlane]:
+            self.selectedCommand.SetPosition(self.mainpanel.x + self.mainpanel.w / 2 - 25, self.mainpanel.y + 5 + len(self.plateitems[self.currentActivePlane]) * 55)
+        else:
+            self.selectedCommand.SetPosition(self.mainpanel.x + self.mainpanel.w / 2 - 25, self.mainpanel.y + 5 + self.plateitems[self.currentActivePlane].index(self.selectedCommand) * 55)
+
+    def RearrangeCommands(self, ignore=None):
+        for item in self.plateitems[self.currentActivePlane]:
+            if item is not ignore:
+                item.SetPosition(self.mainpanel.x + self.mainpanel.w / 2 - 25, self.mainpanel.y + 5 + self.plateitems[self.currentActivePlane].index(item) * 55)
 
     def AddItemToCurrentPlane(self, item, plane=None):
         if plane:
@@ -109,10 +175,10 @@ class ScrollingPlane(AbstractDrawable):
         command = logo.Backward(vec2_pos=Vector2(0,0), size=(50, 50))
         self.grid.append(command)
 
-        command = logo.Right(vec2_pos=Vector2(0,0), size=(50, 50))
+        command = logo.Left(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.grid.append(command)
 
-        command = logo.Left(vec2_pos=Vector2(0, 0), size=(50, 50))
+        command = logo.Right(vec2_pos=Vector2(0,0), size=(50, 50))
         self.grid.append(command)
 
         command = logo.PenDown(vec2_pos=Vector2(0,0), size=(50, 50))
@@ -146,12 +212,12 @@ class ScrollingPlane(AbstractDrawable):
         self.grid.append(command)
 
         #TO BE IMPLEMENTED
-        '''command = logo.HideTurlte(vec2_pos=Vector2(0, 0), size=(50, 50))
+        '''command = logo.Loop(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.Add(self.command)'''
 
         self.DrawGrid()
 
-        self.items.extend(self.grid)
+        #self.items.extend(self.grid)
 
     def DrawGrid(self):
         from math import ceil
@@ -164,3 +230,4 @@ class ScrollingPlane(AbstractDrawable):
                 if counter == len(self.grid):
                     return
                 self.grid[counter].SetPosition(base_x + delta_x * j, base_y + delta_y * i)
+

@@ -32,4 +32,4 @@ class Button(AbstractDrawable):
 
     def LoadImage(self):
         self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath)
-        self.buttonsquircle = Rect(self.x  , self.y , self.w , self.h, width=1)
+        self.buttonsquircle = Rect(self.x  , self.y , self.w , self.h, width=1, transparent=False)

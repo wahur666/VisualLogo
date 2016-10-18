@@ -1,7 +1,26 @@
 # Changelog / Fejlesztői napló
 
+## 2016.10.18. (Update 35)
++ *Etc* FontAwesome tesztelélsek, a __t.py__ fájlban
++ __Command__ implementáció a drag 'n drop funckióra
++ Háttér szín miatt több panel mapott szolid fehér hátteret
++ __GUI__ események kezelése átkerült ide a __PythonApplication1__-ből, így minden esemény megkapja az egész esemény struktúrát, amiből majd lehet válogatni mi lesz felhasználva, ezzel könnyíve a fejlesztést. 
++ __Tab__ felcserlétem a színeket, sötét a kijelölt világos a nem aktív tabok színe
++ __Constants__ közkívánatra adtam még hozzá tesztelés során különböző színeket, hogy ne legyen fekete fehér egyhangú a program
++ __SupportFunctions__, új fájl, funkciója olyan függvények nyilvántartása, ami nem kötődik dirket a projekthez, de szügséges pár kritikus helyen
++ *Unittests* kapott még teszteket a __SupportFunctions__ fájl függvényeinek a tesztelésére
++ __ScrollingPlane__, sok sok új dolog, rendre:
+    1. IsInside implementáció változott, és elkülöníthetőek a csoportosító elemektől
+    2. OnClick() implementáció változott, mostmár külön eseménykezelés történik akkor mikor egy __Command__ osztály leszármazottjára kattintunk. Ugyanis akkor lemásolódik a parancs, és azt már a forráskódok közé tudjuk húzni.
+    3. OnDrag() ez a mozgatás eseményeit dolgozza fel, adja hozzá a forráskód panelhez, rendezi át azt, és vesz el belőle elemet
+    4. OnRelease() a parancs elegedése implementációja található itt, lényegében takarítás ha még nem történt meg az OnDrag() után, vagy az elem helyrerakása, ha még nem került át az új helyére
+    5. Továbbá segédfunckiók, a parancsok elhelyezésére és szép formázására.
+    6. Felcseréltem a Jobb és Bal nyilat esztétikai és logikai okokból
+    7. *TODO* a mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően, és húzás bal egérgombbal
 
-## 2016.10.10. (Update 34)
+
+
+### 2016.10.10. (Update 34)
 + Kisebb hibák javítása
 + __Base.AbstarctDrawbale__ kapott egy SetPosition metódust, dinamikus elrendezés esetére, ahol nincs meg a fix pozíció, bár kötelező paramétere minden ebből származtatott osztálynak
 + __Base.Command__ feljebb lettek hozva a különböző metódusok implementációi, mivel megyeznek többnyire, a spciális eseteket majd külön kell kezelni, pl. __Loop__
@@ -14,7 +33,8 @@
 
 
 
-### 2016.10.04. (Update 33)
+
+## 2016.10.04. (Update 33)
 + __ConfigParser__ átkerült az *Etc* mappába, mivel nem volt érdemi haszna ezért került oda, így megszünt a *Utils* mappa. 
 + __PythonApplication1__, a fő program most nem a *settings.ini* fájlból olvassa fel a méreteket, hanem két konstans értéket kapott
 + *Etc* mappa funkciója hogy ott tárolódnak azok az adatok amit már egyszer kikerestem neten, de még nincs berakva a kódba, és további elemzésre vár
