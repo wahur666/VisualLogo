@@ -1,20 +1,29 @@
 # -*- coding: utf-8 -*-
 
 import pygame
+if not pygame.font: print 'Warning, fonts disabled'
 
 from Drawable import *
 from System.Constants import COLOR as Color
 
+def Exit():
+    global gameExit
+    gameExit = True
+
 SCREEN_WIDHT = 1100
 SCREEN_HEIGHT = 720
 
-gui = GUI()
+pygame.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDHT, SCREEN_HEIGHT))
 screen.fill(Color.WHITE)
 
 pygame.display.init()
+
 pygame.display.update()
+
+gui = GUI(Exit)
+
 clock = pygame.time.Clock()
 touching = False
 currentRect = None
@@ -28,42 +37,14 @@ while not gameExit:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            gameExit = True
+            Exit()
 
         if event.type in [pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION]:
             gui.MainEventHandler(event)
-        '''if event.type == pygame.MOUSEBUTTONDOWN:
 
-        gui.OnClick()
-        if event.button == 1:
-            touching = True
-            for rect in rects:
-                insite = rect.isInside(event.pos)
-                if insite and rect.isMovable():
-                    #print 'There is my boi boo ', name
-                    #print 'Delta pos' , rect.deltapos(event.pos)
-                    currentRect = rect
-                    currentRect.setDelta(event.pos)
-                else:
-                    pass
-                    #print 'njet komrad'
-            #print event.pos
-
-        if event.type == pygame.MOUSEMOTION:
-            pass
-            #if touching and currentRect:
-            #    #print 'DAGGING'
-            #    currentRect.drag(event.pos)
-        if event.type == pygame.MOUSEBUTTONUP:
-            pass
-            #if event.button == 1:
-            #    touching = False
-            #    currentRect = None
-            #    #print "Released"
-        '''
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_ESCAPE:
-                gameExit = True
+                Exit()
             if event.key == pygame.K_KP_PLUS:
                 pass
     clock.tick(60)

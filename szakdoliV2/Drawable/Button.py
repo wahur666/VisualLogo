@@ -3,22 +3,31 @@
 from Drawable.Base.AbstractDrawable import AbstractDrawable
 from Rectangle import Rect
 from Sprite import Spirte
-from System.Vector2 import Vector2
+from TextIcon import TextIcon
+from System.Constants import IMAGE_PATHS as C_IMG
+from System.Constants import FONT_AWESOME as C_FA
 
 class Button(AbstractDrawable):
 
-    def __init__(self, x=None, y=None, w=None, h=None, imgpath = "\\Resources\\icon-placeholder.png", descriptor="", size = None, vec2_pos = None):
+    def __init__(self, x=None, y=None, w=None, h=None, imgpath = C_IMG.PLACEHOLDER, descriptor="", size = None, vec2_pos = None, keycode=u"\uf071", padding=0):
         super(Button, self).__init__(x=x, y=y, w=w, h=h, size=size, vec2_pos=vec2_pos, descriptor=descriptor)
+
         self.imgpath = imgpath
         self.sprite = None
 
+        self.keycode = keycode
+        self.icon_padding = padding
+        self.texticon = None
+
+
     def DrawObject(self, screen):
-        if not self.sprite:
+        if not self.texticon:
             self.LoadImage()
         self.buttonsquircle.DrawObject(screen)      #BASE
-                                                    #FEEDBACK
-        self.sprite.DrawObject(screen)              #IMAGE
-
+        if self.sprite:
+            self.sprite.DrawObject(screen)          #IMAGE
+        if self.texticon:
+            self.texticon.DrawObject(screen)        #FontAwesome
 
     def IsInside(self, position):
         return self.x <= position[0] and self.x + self.h >= position[0] and self.y <= position[1] and self.y + self.w >= \
@@ -31,5 +40,10 @@ class Button(AbstractDrawable):
         raise RuntimeError("Undobund button")
 
     def LoadImage(self):
-        self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath)
+        if self.imgpath != C_IMG.PLACEHOLDER:
+            self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath)
+        elif self.keycode != C_FA.PLACEHOLDER:
+            self.texticon = TextIcon(self.x + 2 + self.icon_padding, self.y + 2, self.w - 5, self.h - 5, keycode=self.keycode)
+        else:
+            self.texticon = TextIcon(self.x + 2, self.y + 2, self.w - 5, self.h - 5, keycode=C_FA.PLACEHOLDER)
         self.buttonsquircle = Rect(self.x  , self.y , self.w , self.h, width=1, transparent=False)

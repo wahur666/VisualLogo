@@ -13,6 +13,7 @@ class Polygon(AbstractDrawable):
         self.width = width
         self.accentColor = Color.WHITE
         self.transparent = False
+        self.base = { "coords" : self.coordinates }
 
     def DrawObject(self, screen):
         if not self.transparent:
@@ -21,3 +22,9 @@ class Polygon(AbstractDrawable):
 
     def IsInside(self, position):
         pass
+
+    def ResetPosition(self):
+        self.coordinates = self.base["coords"]
+
+    def SaveCoords(self):
+        self.base = {"coords": self.coordinates}

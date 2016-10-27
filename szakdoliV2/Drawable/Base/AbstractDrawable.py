@@ -31,6 +31,13 @@ class AbstractDrawable:
 
         self.descriptor = descriptor
 
+        self.base = {
+            "x" : self.x,
+            "y" : self.y,
+            "h" : self.h,
+            "w" : self.w
+        }
+
     @abstractmethod
     def DrawObject(self, screen):
         pass
@@ -42,3 +49,9 @@ class AbstractDrawable:
     def SetPosition(self, x, y):
         self.x = x
         self.y = y
+
+    def ResetPosition(self):
+        self.x = self.base['x']
+        self.y = self.base['y']
+        self.h = self.base['h']
+        self.w = self.base['w']

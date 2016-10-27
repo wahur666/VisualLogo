@@ -11,6 +11,7 @@ from LogoModule.DrawableCommands import *
 
 from System.Vector2 import Vector2
 from System.SupportFunctions import MoveListElement
+from System.Constants import MOUSE as Mouse
 
 import Drawable.LogoModule.DrawableCommands as logo
 
@@ -28,6 +29,13 @@ class ScrollingPlane(AbstractDrawable):
         self.GenerateWindow()
         self.InitAfter()
         self.selectedCommand = None
+
+        self.base = {
+            'height' : self.h,
+            'x' : self.x,
+            'y' : self.y,
+            'width' : self.w
+        }
 
     def IsInside(self, position):
         for item in self.grid:
@@ -67,9 +75,9 @@ class ScrollingPlane(AbstractDrawable):
             tab = Tab(self.x + i * tabwidth, self.y, tabwidth, tabhight, id=i, width=1, transparent=False)
             self.Add(tab)
 
-        sidepanel = Rect(vec2_pos=Vector2(700, 75), size=(121, 520), width=1, transparent=False)
+        self.sidepanel = Rect(vec2_pos=Vector2(700, 75), size=(121, 520), width=1, transparent=False)
         #sidepanel.SetClickable(False)
-        self.Add(sidepanel)
+        self.Add(self.sidepanel)
 
         self.PrepareSidePanelForLogo()
 
@@ -87,11 +95,12 @@ class ScrollingPlane(AbstractDrawable):
     def OnDrag(self, event):
         if self.selectedCommand:
             self.selectedCommand.drag(event.pos)
-            if self.selectedCommand not in self.plateitems[self.currentActivePlane] and self.mainpanel.IsInside((self.selectedCommand.x, self.selectedCommand.y)):
+            if self.selectedCommand not in self.plateitems[self.currentActivePlane] and self.mainpanel.IsInside((event.pos)):
                 self.AddItemToCurrentPlane(self.selectedCommand)
-            if self.selectedCommand in self.plateitems[self.currentActivePlane] and not self.mainpanel.IsInside((self.selectedCommand.x, self.selectedCommand.y)):
+            if self.selectedCommand in self.plateitems[self.currentActivePlane] and not self.mainpanel.IsInside((event.pos)):
                 self.plateitems[self.currentActivePlane].remove(self.selectedCommand)
                 self.RearrangeCommands()
+            self.ResizeSourceBlock()
             if self.selectedCommand in self.plateitems[self.currentActivePlane]:
                 for item in self.plateitems[self.currentActivePlane]:
                     if self.selectedCommand is not item:
@@ -114,23 +123,57 @@ class ScrollingPlane(AbstractDrawable):
         self.selectedCommand = None
 
     def OnClick(self, event):
-        if isinstance(self.clicked, Tab):
-            id = self.clicked.GetId()
-            self.RepaintTabs(id)
-            print id
-            self.currentActivePlane = id
-        elif isinstance(self.clicked, Command):
-            if not self.mainpanel.IsInside(event.pos):
-                self.selectedCommand = copy.deepcopy(self.clicked)
-                #DeepCopy Eseten muszaly ujra betolteni a kepet!!!
-                self.selectedCommand.LoadSprite()
-            else:
-                self.selectedCommand = self.clicked
+        if event.button in [Mouse.LMB, Mouse.RMB]:
+            if isinstance(self.clicked, Tab):
+                id = self.clicked.GetId()
+                self.currentActivePlane = id
+                self.ResetPosition()
+                self.RepaintTabs(id)
+                self.ResizeSourceBlock()
+            elif isinstance(self.clicked, Command):
+                if not self.mainpanel.IsInside(event.pos):
+                    self.selectedCommand = copy.deepcopy(self.clicked)
+                    #DeepCopy Eseten muszaly ujra betolteni a kepet!!!
+                    self.selectedCommand.LoadSprite()
+                else:
+                    self.selectedCommand = self.clicked
 
-            self.selectedCommand.setDelta(event.pos)
-            print "Copied"
-        else:
-            print self.clicked
+                self.selectedCommand.setDelta(event.pos)
+                print "Copied"
+            else:
+                print "Clicked element: ", self.clicked
+        elif event.button in [Mouse.SCROLLDOWN, Mouse.SCROLLUP]:
+            if self.mainpanel.IsInside(event.pos):
+                if self.mainpanel.h > 600:
+                    if event.button == Mouse.SCROLLDOWN:
+                        self.MoveSourcePanel(-1)
+                    else:
+                        self.MoveSourcePanel(1)
+
+
+    def MoveSourcePanel(self, direction = 1):
+        if self.items[0].y >= 20 and direction > 0:
+            return
+
+        if self.mainpanel.y +  self.mainpanel.h <= 700 and direction < 0:
+            return
+
+        for item in self.items:
+            if item is self.sidepanel:
+                continue
+            position_y = item.y + 20 * direction
+            item.SetPosition(item.x, position_y)
+            if isinstance(item, Tab):
+                item.UpdatePoints()
+
+        self.RearrangeCommands()
+
+    def ResetPosition(self):
+        for item in self.items:
+            if item is self.sidepanel:
+                continue
+            item.ResetPosition()
+        self.RearrangeCommands()
 
     def SetCommandPosition(self):
         if not self.selectedCommand in self.plateitems[self.currentActivePlane]:
@@ -149,6 +192,9 @@ class ScrollingPlane(AbstractDrawable):
         else:
             self.plateitems[self.currentActivePlane].append(item)
 
+
+    def ResizeSourceBlock(self):
+        self.mainpanel.h = max([len(self.plateitems[self.currentActivePlane]) * 55 + 5, self.base['height']])
 
     def InitBefore(self):
         for i in range(self.tabs):

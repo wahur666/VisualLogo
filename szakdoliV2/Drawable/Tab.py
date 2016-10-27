@@ -22,6 +22,12 @@ class Tab(Polygon):
         self.transparent = transparent
         self.selected = False
         self.coordinates = self.CalculatePoints()
+        self.base = {
+            "x": self.x,
+            "y": self.y,
+            "h": self.h,
+            "w": self.w
+        }
 
     def IsInside(self, position):
         return self.x <= position[0] and self.x + self.w >= position[0] and self.y <= position[1] and self.y + self.h >= position[1]
@@ -72,3 +78,11 @@ class Tab(Polygon):
         points.append( bl )  # p6
 
         return points
+
+    def UpdatePoints(self):
+        self.coordinates = self.CalculatePoints()
+
+    def ResetPosition(self):
+        self.y = self.base['y']
+        self.h = self.base['h']
+        self.UpdatePoints()
