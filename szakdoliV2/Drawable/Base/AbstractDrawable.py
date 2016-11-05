@@ -16,7 +16,7 @@ class AbstractDrawable:
             self.x = vec2_pos.x
             self.y = vec2_pos.y
         else:
-            raise ValueError("Not enough paramter, give X and Y, or Vec2_pos")
+            raise ValueError("Not enough parameter, give X and Y, or Vec2_pos")
 
         if w is not None and h is not None:
             self.w = w
@@ -27,7 +27,7 @@ class AbstractDrawable:
             self.w = size[0]
             self.h = size[1]
         else:
-            raise ValueError("Not enough paramter, give W and H, or size=tuple(int,int)")
+            raise ValueError("Not enough parameter, give W and H, or size=tuple(int,int)")
 
         self.descriptor = descriptor
 
@@ -55,3 +55,6 @@ class AbstractDrawable:
         self.y = self.base['y']
         self.h = self.base['h']
         self.w = self.base['w']
+
+    def GetParameters(self):
+        return self.x, self.y, self.w, self.h

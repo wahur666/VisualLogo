@@ -1,23 +1,35 @@
 # -*- coding: utf-8 -*-
 
 from pygame import MOUSEBUTTONDOWN, MOUSEBUTTONUP, MOUSEMOTION
+import pygame
 
 from Button import Button
 from Drawable.Rectangle import Rect
 from Drawable.ScrollingPlane import ScrollingPlane
 from System.Constants import COLOR as Color, MOUSE
+from System.Timer import Timer
+from Drawable.DrawingIcon import DrawingIcon
+
 from Tab import Tab
+import os.path, os
+
+global_counter = 0
+
 
 class GUI:
 
-    def __init__(self, exit_func_pointer):
-        self.exit_func = exit_func_pointer
+    def __init__(self, parent):
+        self.parent = parent
         self.items = []
         self.settings_buttons = []
-        self.show_settings = False
+        self.show_settings = True
         self.initilize()
 
+    def __del__(self):
+        print "GUI destruktor lefutott"
+
     def DrawGUI(self, screen):
+        self.timer.tick()
         for item in self.items:
             item.DrawObject(screen)
 
@@ -25,9 +37,22 @@ class GUI:
             for item in self.settings_buttons:
                 item.DrawObject(screen)
 
+        if self.running:
+            self.RunCode()
+
+        pos, rot, show = self.parent.logoCore.GetTurtleInformationToRender()
+        if show:
+            self.drawing_arrow.SetPosition(pos[0], pos[1])
+            self.drawing_arrow.DrawObject(screen, rot)
+            #self.turtle_image.SetPosition(pos[0], pos[1])
+            #self.turtle_image.DrawObject(screen, rot)
+        for line in self.parent.logoCore.GetLinesForRenderer():
+            line.DrawLine(screen)
+
+
     def initilize(self):
-        drawingWindow = Rect(20, 20, 630, 600, "Drawingwindow", Color.BLACK, 1, transparent=False)
-        self.Add(drawingWindow)
+        self.drawingWindow = Rect(20, 20, 630, 600, "Drawingwindow", Color.BLACK, 1, transparent=False)
+        self.Add(self.drawingWindow)
 
         buttonPlay = Button(450,640,60,60, keycode=u"\uF04B", padding=5)
         buttonPlay.bind(self.OnClickPlay)
@@ -68,10 +93,18 @@ class GUI:
         #tab = Tab(100,100,100,50,width=1)
         #self.Add(tab)
 
-        scrollplane = ScrollingPlane(820, 20, 263, 600, 3)
-        self.Add(scrollplane)
+        self.scrollplane = ScrollingPlane(820, 20, 263, 600, 3, parent=self)
+        self.Add(self.scrollplane)
 
         self.mouseDown = False
+        self.timer = Timer()
+        self.running = False
+        self.reset = True
+        self.compile_needed = True
+
+        self.drawing_arrow = DrawingIcon(0, 0, 30, 30, color=Color.RED, width=1)
+        #self.turtle_image = Spirte(x=0,y=0, w=50, h=50, imgpath=img.TURTLE)
+        #self.parent.logoCore.SetDistorsion(25)
 
     def MainEventHandler(self, event):
         if event.type == MOUSEMOTION:
@@ -135,15 +168,25 @@ class GUI:
 
     def OnClickPlay(self, event):
         if event.button == MOUSE.LMB:
-            print "Play"
+            self.parent.logoCore.reset()
+            self.reset = True
+            self.running = True
+            if self.compile_needed:
+                self.Compile()
+                self.compile_needed = False
         else:
             print "Valami", event.button
 
     def OnClickStop(self, event):
+        global global_counter
+        self.running = False
+        self.scrollplane.EnableSidepanel(True)
         print "Stop"
 
     def OnClickStepOver(self, event):
-        print "StepOver"
+        if not self.reset:
+            self.running = False
+            self.StepOver()
 
     def OnClickSettings(self, event):
         self.show_settings = not self.show_settings
@@ -155,7 +198,40 @@ class GUI:
         print "Save"
 
     def OnClickScreenshot(self, event):
-        print "Screenshot"
+        rect = pygame.Rect(self.drawingWindow.GetParameters())
+        sub = self.parent.screen.subsurface(rect)
+        pygame.image.save(sub, os.path.join("..", "Etc", "screenshot.jpg"))
 
     def OnClickExit(self, event):
-        self.exit_func()
+        self.parent.Exit()
+
+    def RunCode(self):
+        global global_counter
+        if self.reset:
+            global_counter = 0
+            self.reset =  False
+
+        if self.scrollplane.HasNext(global_counter):
+            self.scrollplane.EnableSidepanel(False)
+            if self.timer.is_waiting():
+                return
+            global_counter = self.scrollplane.Play(global_counter)
+            print global_counter
+            self.timer.wait(.5)
+        else:
+            self.running = False
+            self.scrollplane.EnableSidepanel(True)
+
+    def StepOver(self):
+        global global_counter
+        if self.scrollplane.HasNext(global_counter):
+            global_counter = self.scrollplane.Play(global_counter)
+        else:
+            self.scrollplane.EnableSidepanel(True)
+
+    def Compile(self):
+        self.scrollplane.CompileLoops()
+        print "Compiled"
+
+    def NeedCompile(self):
+        self.compile_needed = True

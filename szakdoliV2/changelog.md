@@ -1,19 +1,66 @@
 # Changelog / Fejlesztői napló
 
+
+____
+
+
 ## TODO List
-+ __PythonApplication1__ át kell alakítani egy osztályá, és minimalizálni a kódot ebben a fájlban
-+ A *Logo Moduls* még csak a szerkezeti felépítést tartalmazza, amit le kell implementálni!
+
++ DeltaTime implementálás, __magas prioritás__
++ "global global_counter" kódrészek törlése, ez egy maradványa az egyik implementációs módszernek, amit nem sikerült működésre bírni, mivel nem egyszerű python objektumot szinkronizálni több szál között
++ Kivizsgálni, hogy miért szaggat a program futása, ha 50+ block kerül a programozó blokkok közé, komoly otptimalizási problémákkal van tele a kód, minnél előbb ki kell takarítani, __közepes prioritás__
++ __LogoModule.Turtle__ FloodFill implementálása
++ __LogoModule.DrawableCommands__ maradék iconok elkészítése
 + Az UML diagrammot napra készre tenni!
 + *Etc.dt_example.py* egy DeltaTime implementáció, további feldolgozásra vár
-+  ~~*Etc* FontAwesome tesztelélsek, a __t . py__ fájlban~~
-+ A maradék ikonok ~~beszerzése és helyfoglalók~~ kicserélése. Továbbá a parancsok implementálása
 +  A __Tab__ osztály újratervezést igényel nem maradhat így sokkal tovább, mert csak hátráltat, kódban feltüntetve a kritikus helyek, __alacsony prioritás__
++ ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően,~~ és húzás bal egérgombbal
++ ~~A maradék ikonok beszerzése és helyfoglalók kicserélése. Továbbá a parancsok implementálása~~
++ ~~__PythonApplication1__ át kell alakítani egy osztályá, és minimalizálni a kódot ebben a fájlban~~
++ ~~A *Logo Moduls* még csak a szerkezeti felépítést tartalmazza, amit le kell implementálni!~~
++  ~~*Etc* FontAwesome tesztelélsek, a __t . py__ fájlban~~
 + ~~Az event handert még be kell állítani, hogy értlems műveletet végezzen.~~ 
 + ~~__ConfigParser__ ez nem maradhat így, vagy vissza kell hogy kerüljön a fő programba, vagy teljesen elvetni a külső konigurációs fájl használatát, jelenleg hátráltatja a gyors és dinamukus változtatás lehetőségét.~~
-+ ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően,~~ és húzás bal egérgombbal
 
 
-## 2016.10.27. (Update 36)
+
+
+
+## 2016.11.05. (Update 37)
++ __Linux kompatiblitás (Multiplatform kód üzembe helyezése)__
++ Kisebb elírások javítása
++ __Base.AbstractDrawable__, *GetParameters* getter
++ __Base.Command__ Font Awesome implementáció elkészítése
++ __LogoMudule.Core__ törölve, mivel nem lesz használva
++ __LogoModule.DrawableCommands__ implementációk hozzáadva minden parancshoz, __Loopend__ egy új osztály, ami majd segíti a __Loop__ osztály működését
++ __LogoModule.Turtle__ implementációk elkészítve
++ __DrawingIcon__, új osztály, funkciója : a teknős kép  drasztiksan veszít minőségéből mikor forgatjuk nem 90°-ban, ezért inkább egy nyil jelzi a teknőst, és így mindig tiszta és szép lesz a rajzoló. Mivel ez a __Polygon__ osztályból származik, ezért mikor fordul kell használni a forgató mátrix képletét. (Mátrix szorzás)
++ __GUI__ hatalmas változások, a program logikájának a vizuális reprezentációjának a felépítése, és a program működésének a gerince ide került. 
+  + Itt hajtódik vére a program futásának a logikája, ami  a __LogoModule.Turtle__ osztállyal áll direkt kapcsolatban és onnan kéri le a teknős adatai, a futtatás része itt kerül megvalósításra, Play, StepOver és Stop parancsok itt vannak implementálva a helyes használatra.
+  + Futás előtt a kód lefuttat egy fordítás parancsot, ami arra szolgál, hogy a két darabból összetevődő ciklus elemeket összekapcsolja, kioptimalizálja, hogy futás közben a lehető legkevesebb számítást kelljen a ott elvégezni. Ezzel sok számítást ki tudunk számolni előre, ezzel javul a futás idő, és kevesebb lesz a hiba lehetősége. 
+  + Működő gombok a Settings, ScreenShot, Exit, Play, StepOver, Stop
++ __ScrollingPlane__ nagyobb változások.
+  + *Sidepanel* mostmár relyett állapotba kerül, ha futtatjuk a kódot, ezzel megakadályozva, hogy futás közben kerüljön be új kód a panelre, ami végtelen + 1  hibához vezet.
+  + A kirajzolást több részre bontottam, hogy minden egyes lépést külön rajzoljön le, ezzel növelve a modularitást, olvashatóságot, és a jövőbeli kiegészítő lehetőségeit. 
+  + Implementálva lett a __Loop__ és __Loopend__ parancsok, ami egy nagyon fontos lépés, mert a kettő összetartozik, és egyik nem működik a másik nélkül. Ezek együttes kirajzolása, majd külön külön is mozgathatóak. Ha törlődik az egyik a másik is törlődik vele együtt.
+  + Takarító funkció folyamatosan fut, törli a felesleges objektum szemeteket, ami bentmaradhat ha a cliklus parancsok hozzáadódnak, és törlődnek. 
+  + Egy áttétes megoldás implementálása, mivel a *pygame.Font* nem másolható a *copy.deepcopy* segítségével, ezért először el kell távolítani ezt az objektumot lemásolni, majd visszatölteni a fontot. 
+  + Két új parancs arra, hogy még finomabb legyen a teknős írányítása, dupla táv megtétele, és 45°-os fordulás. 
+  + __Teljes eseménykezelő újraírása__, erre azért volt szükség, hogy ne a parancsok tárolják a futtatási parancsokat, hanem egy helyen történjen a feldolgozás, átláthatóság, és fejlesztés megkönnyítése. Itt kivélesen nem megfelelő ha rákötünk egy eseményvezérlőt az elemekre, mivel nagyon sok elem lesz, és mindegyikre rá kellene kötni. Ezért inkább a polimorfizmust kihasználva egy nagy elágazásba van szedve az eseményvezérlés. 
+  + Itt van a futtatás magja, itt történik meg az összes léptetés implementációja, mivel ez az osztály tartalmazza az összes kódot leíró adatot. Itt van a fordító parancs lényegi része, ami összeköti a darabokban álló ciklus parancsoakt
++ __Sprite__ fordgatás funkció hozzáadása, ajánlott használat csak 90° többszöreire való forgatás, mivel tönkre teszi a képet ha más szöget használunk. __Kerüljük a használatát.__  
++ __TextIcon__ a konstasok közül olvassa fel a megfelelő ábrákat
++ __System.Constans__ új konstansok kerültek be, többnyire az új irányjelek, és azok kisebb és nagyobb változatai, plusz a multiplatform elérési útvonalak
++ __System.Line__ új osztály, funkciója : A program futás közben vonalat húz maga után aminek többfajta tulajdonsága lehet, kezdő- és végpontok, vastagság, szín, egyáltalán kell-e kirajzolni. Ez az oszátly tartja ezeket az adatokat, és a program futása közben ezek jönnek létre a képernyőn, és jelenítődnek meg.
++ __System.ScreenMatrix__ új osztály, koncepció arra, hogy lesz majd a Floodfill implementálva, jelenleg csak a struktúráját tartlamazza, további implementációra vár
++ __System.Timer__ új osztály, funkciója időt mérni sleep nélkül. Mivel a sleep megakasztaja a program futását, ezért ki kellett iktatni az összes használatát, és ezzel helyettesíteni, mi a képernyő frissítés alapján számolja az időt. __EZ EGY ROSSZ MEGOLDÁS, DE ÁTMENETILEG MEGFELEL!__ Minnél előbb át kellene írni a program megvalósítását a DeltaTime megoldásra, hogy ezt a megoldást minnél hamarabb felszámoljuk. 
++ __PythonApplication1__ az egész fájl strukturúja osztályba lett rendezve, __ApplicationCore__ név alatt, sokkal könnyebb a kezelhetősége, és segédfunckciók, osztály szintű adattagok használata jelentősen megkönnyítik a program fejlesztését
+
+
+___
+
+
+### 2016.10.27. (Update 36)
 + Kisebb elíráok javítása
 + __AbstractDrawable__ kapott egy *ResetPosition* funkciót ami visszaállítja a konstruktorban megadott paramtéretben adott értékekre az objektumot, ez azért szükséges, hogy mikor váltunk Tab-ot akkor mindig a kezdőállípotba álljon vissza
 + __Poligon__ kapott egy felüldefiniált ResetPosition függvényt
@@ -27,6 +74,9 @@
 + *Resources* ide került a FontAwesome.otf font fájl
 
 
+___
+
+
 ### 2016.10.18. (Update 35)
 + __Command__ implementáció a drag 'n drop funckióra
 + Háttér szín miatt több panel mapott szolid fehér hátteret
@@ -36,13 +86,15 @@
 + __SupportFunctions__, új fájl, funkciója olyan függvények nyilvántartása, ami nem kötődik dirket a projekthez, de szügséges pár kritikus helyen
 + *Unittests* kapott még teszteket a __SupportFunctions__ fájl függvényeinek a tesztelésére
 + __ScrollingPlane__, sok sok új dolog, rendre:
-    1. IsInside implementáció változott, és elkülöníthetőek a csoportosító elemektől
-    2. OnClick() implementáció változott, mostmár külön eseménykezelés történik akkor mikor egy __Command__ osztály leszármazottjára kattintunk. Ugyanis akkor lemásolódik a parancs, és azt már a forráskódok közé tudjuk húzni.
-    3. OnDrag() ez a mozgatás eseményeit dolgozza fel, adja hozzá a forráskód panelhez, rendezi át azt, és vesz el belőle elemet
-    4. OnRelease() a parancs elegedése implementációja található itt, lényegében takarítás ha még nem történt meg az OnDrag() után, vagy az elem helyrerakása, ha még nem került át az új helyére
-    5. Továbbá segédfunckiók, a parancsok elhelyezésére és szép formázására.
-    6. Felcseréltem a Jobb és Bal nyilat esztétikai és logikai okokból
+    + IsInside implementáció változott, és elkülöníthetőek a csoportosító elemektől
+    + OnClick() implementáció változott, mostmár külön eseménykezelés történik akkor mikor egy __Command__ osztály leszármazottjára kattintunk. Ugyanis akkor lemásolódik a parancs, és azt már a forráskódok közé tudjuk húzni.
+    + OnDrag() ez a mozgatás eseményeit dolgozza fel, adja hozzá a forráskód panelhez, rendezi át azt, és vesz el belőle elemet
+    + OnRelease() a parancs elegedése implementációja található itt, lényegében takarítás ha még nem történt meg az OnDrag() után, vagy az elem helyrerakása, ha még nem került át az új helyére
+    + Továbbá segédfunckiók, a parancsok elhelyezésére és szép formázására.
+    + Felcseréltem a Jobb és Bal nyilat esztétikai és logikai okokból
 
+
+___
 
 
 ### 2016.10.10. (Update 34)
@@ -55,6 +107,8 @@
 + __ScrollingPlane__ megkapta az oldalpanelt, amire fogom rátenni a Logó parancsokat, majd ezek után ezek segítségével lehet összerakni a Logó kódot, a fő panelben
 + __Tab__ osztály kapott háttérszínt, és attól függően, hogy épp ki van jelölve más színe van a háttérnek. Világos a kijelölt, sötét a nem. Az új kirajzolás elhalasztva határozatlan időre.
 
+
+___
 
 
 ## 2016.10.04. (Update 33)
@@ -70,6 +124,8 @@
     + __DrawableCommands__, funkciója: ez egy gyüjtő osztály, amiben minden egyes lehetséges (eddig tervezett) parancs megjelenítéséhez szükséges osztályt és annak metódusait tárolja. Mivel a __Command__ megváltozott picit, ezért már az IsInside parancsok készen vannak, kivétel __Loop__ osztály, mert az több darabból fog állni, és ott majd külön kell kézileg lekezelni.
 
 
+____
+
 
 ### 2016.10.03. (Commit 32)
 + Törött linkek és elírások javítása a readme és changelog fájlokban, továbbá további hivatkozások hozzáadása
@@ -84,6 +140,8 @@
     + __Vector__, funkciója: megadni tömören és egyértelműen a helyét az elemeknek. Továbbá majd szükség lesz a *Lerp(Lineáris interpoláció)* funkcióra a __Scrollplane__ elemei mozgatásakor
     + *Unittests* könyvtár létrehozása, ide került egy __test__ osztály, ami jelenleg a __Vector__ oszály műveleteit teszteli
 
+
+___
 
 
 ### 2016.09.27 (Commit 31)

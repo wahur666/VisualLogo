@@ -28,3 +28,6 @@ class Polygon(AbstractDrawable):
 
     def SaveCoords(self):
         self.base = {"coords": self.coordinates}
+
+    def GetParameters(self):
+        pass

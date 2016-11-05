@@ -1,134 +1,217 @@
 # -*- coding: utf-8 -*-
 
 from Drawable.Base.Command import Command
+from System.Constants import FONT_AWESOME as fa
+import os.path
+import pygame
+from System.Constants import COLOR as Color
 
 class Forward(Command):
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Forward, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = "\\Resources\\arrow-up.png"
+        #self.imagePath = "\\Resources\\arrow-up.png"
+        self.imagePath = imgpath
+        self.mul = mul
+        if self.mul == 1:
+            self.keycode = fa.ANGLE_UP
+        elif self.mul == 2:
+            self.keycode = fa.ANGLE_DOUBLE_UP
 
-    def execture_command(self):
-        super(Forward, self).execture_command()
 
 
 class Backward(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Backward, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = "\\Resources\\arrow-down.png"
+        #self.imagePath = "\\Resources\\arrow-down.png"
+        self.imagePath = imgpath
+        self.mul = mul
+        if self.mul == 1:
+            self.keycode = fa.ANGLE_DOWN
+        elif self.mul == 2:
+            self.keycode = fa.ANGLE_DOUBLE_DOWN
 
-    def execture_command(self):
-        super(Backward, self).execture_command()
 
 
 class Right(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Right, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = "\\Resources\\turnright.png"
+        #self.imagePath = "\\Resources\\turnright.png"
 
-    def execture_command(self):
-        super(Right, self).execture_command()
+        self.imagePath = imgpath
+        self.mul = mul
+        if self.mul == 1:
+            self.keycode = fa.ANGLE_RIGHT
+        elif self.mul == 2:
+            self.keycode = fa.ANGLE_DOUBLE_RIGHT
+
 
 
 class Left(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Left, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = "\\Resources\\turnleft.png"
+        #self.imagePath = "\\Resources\\turnleft.png"
 
-    def execture_command(self):
-        super(Left, self).execture_command()
+        self.imagePath = imgpath
+        self.mul = mul
+        if self.mul == 1:
+            self.keycode = fa.ANGLE_LEFT
+        elif self.mul == 2:
+            self.keycode = fa.ANGLE_DOUBLE_LEFT
+
 
 
 class Home(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(Home, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(Home, self).execture_command()
+        self.imagePath = imgpath
+        self.keycode = fa.HOME
+
 
 
 class PenDown(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenDown, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = "\\Resources\\pencil2.png"
+        self.imagePath = os.path.join(os.path.sep,"Resources", "pencil2.png")
 
-    def execture_command(self):
-        super(PenDown, self).execture_command()
+        #self.imagePath = imgpath
+        #self.keycode = fa.PEN
+
 
 class PenUp(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenUp, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = "\\Resources\\pencil.png"
+        #self.imagePath = "\\Resources\\pencil.png"
 
-    def execture_command(self):
-        super(PenUp, self).execture_command()
+        self.imagePath = imgpath
+        self.keycode = fa.PEN
+
 
 
 class PenWidth(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenWidth, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(PenWidth, self).execture_command()
+        self.keycode = fa.PLACEHOLDER
 
 
 class PenColor(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenColor, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(PenColor, self).execture_command()
+        self.keycode = fa.PLACEHOLDER
+
 
 
 class FloodFill(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(FloodFill, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(FloodFill, self).execture_command()
+        self.imagePath = imgpath
+        self.keycode = fa.FLOODFILL
+
 
 
 class Reset(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(Reset, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(Reset, self).execture_command()
+        self.imagePath = imgpath
+        self.keycode = fa.RESET
+
 
 
 class Clear(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(Clear, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(Clear, self).execture_command()
+        self.imagePath = imgpath
+        self.keycode = fa.CLEAR
+
 
 
 class ShowTurtle(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(ShowTurtle, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(ShowTurtle, self).execture_command()
+        self.keycode = fa.PLACEHOLDER
+
 
 class HideTurlte(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(HideTurlte, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(HideTurlte, self).execture_command()
+        self.keycode = fa.PLACEHOLDER
+
 
 
 class Loop(Command):
     # mivel ez több darabból fog állni ezért nem lehet csak úgy az örököltet használni
-    def IsInside(self, position):
-        pass
+    #def IsInside(self, position):
+    #   pass
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(Loop, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-    def execture_command(self):
-        super(Loop, self).execture_command()
+        self.keycode = fa.LOOP
+        self.loopend = None
+
+        self.cycle_nubmer = 3
+        self.remaining_cycle = self.cycle_nubmer
+
+        self.compile_information = {
+            "compiled" : False,
+            "pre_test" : False,
+            "loopend_index" : -1
+        }
 
     def DrawObject(self, screen):
-        pass
+        super(Loop, self).DrawObject(screen)
+
+
+    def SetLoopend(self, loopend):
+        self.loopend = loopend
+
+    def DrawLoopend(self, screen):
+        if self.loopend:
+            #self.loopend.DrawObject(screen)
+            pygame.draw.line(screen, Color.BLUE, (int(self.x + self.w * 0.75), int(self.y + self.h / 2)),
+                      (int(self.loopend.x + self.loopend.w / 2),int(self.loopend.y + self.loopend.h / 2)),1)
+
+
+    def SetCompileInfo(self, pre_test, loopend_index):
+        self.compile_information["compiled"] = True
+        self.compile_information["pre_test"] = pre_test
+        self.compile_information["loopend_index"] = loopend_index
+
+    def ResetCompileInfo(self):
+        self.compile_information["compiled"] = False
+
+    def CountDown(self):
+        self.remaining_cycle -= 1
+
+    def ResetCycleCounter(self):
+        self.remaining_cycle = self.cycle_nubmer
+
+class LoopEnd(Command):
+    def __init__(self, vec2_pos=None, size=None):
+        super(LoopEnd, self).__init__(vec2_pos=vec2_pos, size=size)
+
+        self.compile_information = {
+            "compiled": False,
+            "pre_test": False,
+            "loopbase_index": -1
+        }
+
+    def DrawObject(self, screen):
+        self.mainRect.DrawObject(screen)
+
+    def SetCompileInfo(self, pre_test, loopbase_index):
+        self.compile_information["compiled"] = True
+        self.compile_information["pre_test"] = pre_test
+        self.compile_information["loopbase_index"] = loopbase_index
+
+    def ResetCompileInfo(self):
+        self.compile_information["compiled"] = False
+

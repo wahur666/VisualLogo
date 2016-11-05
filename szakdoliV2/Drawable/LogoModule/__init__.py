@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from Core import LogoCore
+from Turtle import Turtle
 from DrawableCommands import *

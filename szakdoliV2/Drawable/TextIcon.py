@@ -2,6 +2,7 @@
 
 from Base import AbstractDrawable
 from System.Constants import COLOR as Color
+from System.Constants import FONT_AWESOME as fa
 
 import pygame
 
@@ -24,5 +25,5 @@ class TextIcon(AbstractDrawable):
 
 
     def LoadFont(self):
-        self.font = pygame.font.Font("Resources\\FontAwesome.otf", self.w - 6 )
+        self.font = pygame.font.Font(fa.FONT_PATH, self.h - 6 )
         self.text = self.font.render(self.keycode, 1, Color.BLACK)

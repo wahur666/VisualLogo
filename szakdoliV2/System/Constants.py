@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 
 class MOUSE:
     LMB = 1
@@ -23,10 +24,11 @@ class COLOR:
     LIGHTGRAY = (238, 238, 238)
 
 class IMAGE_PATHS:
-    DEFALUT = PLACEHOLDER = "\\Resources\\icon-placeholder.png"
-    TURTLE = "\\Resources\\turtle.png"
+    DEFALUT = PLACEHOLDER = os.path.join(os.sep, "Resources","icon-placeholder.png")
+    TURTLE = os.path.join(os.sep, "Resources", "turtle.png")
 
 class FONT_AWESOME:
+    FONT_PATH = os.path.join("Resources", "FontAwesome.otf")
     SETTINGS = u"\uF085"
     LOAD = u"\uF115"
     SAVE = u"\uF0C7"
@@ -47,3 +49,11 @@ class FONT_AWESOME:
     LOOP = u"\uF0E2"
     PLACEHOLDER = u"\uF071"
     BOOKMARK = u"\uF097"
+    ANGLE_DOUBLE_DOWN = u"\uF103"
+    ANGLE_DOUBLE_LEFT = u"\uF100"
+    ANGLE_DOUBLE_RIGHT = u"\uF101"
+    ANGLE_DOUBLE_UP = u"\uF102"
+    ANGLE_UP = u"\uF106"
+    ANGLE_RIGHT = u"\uF105"
+    ANGLE_LEFT = u"\uF104"
+    ANGLE_DOWN = u"\uF107"
