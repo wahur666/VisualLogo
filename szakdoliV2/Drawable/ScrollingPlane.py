@@ -6,7 +6,6 @@ from Base import AbstractDrawable
 
 from Drawable.Rectangle import Rect
 from Drawable.Tab import Tab
-from Drawable.Base.Command import Command
 from LogoModule.DrawableCommands import *
 
 from System.Vector2 import Vector2
@@ -169,20 +168,29 @@ class ScrollingPlane(AbstractDrawable):
                 self.RepaintTabs(id)
                 self.ResizeSourceBlock()
             elif isinstance(self.clicked, Command):
-                if not self.mainpanel.IsInside(event.pos):
-                    self.clicked.UnloadIcon()
-                    self.selectedCommand = copy.deepcopy(self.clicked)
-                    self.clicked.LoadSprite()
-                    #DeepCopy Eseten muszaly ujra betolteni a kepet!!!
-                    self.selectedCommand.LoadSprite()
-                    if isinstance(self.selectedCommand, Loop):
-                        self.loopend = LoopEnd(vec2_pos=Vector2(self.selectedCommand.x, self.selectedCommand.y + 55), size=(50,50))
-                        self.selectedCommand.SetLoopend(self.loopend)
-                else:
-                    self.selectedCommand = self.clicked
+                if event.button == Mouse.LMB:
+                    if not self.mainpanel.IsInside(event.pos):
+                        self.clicked.UnloadIcon()
+                        self.selectedCommand = copy.deepcopy(self.clicked)
+                        self.clicked.LoadSprite()
+                        #DeepCopy Eseten muszaly ujra betolteni a kepet!!!
+                        self.selectedCommand.LoadSprite()
+                        if isinstance(self.selectedCommand, Loop):
+                            self.loopend = LoopEnd(vec2_pos=Vector2(self.selectedCommand.x, self.selectedCommand.y + 55), size=(50,50))
+                            self.selectedCommand.SetLoopend(self.loopend)
+                    else:
+                        self.selectedCommand = self.clicked
 
-                self.selectedCommand.setDelta(event.pos)
-                print "Copied"
+                    self.selectedCommand.setDelta(event.pos)
+                    print "Copied"
+                else:
+                    if isinstance(self.clicked, PenColor):
+                        self.clicked.ChangeColor()
+                    elif isinstance(self.clicked, PenWidth):
+                        self.clicked.Extend()
+                    elif isinstance(self.clicked, Loop):
+                        self.clicked.ChangeCycleNumber()
+
             else:
                 print "Clicked element: ", self.clicked
         elif event.button in [Mouse.SCROLLDOWN, Mouse.SCROLLUP]:
@@ -316,7 +324,6 @@ class ScrollingPlane(AbstractDrawable):
         command = logo.Clear(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.grid.append(command)
 
-        #TO BE IMPLEMENTED
         command = logo.Loop(vec2_pos=Vector2(0, 0), size=(105, 50))
         self.grid.append(command)
 
@@ -352,9 +359,9 @@ class ScrollingPlane(AbstractDrawable):
         elif isinstance(i, PenUp):
             self.parent.parent.logoCore.penup()
         elif isinstance(i, PenWidth):
-            self.parent.parent.logoCore.width()
+            self.parent.parent.logoCore.width(i.pen_width + 1)
         elif isinstance(i, PenColor):
-            self.parent.parent.logoCore.color()
+            self.parent.parent.logoCore.color(i.pen_color)
         elif isinstance(i, Home):
             self.parent.parent.logoCore.home()
         elif isinstance(i, FloodFill):
@@ -368,6 +375,7 @@ class ScrollingPlane(AbstractDrawable):
         elif isinstance(i, Clear):
             self.parent.parent.logoCore.clear()
         elif isinstance(i, Loop):
+            i.running = True
             if i.compile_information["pre_test"]:
                 if i.remaining_cycle == 0:
                     counter = i.compile_information["loopend_index"]
@@ -431,3 +439,8 @@ class ScrollingPlane(AbstractDrawable):
         for elem in self.plateitems[self.currentActivePlane]:
             if isinstance(elem, Loop) or isinstance(elem, LoopEnd):
                 elem.ResetCompileInfo()
+
+    def StopRunning(self):
+        for elem in self.plateitems[self.currentActivePlane]:
+            if isinstance(elem, Loop) or isinstance(elem, LoopEnd):
+                elem.running = False

@@ -66,3 +66,10 @@ class Rect(AbstractDrawable):
 
     def SetClickable(self, state):
         self.Clickable = state
+
+    def SetColor(self, color):
+        self.color = color
+
+    def Extend(self, y, h):
+        self.h = h
+        self.y = y

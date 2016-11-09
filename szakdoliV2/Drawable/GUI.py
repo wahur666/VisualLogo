@@ -102,7 +102,7 @@ class GUI:
         self.reset = True
         self.compile_needed = True
 
-        self.drawing_arrow = DrawingIcon(0, 0, 30, 30, color=Color.RED, width=1)
+        self.drawing_arrow = DrawingIcon(0, 0, 30, 30, color=Color.RED, width=0)
         #self.turtle_image = Spirte(x=0,y=0, w=50, h=50, imgpath=img.TURTLE)
         #self.parent.logoCore.SetDistorsion(25)
 
@@ -139,6 +139,8 @@ class GUI:
                     print "Tab"
                     return
                 elif isinstance(item, ScrollingPlane):
+                    if self.running:
+                        return
                     print "Scrolling"
                     item.OnClick(event)
                     return
@@ -181,6 +183,7 @@ class GUI:
         global global_counter
         self.running = False
         self.scrollplane.EnableSidepanel(True)
+        self.scrollplane.StopRunning()
         print "Stop"
 
     def OnClickStepOver(self, event):
@@ -221,6 +224,7 @@ class GUI:
         else:
             self.running = False
             self.scrollplane.EnableSidepanel(True)
+            self.scrollplane.StopRunning()
 
     def StepOver(self):
         global global_counter

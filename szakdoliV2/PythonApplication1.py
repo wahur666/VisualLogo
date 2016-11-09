@@ -22,6 +22,7 @@ class ApplicationCore:
         pygame.display.update()
 
         self.logoCore = Turtle()
+        self.logoCore.SetBoundaries((20, 20), (650, 620))
 
         self.gui = GUI(self)
 

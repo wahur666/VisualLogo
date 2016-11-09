@@ -7,7 +7,6 @@ from System.Line import Line
 class Turtle:
 
     def __init__(self):
-        print "Turtle construktor lefutott"
         self.pos_x , self.pos_y = (315, 300)
         self.base = {
             "x" : self.pos_x,
@@ -22,13 +21,16 @@ class Turtle:
 
         self.lines = [] # <instance Class : Line >
 
+        self.boundaries = {
+            "top" : None,
+            "bot" : None
+        }
 
-    def __del__(self):
-        print "Turtle Destruktor lefutott"
 
     def forward(self, distance = 20):
         start_x, start_y = self.pos_x, self.pos_y
         self.pos_x, self.pos_y = self.move(1, distance)
+        self.NormalizeMovement()
         end_x, end_y = self.pos_x, self.pos_y
         line_o = Line((start_x + self.distorsion, start_y + self.distorsion), (end_x + self.distorsion, end_y + self.distorsion),
                       self.pen_color, self.pen_witdh, self.pen_down)
@@ -37,6 +39,7 @@ class Turtle:
     def backward(self, distance = 20):
         start_x, start_y = self.pos_x, self.pos_y
         self.pos_x, self.pos_y = self.move(-1, distance)
+        self.NormalizeMovement()
         end_x, end_y = self.pos_x, self.pos_y
         line_o = Line((start_x, start_y), (end_x, end_y), self.pen_color, self.pen_witdh, self.pen_down)
         self.lines.append(line_o)
@@ -107,3 +110,20 @@ class Turtle:
 
     def SetDistorsion(self, amount):
         self.distorsion = amount
+
+    def SetBoundaries(self, (top_x, top_y), (bot_x, bot_y)):
+        self.boundaries["top"] = (top_x, top_y)
+        self.boundaries["bot"] = (bot_x, bot_y)
+
+    def NormalizeMovement(self):
+        if self.boundaries["top"] is not None and self.boundaries["bot"] is not None:
+
+            if self.pos_x < self.boundaries["top"][0]:
+                self.pos_x = self.boundaries["top"][0]
+            if self.pos_x > self.boundaries["bot"][0]:
+                self.pos_x = self.boundaries["bot"][0]
+
+            if self.pos_y < self.boundaries["top"][1]:
+                self.pos_y = self.boundaries["top"][1]
+            if self.pos_y > self.boundaries["bot"][1]:
+                self.pos_y = self.boundaries["bot"][1]

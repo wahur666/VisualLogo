@@ -23,9 +23,18 @@ class COLOR:
     KINDAORANGE = (255, 128, 0)
     LIGHTGRAY = (238, 238, 238)
 
+    COLOR_LIST = [WHITE, BLACK, RED, GREEN, BLUE, CYAN, GREY, LIGHTGRAY,
+                  MAGENTA, YELLOW, LIGHTBLUE, LIGHTORANGE, KINDAORANGE ]
+
 class IMAGE_PATHS:
     DEFALUT = PLACEHOLDER = os.path.join(os.sep, "Resources","icon-placeholder.png")
     TURTLE = os.path.join(os.sep, "Resources", "turtle.png")
+    BEND_LEFT = os.path.join(os.sep, "Resources", "bendleft.png")
+    BEND_RIGHT = os.path.join(os.sep, "Resources", "bendright.png")
+    TURN_LEFT = os.path.join(os.sep, "Resources", "turnleft.png")
+    TURN_RIGHT = os.path.join(os.sep, "Resources", "turnright.png")
+
+
 
 class FONT_AWESOME:
     FONT_PATH = os.path.join("Resources", "FontAwesome.otf")
@@ -57,3 +66,7 @@ class FONT_AWESOME:
     ANGLE_RIGHT = u"\uF105"
     ANGLE_LEFT = u"\uF104"
     ANGLE_DOWN = u"\uF107"
+    LONG_UP = u"\uF176"
+    LONG_DOWN = u"\uF175"
+    EYE_SEE = u"\uF06E"
+    EYE_NOT_SEE = u"\uF070" # http://imgur.com/w8vx7A6

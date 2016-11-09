@@ -8,12 +8,12 @@ ____
 
 + DeltaTime implementálás, __magas prioritás__
 + "global global_counter" kódrészek törlése, ez egy maradványa az egyik implementációs módszernek, amit nem sikerült működésre bírni, mivel nem egyszerű python objektumot szinkronizálni több szál között
-+ Kivizsgálni, hogy miért szaggat a program futása, ha 50+ block kerül a programozó blokkok közé, komoly otptimalizási problémákkal van tele a kód, minnél előbb ki kell takarítani, __közepes prioritás__
++ Kivizsgálni, hogy miért szaggat a program futása, ha 60+ block kerül a programozó blokkok közé, komoly otptimalizási problémákkal van tele a kód, minnél előbb ki kell takarítani, probléma eddig csak egy Intel 877 processorral rendelkező gépen fordult elő, __közepes prioritás__
 + __LogoModule.Turtle__ FloodFill implementálása
-+ __LogoModule.DrawableCommands__ maradék iconok elkészítése
 + Az UML diagrammot napra készre tenni!
 + *Etc.dt_example.py* egy DeltaTime implementáció, további feldolgozásra vár
 +  A __Tab__ osztály újratervezést igényel nem maradhat így sokkal tovább, mert csak hátráltat, kódban feltüntetve a kritikus helyek, __alacsony prioritás__
++ ~~__LogoModule.DrawableCommands__ maradék iconok elkészítése~~
 + ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően,~~ és húzás bal egérgombbal
 + ~~A maradék ikonok beszerzése és helyfoglalók kicserélése. Továbbá a parancsok implementálása~~
 + ~~__PythonApplication1__ át kell alakítani egy osztályá, és minimalizálni a kódot ebben a fájlban~~
@@ -23,10 +23,26 @@ ____
 + ~~__ConfigParser__ ez nem maradhat így, vagy vissza kell hogy kerüljön a fő programba, vagy teljesen elvetni a külső konigurációs fájl használatát, jelenleg hátráltatja a gyors és dinamukus változtatás lehetőségét.~~
 
 
+## 2016.11.10. (Update 38)
+
++ Szakdolgozat írt változata hozzáadva a projekthez
++ Vázlatrajz hozzáadva a szerkezeti felépítésről, UML
++ __DrawableCommands.PenColor/Penwidth__ osztályok megkapták az implementációt
++ __DrawableCommand.Loop__ megkapta a számlálót, és a megfelelő megjelenítését
++ Új funkció __Loop, PenWidth, PenColor__ változik a paraméterük ha jobb egér gombal kattintuk rá
++ __LogoMoudle.Turtle__ javítva, már nem megy ki a rajzlapról a teknős rajzolás közben
++ __GUI__ segédfunkciók annak kiküszöbölésére, hogy ne lehessen a kódot változtatni futás közben
++ __Rectangle__ speciális funkciók a __PenWidth, PenColor__ oszályok megjelenítésének előségítéséhez
++ __ScrollingPlane__ segédfüggvények és __PenWidth, PenColor__ implementációk, és részlegesen szétválasztott eseményekzelő a gombokra, hogy más funkcionalitást csináljon jobb és bal egér gomb megnyomásakor
++ Jobb minőségü képek hozzáadása a jobb és bal forduláshoz
++ __System.Constants__ még több Font Awesome binding, és képek hozzáadása, továbbá egy színlista segédváltozó, a __PenColor__ segítéséhez
++ __ApplicationCore__ segítőfüggvény, azért hogy ne lehessen kivül rajzolni a vásznon 
 
 
+---
 
-## 2016.11.05. (Update 37)
+
+### 2016.11.05. (Update 37)
 + __Linux kompatiblitás (Multiplatform kód üzembe helyezése)__
 + Kisebb elírások javítása
 + __Base.AbstractDrawable__, *GetParameters* getter

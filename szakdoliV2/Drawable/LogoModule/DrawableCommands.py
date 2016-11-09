@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from Drawable.Base.Command import Command
+from Drawable.Rectangle import Rect
 from System.Constants import FONT_AWESOME as fa
+from System.Constants import IMAGE_PATHS as img
 import os.path
 import pygame
 from System.Constants import COLOR as Color
@@ -14,9 +16,9 @@ class Forward(Command):
         self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
-            self.keycode = fa.ANGLE_UP
+            self.keycode = fa.UP
         elif self.mul == 2:
-            self.keycode = fa.ANGLE_DOUBLE_UP
+            self.keycode = fa.LONG_UP
 
 
 
@@ -27,37 +29,36 @@ class Backward(Command):
         self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
-            self.keycode = fa.ANGLE_DOWN
+            self.keycode = fa.DOWN
         elif self.mul == 2:
-            self.keycode = fa.ANGLE_DOUBLE_DOWN
+            self.keycode = fa.LONG_DOWN
 
 
 
 class Right(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Right, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        #self.imagePath = "\\Resources\\turnright.png"
 
-        self.imagePath = imgpath
+
+        #self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
-            self.keycode = fa.ANGLE_RIGHT
+            self.imagePath = img.BEND_RIGHT
         elif self.mul == 2:
-            self.keycode = fa.ANGLE_DOUBLE_RIGHT
+            self.imagePath = img.TURN_RIGHT
 
 
 
 class Left(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Left, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        #self.imagePath = "\\Resources\\turnleft.png"
 
-        self.imagePath = imgpath
+        #self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
-            self.keycode = fa.ANGLE_LEFT
+            self.imagePath = img.BEND_LEFT
         elif self.mul == 2:
-            self.keycode = fa.ANGLE_DOUBLE_LEFT
+            self.imagePath = img.TURN_LEFT
 
 
 
@@ -95,6 +96,21 @@ class PenWidth(Command):
 
         self.keycode = fa.PLACEHOLDER
 
+        self.pen_width = 0
+
+        self.width_rect = Rect(self.x, self.y, self.w, self.h, color=Color.BLACK)
+
+    def DrawObject(self, screen):
+        self.mainRect.DrawObject(screen)
+        self.width_rect.Extend(y=self.y + self.h / 2 - self.pen_width * 5, h=self.pen_width * 10)
+        self.width_rect.DrawObject(screen)
+
+    def Extend(self):
+        self.pen_width = (self.pen_width + 1) % 4
+
+    def SetPosition(self, x, y):
+        super(PenWidth, self).SetPosition(x, y)
+        self.width_rect.SetPosition(x, y)
 
 class PenColor(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
@@ -103,6 +119,25 @@ class PenColor(Command):
         self.keycode = fa.PLACEHOLDER
 
 
+        self.colorlist = Color.COLOR_LIST
+        self.current_color_index = 1
+
+        self.pen_color = self.colorlist[self.current_color_index]
+
+        self.color_rect = Rect(self.x + 10, self.y + 10, self.w - 20, self.h - 20, color=self.pen_color)
+
+    def DrawObject(self, screen):
+        self.mainRect.DrawObject(screen)
+        self.color_rect.DrawObject(screen)
+
+    def ChangeColor(self):
+        self.current_color_index = (self.current_color_index + 1) % len(self.colorlist)
+        self.pen_color = self.colorlist[self.current_color_index]
+        self.color_rect.SetColor(self.pen_color)
+
+    def SetPosition(self, x, y):
+        super(PenColor, self).SetPosition(x, y)
+        self.color_rect.SetPosition(x + 10, y + 10)
 
 class FloodFill(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
@@ -135,21 +170,18 @@ class ShowTurtle(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(ShowTurtle, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-        self.keycode = fa.PLACEHOLDER
+        self.keycode = fa.EYE_SEE
 
 
 class HideTurlte(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(HideTurlte, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-        self.keycode = fa.PLACEHOLDER
+        self.keycode = fa.EYE_NOT_SEE
 
 
 
 class Loop(Command):
-    # mivel ez több darabból fog állni ezért nem lehet csak úgy az örököltet használni
-    #def IsInside(self, position):
-    #   pass
 
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(Loop, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
@@ -166,9 +198,78 @@ class Loop(Command):
             "loopend_index" : -1
         }
 
+        self.running = False
+
+        self.InitCycleDisplayMatrix()
+
+    def InitCycleDisplayMatrix(self):
+        self.cycle_display_matrix = []
+        matix_number = [0, 0, 0,
+                        0, 0, 0,
+                        0, 0, 0]
+        self.cycle_display_matrix.append(matix_number) #0
+
+        matix_number = [0, 0, 0,
+                        0, 1, 0,
+                        0, 0, 0]
+        self.cycle_display_matrix.append(matix_number) #1
+
+        matix_number = [1, 0, 0,
+                        0, 0, 0,
+                        0, 0, 1]
+        self.cycle_display_matrix.append(matix_number) #2
+
+        matix_number = [1, 0, 0,
+                        0, 1, 0,
+                        0, 0, 1]
+        self.cycle_display_matrix.append(matix_number) #3
+
+        matix_number = [1, 0, 1,
+                        0, 0, 0,
+                        1, 0, 1]
+        self.cycle_display_matrix.append(matix_number) #4
+
+        matix_number = [1, 0, 1,
+                        0, 1, 0,
+                        1, 0, 1]
+        self.cycle_display_matrix.append(matix_number) #5
+
+        matix_number = [1, 0, 1,
+                        1, 0, 1,
+                        1, 0, 1]
+        self.cycle_display_matrix.append(matix_number) #6
+
+        matix_number = [1, 0, 1,
+                        1, 1, 1,
+                        1, 0, 1]
+        self.cycle_display_matrix.append(matix_number) #7
+
+        matix_number = [1, 1, 1,
+                        1, 0, 1,
+                        1, 1, 1]
+        self.cycle_display_matrix.append(matix_number) #8
+
+        matix_number = [1, 1, 1,
+                        1, 1, 1,
+                        1, 1, 1]
+        self.cycle_display_matrix.append(matix_number) #9
+
+
     def DrawObject(self, screen):
         super(Loop, self).DrawObject(screen)
+        self.DrawRemainingCycleMatrix(screen)
 
+    def DrawRemainingCycleMatrix(self, screen):
+        if self.running:
+            amount = self.remaining_cycle
+        else:
+            amount = self.cycle_nubmer
+        for i in range(3):
+            for j in range(3):
+                if self.cycle_display_matrix[amount][i * 3 + j]:
+                    pos_x = 8 + j * 16 + self.x + 55
+                    pos_y = 8 + i * 16 + self.y + 1
+                    pygame.draw.circle(screen, Color.MAGENTA, (pos_x, pos_y), 5, 0)
 
     def SetLoopend(self, loopend):
         self.loopend = loopend
@@ -192,6 +293,12 @@ class Loop(Command):
         self.remaining_cycle -= 1
 
     def ResetCycleCounter(self):
+        self.remaining_cycle = self.cycle_nubmer
+
+    def ChangeCycleNumber(self):
+        self.cycle_nubmer = (self.cycle_nubmer + 1) % 10
+        if not self.running and not self.cycle_nubmer:
+            self.cycle_nubmer = 1
         self.remaining_cycle = self.cycle_nubmer
 
 class LoopEnd(Command):
