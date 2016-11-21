@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-from Drawable.LogoModule.DrawableCommands import *
+
 from Vector2 import Vector2
 
 import sys
 import re
 from ast import literal_eval as make_tuple
 import os, os.path
+import zipfile
+
+DC = None
 
 def MoveListElement(list , element, index):
     # type: (list, object, int)
@@ -14,56 +17,59 @@ def MoveListElement(list , element, index):
     return  list
 
 def SerializeCommands(list, index):
+    global DC
+    if not DC:
+        import Drawable.LogoModule.DrawableCommands as DC
     sys.stdout.write("Serializing . . . ")
     loop_indexer = 0
     output_text = []
     for elem in list:
-        if isinstance(elem, Forward):
+        if isinstance(elem, DC.Forward):
             text = """<class={0}, mul={1}>""".format("Forward", elem.mul)
             output_text.append(text+"\n")
-        elif isinstance(elem, Backward):
+        elif isinstance(elem, DC.Backward):
             text = """<class={0}, mul={1}>""".format("Backward", elem.mul)
             output_text.append(text+"\n")
-        elif isinstance(elem, Left):
+        elif isinstance(elem, DC.Left):
             text = """<class={0}, mul={1}>""".format("Left", elem.mul)
             output_text.append(text+"\n")
-        elif isinstance(elem, Right):
+        elif isinstance(elem, DC.Right):
             text = """<class={0}, mul={1}>""".format("Right", elem.mul)
             output_text.append(text+"\n")
-        elif isinstance(elem, PenDown):
+        elif isinstance(elem, DC.PenDown):
             text = """<class={0}>""".format("PenDown")
             output_text.append(text+"\n")
-        elif isinstance(elem, PenUp):
+        elif isinstance(elem, DC.PenUp):
             text = """<class={0}>""".format("PenUp")
             output_text.append(text+"\n")
-        elif isinstance(elem, PenWidth):
+        elif isinstance(elem, DC.PenWidth):
             text = """<class={0}, penwidth={1}>""".format("PenWidth", elem.pen_width)
             output_text.append(text+"\n")
-        elif isinstance(elem, PenColor):
+        elif isinstance(elem, DC.PenColor):
             ''' apro megjegyzes ide, tisztan lathato hogy egy tuple kerul kiirasra, az rgb kodokkal, ezert
                 kis ugyeskedessel barmi szint ki lehet keverni, http://imgur.com/48JgYRM '''
             text = """<class={0}, pencolor={1}>""".format("PenColor", elem.pen_color)
             output_text.append(text+"\n")
-        elif isinstance(elem, Home):
+        elif isinstance(elem, DC.Home):
             text = """<class={0}>""".format("Home")
             output_text.append(text+"\n")
-        elif isinstance(elem, FloodFill):
+        elif isinstance(elem, DC.FloodFill):
             text = """<class={0}>""".format("FloodFill")
             output_text.append(text+"\n")
-        elif isinstance(elem, ShowTurtle):
+        elif isinstance(elem, DC.ShowTurtle):
             text = """<class={0}>""".format("ShowTurtle")
             output_text.append(text+"\n")
-        elif isinstance(elem, HideTurtle):
+        elif isinstance(elem, DC.HideTurtle):
             text = """<class={0}>""".format("HideTurtle")
             output_text.append(text+"\n")
-        elif isinstance(elem, Loop):
+        elif isinstance(elem, DC.Loop):
             if elem.loop_id is None:
                 elem.loop_id = loop_indexer
                 elem.loopend.loop_id = loop_indexer
                 loop_indexer += 1
             text = """<class={0}, loop_index={1}, cycle_number={2}>""".format("Loop", elem.loop_id, elem.cycle_number)
             output_text.append(text+"\n")
-        elif isinstance(elem, LoopEnd):
+        elif isinstance(elem, DC.LoopEnd):
             if elem.loop_id is None:
                 elem.loop_id = loop_indexer
                 elem.loopstart.loop_id = loop_indexer
@@ -76,9 +82,14 @@ def SerializeCommands(list, index):
     print "Done"
 
 def LoadSerializedCommands(index):
+    global DC
+    if not DC:
+        import Drawable.LogoModule.DrawableCommands as DC
     sys.stdout.write("Opening file . . . ")
     try:
-        lines = open(os.path.join("UserData","data" + str(index) + ".dat"), "r").read().splitlines()
+        data = LoadZip_Data(index)
+        #lines = open(os.path.join("UserData","data" + str(index) + ".dat"), "r").read().splitlines()
+        lines = data.splitlines()
         print "Done"
     except:
         print "Error, no file found"
@@ -91,55 +102,55 @@ def LoadSerializedCommands(index):
         if command_dict:
             command = None
             if command_dict['class'] == "Forward":
-                command = Forward(vec2_pos=Vector2(0,0), size=(50, 50), mul=int(command_dict["mul"]))
+                command = DC.Forward(vec2_pos=Vector2(0,0), size=(50, 50), mul=int(command_dict["mul"]))
             elif command_dict['class'] == "Backward":
-                command = Backward(vec2_pos=Vector2(0, 0), size=(50, 50), mul=int(command_dict["mul"]))
+                command = DC.Backward(vec2_pos=Vector2(0, 0), size=(50, 50), mul=int(command_dict["mul"]))
             elif command_dict['class'] == "Left":
-                command = Left(vec2_pos=Vector2(0, 0), size=(50, 50), mul=int(command_dict["mul"]))
+                command = DC.Left(vec2_pos=Vector2(0, 0), size=(50, 50), mul=int(command_dict["mul"]))
             elif command_dict['class'] == "Right":
-                command = Right(vec2_pos=Vector2(0, 0), size=(50, 50), mul=int(command_dict["mul"]))
+                command = DC.Right(vec2_pos=Vector2(0, 0), size=(50, 50), mul=int(command_dict["mul"]))
             elif command_dict['class'] == "PenDown":
-                command = PenDown(vec2_pos=Vector2(0,0), size=(50, 50))
+                command = DC.PenDown(vec2_pos=Vector2(0,0), size=(50, 50))
             elif command_dict['class'] == "PenUp":
-                command = PenUp(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.PenUp(vec2_pos=Vector2(0, 0), size=(50, 50))
             elif command_dict['class'] == "PenWidth":
-                command = PenWidth(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.PenWidth(vec2_pos=Vector2(0, 0), size=(50, 50))
                 command.pen_width = int(command_dict["penwidth"])
             elif command_dict['class'] == "PenColor":
-                command = PenColor(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.PenColor(vec2_pos=Vector2(0, 0), size=(50, 50))
                 command.SetColor(make_tuple(command_dict["pencolor"]))
             elif command_dict['class'] == "Home":
-                command = Home(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.Home(vec2_pos=Vector2(0, 0), size=(50, 50))
             elif command_dict['class'] == "FloodFill":
-                command = FloodFill(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.FloodFill(vec2_pos=Vector2(0, 0), size=(50, 50))
             elif command_dict['class'] == "ShowTurtle":
-                command = ShowTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.ShowTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
             elif command_dict['class'] == "HideTurtle":
-                command = HideTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
+                command = DC.HideTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
             elif command_dict['class'] == "Loop":
-                command = Loop(vec2_pos=Vector2(0, 0), size=(100, 50))
+                command = DC.Loop(vec2_pos=Vector2(0, 0), size=(100, 50))
                 command.loop_id = command_dict["loop_index"]
                 command.SetCycleNumber(int(command_dict["cycle_number"]))
             elif command_dict['class'] == "LoopEnd":
-                command = LoopEnd(vec2_pos=Vector2(0,0), size=(50, 50))
+                command = DC.LoopEnd(vec2_pos=Vector2(0,0), size=(50, 50))
                 command.loop_id = command_dict["loop_index"]
             command_list.append(command)
 
     # OsszeKotjuk a Loop es LoopEnd mezoket
 
     for elem in command_list:
-        if isinstance(elem, Loop):
+        if isinstance(elem, DC.Loop):
             for item in command_list:
-                if isinstance(item, LoopEnd):
+                if isinstance(item, DC.LoopEnd):
                     if item.loop_id == elem.loop_id:
                         elem.SetLoopend(item)
                         item.SetLoopStart(elem)
                         elem.loop_id = None
                         item.loop_id = None
                         break
-        elif isinstance(elem, LoopEnd):
+        elif isinstance(elem, DC.LoopEnd):
             for item in command_list:
-                if isinstance(item, Loop):
+                if isinstance(item, DC.Loop):
                     if item.loop_id == elem.loop_id:
                         elem.SetLoopStart(item)
                         item.SetLoopend(elem)
@@ -161,3 +172,28 @@ def SplitCommand(command):
                 command_dict[lists_[1].strip().split("=")[0]] = ", ".join(lists_[1:]).split("=")[1]
         return command_dict
     return None
+
+
+def CreateZip(index):
+    with zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".vls"), "w") as datazip:
+        datafile = os.path.join("UserData", "data" + str(index) + ".dat")
+        datazip.write(datafile, os.path.basename(datafile))
+        dataimage = os.path.join("UserData", "data" + str(index) + ".jpg")
+        datazip.write(dataimage, os.path.basename(dataimage))
+    os.remove(os.path.join("UserData", "data" + str(index) + ".dat"))
+    os.remove(os.path.join("UserData", "data" + str(index) + ".jpg"))
+
+def LoadZip_Data(index):
+    datazip = zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".vls"), "r")
+    return datazip.read("data" + str(index) + ".dat")
+
+
+def LoadZip_Image(index):
+    from PIL import Image
+    import StringIO
+    datazip = zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".vls"), "r")
+    image = datazip.read("data" + str(index) + ".jpg")
+    buff = StringIO.StringIO()
+    buff.write(image)
+    buff.seek(0)
+    return Image.open(buff)

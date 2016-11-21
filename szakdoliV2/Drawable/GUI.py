@@ -10,7 +10,7 @@ from Drawable.ScrollingPlane import ScrollingPlane
 from System.Constants import COLOR as Color, MOUSE, FONT_AWESOME as FA
 from System.Timer import Timer
 from Drawable.DrawingIcon import DrawingIcon
-from System.SupportFunctions import SerializeCommands, LoadSerializedCommands
+from System.SupportFunctions import SerializeCommands, LoadSerializedCommands, CreateZip
 from DataManagementScreen import DataManagementScreen
 
 from Tab import Tab
@@ -200,13 +200,14 @@ class GUI:
     # ------ Event handlerek -------
 
     def OnClickPlay(self, event):
-        if event.button == MOUSE.LMB:
-            if self.button_down["s"]:
+        if not self.running:
+            if event.button == MOUSE.LMB:
+                if self.button_down["s"]:
+                    self.skip_wait = True
+                self.StartRunningCode()
+            elif event.button == MOUSE.RMB:
                 self.skip_wait = True
-            self.StartRunningCode()
-        elif event.button == MOUSE.RMB:
-            self.skip_wait = True
-            self.StartRunningCode()
+                self.StartRunningCode()
 
     def OnClickStop(self, event):
         self.running = False
@@ -232,6 +233,7 @@ class GUI:
         self.DataManagmentWindow.SetMode("Load")
 
     def OnClickSave(self, event):
+        self.OnClickStop(event)
         self.show_data_management_panel = True
         self.DataManagmentWindow.SetMode("Save")
 
@@ -310,10 +312,11 @@ class GUI:
         self.disable_input = True
 
     def CreateDataScreenshot(self):
-        if self.data_index:
+        if self.data_index is not None:
             rect = pygame.Rect(self.drawingWindow.GetParameters())
             sub = self.parent.screen.subsurface(rect)
             pygame.image.save(sub, os.path.join("UserData", "data" + str(self.data_index) + ".jpg"))
+            CreateZip(self.data_index)
 
     def StartRunningCode(self):
         if self.step_over_mode:

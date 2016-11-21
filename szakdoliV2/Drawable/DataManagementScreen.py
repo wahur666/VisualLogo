@@ -3,6 +3,7 @@ from Rectangle import Rect
 from System.Constants import *
 from Button import Button
 from Sprite import Spirte
+from System.SupportFunctions import LoadZip_Image
 
 import os, os.path
 import pygame.font
@@ -120,8 +121,8 @@ class CheckboxRect(AbstractDrawable):
         super(CheckboxRect, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
         self.main_rect = Rect(self.x, self.y, self.w, self.h, color=color, width=1, transparent=False)
         self.selected = False
-        self.imgpath = os.path.join(os.sep, "UserData", "data" + str(index) + ".jpg")
         self.index = index
+        self.imgpath = LoadZip_Image(index)
         self.sprite = None
 
     def DrawObject(self, screen):
@@ -141,7 +142,7 @@ class CheckboxRect(AbstractDrawable):
         self.selected = state
 
     def LoadImage(self):
-        self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath)
+        self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath, mode=1, index = self.index)
 
     def GetSelected(self):
         return self.selected

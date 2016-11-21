@@ -9,44 +9,30 @@ ____
 
 ## Critical Issue
 
-
 + Az UML diagrammot napra készre tenni!
-+ ~~Middle click automatikusan hozzáadja a kiválasztott elemet, alternatív hozzáadás mód kell még hogy touchpad felhasználók is tudják ezt használni~~
-+ ~~__LogoModule.Turtle__ FloodFill implementálása~~
-+ ~~Mentést és visszatöltést megoldani, egy új panel létrehozása, ahol 21 fájlra van hely~~
-+ ~~A __Exit__ gombot le kell cserélni egy színváltoztató gombra, ami a fő hátteret cserélni meg az __ApplicationCore__ osztálynak a *Run* metódusában~~  
-+ ~~A __Clear és Reset__ parancsokat értlemes helyre rakni~~
-+ ~~__Pencolor__ beállítás négyzetét lecserélni egy körre, a könnyebben értlemezhetőségért~~
-+ ~~A __Settings__ menü alatt kivágni a kikapcsolás gombot, mert így semmi értelme nincs, mert ki lehet lépni ESC-el és a felső X el is~~
-+ ~~Felcserélni a cseruzákat, és a jobb oldalit áthúzni pirossal~~
-+ ~~"global global_counter" kódrészek törlése, ez egy maradványa az egyik implementációs módszernek, amit nem sikerült működésre bírni, mivel nem egyszerű python objektumot szinkronizálni több szál között~~
-+ ~~Színkódolni a parancsokat~~
-+ ~~Alternativ navigázió a sidepanelre, touchpad felhasználóknak~~
-+ ~~Mikor be akarunk szúrni egy elemet, de a vége már lement a lapról, autómatikus görgetés bekapcsolása~~ 
-+ ~~Nyíl ami jelzi hol tart a program futása, autómatikus görgetés fontos~~ 
-+ ~~Kukázni a panelek tartalmát könnyen és egyszerűen, valószínüleg egy kis X gomb a bal felső sarokba, vagy jobbclick és ott egy felugrómenü~~
-+ ~~Csökkenteni a fordulást finomabb vonalak létrehozása~~
-+ ~~__Loop__ összekötő vonalat szebben kirajzolni~~
 
 
 ### Feature request
 
+
 + Flood Fill algoritmus gyorsítása, __közepes prioritás__
 + Kivizsgálni, hogy miért szaggat a program futása, ha 60+ block kerül a programozó blokkok közé, komoly otptimalizási problémákkal van tele a kód, minnél előbb ki kell takarítani, probléma eddig csak egy Intel Celeron 877 processorral rendelkező gépen fordult elő, __közepes prioritás__
 + DeltaTime implementálás
-+ *Etc.dt_example.py* egy DeltaTime implementáció, további feldolgozásra vár
-+  ~~A __Tab__ osztály újratervezést igényel nem maradhat így sokkal tovább, mert csak hátráltat, kódban feltüntetve a kritikus helyek~~ *Elvetve*
-+ ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően~~
-+ ~~__LogoModule.DrawableCommands__ maradék iconok elkészítése~~
-+ ~~A maradék ikonok beszerzése és helyfoglalók kicserélése. Továbbá a parancsok implementálása~~
-+ ~~__PythonApplication1__ át kell alakítani egy osztályá, és minimalizálni a kódot ebben a fájlban~~
-+ ~~A *Logo Moduls* még csak a szerkezeti felépítést tartalmazza, amit le kell implementálni!~~
-+  ~~*Etc* FontAwesome tesztelélsek, a __t . py__ fájlban~~
-+ ~~Az event handert még be kell állítani, hogy értlems műveletet végezzen.~~ 
-+ ~~__ConfigParser__ ez nem maradhat így, vagy vissza kell hogy kerüljön a fő programba, vagy teljesen elvetni a külső konigurációs fájl használatát, jelenleg hátráltatja a gyors és dinamukus változtatás lehetőségét.~~
 
 
-## 2016.11.21 (Update 39) Release 1.0
+## 2016.11.21. (Update 40) Release 1.1.0
+
+
++ _Import \*_ lecserélése, körkörös importálás problémája miatt
++ __DataManagementScreen__ streamből tölti be a képeket
++ __GUI__ apró hibák javítva
++ __Sprite__ streamből tölti be a képet funkció
++ __SupportFunctions__ körkörös import hiba javítása, új fájl formátum tárolásra. _VLS (Visual Logo Source)_, lényegében egy zip fájl amiben van egy _.dat_ és egy _.jpg_ fájl, az egyik a az icon a másik a forráskód
++ __readme__ elírások javítása
++ __VisualLogo__ már az új formátumot generálja
+
+
+### 2016.11.21. (Update 39) Release 1.0
 
 
 + Fejlesztési napló kapott egy új szegmenst, ahol a 2016.11.10.-i megbeszélés alkalmával felvetődött javításokat foglaltam össsze, és nyilvántartom azok állapotát
@@ -253,6 +239,36 @@ ___
     + __ScrollingPlane__, funkciója : ez fogja tárolni a parancsokat amit majd a felhasználó fog elheyezni a panelen, majd futtatni. Működik minden örökölt funkció. A fülek külön külön tárolják a parancsokat, és mindig csak az aktív fülön lévő rajzolódik ki.
 
 
+
+### Closed Issues
+
+
++ ~~Middle click automatikusan hozzáadja a kiválasztott elemet, alternatív hozzáadás mód kell még hogy touchpad felhasználók is tudják ezt használni~~
++ ~~__LogoModule.Turtle__ FloodFill implementálása~~
++ ~~Mentést és visszatöltést megoldani, egy új panel létrehozása, ahol 21 fájlra van hely~~
++ ~~A __Exit__ gombot le kell cserélni egy színváltoztató gombra, ami a fő hátteret cserélni meg az __ApplicationCore__ osztálynak a *Run* metódusában~~  
++ ~~A __Clear és Reset__ parancsokat értlemes helyre rakni~~
++ ~~__Pencolor__ beállítás négyzetét lecserélni egy körre, a könnyebben értlemezhetőségért~~
++ ~~A __Settings__ menü alatt kivágni a kikapcsolás gombot, mert így semmi értelme nincs, mert ki lehet lépni ESC-el és a felső X el is~~
++ ~~Felcserélni a cseruzákat, és a jobb oldalit áthúzni pirossal~~
++ ~~"global global_counter" kódrészek törlése, ez egy maradványa az egyik implementációs módszernek, amit nem sikerült működésre bírni, mivel nem egyszerű python objektumot szinkronizálni több szál között~~
++ ~~Színkódolni a parancsokat~~
++ ~~Alternativ navigázió a sidepanelre, touchpad felhasználóknak~~
++ ~~Mikor be akarunk szúrni egy elemet, de a vége már lement a lapról, autómatikus görgetés bekapcsolása~~ 
++ ~~Nyíl ami jelzi hol tart a program futása, autómatikus görgetés fontos~~ 
++ ~~Kukázni a panelek tartalmát könnyen és egyszerűen, valószínüleg egy kis X gomb a bal felső sarokba, vagy jobbclick és ott egy felugrómenü~~
++ ~~Csökkenteni a fordulást finomabb vonalak létrehozása~~
++ ~~__Loop__ összekötő vonalat szebben kirajzolni~~
++ *Etc.dt_example.py* egy DeltaTime implementáció, további feldolgozásra vár
++  ~~A __Tab__ osztály újratervezést igényel nem maradhat így sokkal tovább, mert csak hátráltat, kódban feltüntetve a kritikus helyek~~ *Elvetve*
++ ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően~~
++ ~~__LogoModule.DrawableCommands__ maradék iconok elkészítése~~
++ ~~A maradék ikonok beszerzése és helyfoglalók kicserélése. Továbbá a parancsok implementálása~~
++ ~~__PythonApplication1__ át kell alakítani egy osztályá, és minimalizálni a kódot ebben a fájlban~~
++ ~~A *Logo Moduls* még csak a szerkezeti felépítést tartalmazza, amit le kell implementálni!~~
++  ~~*Etc* FontAwesome tesztelélsek, a __t . py__ fájlban~~
++ ~~Az event handert még be kell állítani, hogy értlems műveletet végezzen.~~ 
++ ~~__ConfigParser__ ez nem maradhat így, vagy vissza kell hogy kerüljön a fő programba, vagy teljesen elvetni a külső konigurációs fájl használatát, jelenleg hátráltatja a gyors és dinamukus változtatás lehetőségét.~~
 
 
 

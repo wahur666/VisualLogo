@@ -8,6 +8,7 @@ if not pygame.font: print 'Warning, fonts disabled'
 from Drawable import *
 from System.Constants import COLOR as Color, IMAGE_PATHS as img
 from Drawable.LogoModule.Turtle import Turtle
+from System.SupportFunctions import CreateZip
 
 class ApplicationCore:
 
@@ -109,11 +110,12 @@ class ApplicationCore:
         for (dirpath, dirnames, filenames) in os.walk("UserData"):
             files.extend(filenames)
         for i in range(21):
-            if "data" + str(i) + ".jpg" not in filenames:
+            if "data" + str(i) + ".vls" not in filenames:
                 shutil.copyfile(os.getcwd() + os.path.join(os.sep, "Resources", "data.jpg"),
-                                os.getcwd() + os.path.join(os.sep, "UserData", "data" + str(i) + ".jpg"))
-            if "data" + str(i) + ".dat" not in filenames:
+                                    os.getcwd() + os.path.join(os.sep, "UserData", "data" + str(i) + ".jpg"))
                 open(os.getcwd() + os.path.join(os.sep, "UserData", "data" + str(i) + ".dat"), "w")
+
+                CreateZip(i)
 
 core = ApplicationCore()
 core.Run()

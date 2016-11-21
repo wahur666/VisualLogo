@@ -33,5 +33,5 @@ pip install {modul_neve}
 
 ### Futatási parancsok
 
-    python PythonApplication1.py
+    python VisualLogo.py
 

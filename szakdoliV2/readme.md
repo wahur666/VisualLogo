@@ -10,7 +10,7 @@
 
 ### Futtatás
 
-    python PythonApplication1.py 
+    python VisualLogo.py 
 
 ### [_Fejlesztői napló_](changelog.md)
  
