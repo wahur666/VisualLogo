@@ -1,64 +1,70 @@
 # -*- coding: utf-8 -*-
 
+import pygame
+import random
+
 from Drawable.Base.Command import Command
 from Drawable.Rectangle import Rect
 from System.Constants import FONT_AWESOME as fa
 from System.Constants import IMAGE_PATHS as img
-import os.path
-import pygame
 from System.Constants import COLOR as Color
+
 
 class Forward(Command):
 
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Forward, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        #self.imagePath = "\\Resources\\arrow-up.png"
         self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
             self.keycode = fa.UP
+            self.SetKeyCodePadding(2)
         elif self.mul == 2:
             self.keycode = fa.LONG_UP
+            self.SetKeyCodePadding(13)
 
+        self.mainRect.SetAccentColor(Color.HATTER_1)
 
 
 class Backward(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
         super(Backward, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        #self.imagePath = "\\Resources\\arrow-down.png"
         self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
             self.keycode = fa.DOWN
+            self.SetKeyCodePadding(2)
         elif self.mul == 2:
             self.keycode = fa.LONG_DOWN
+            self.SetKeyCodePadding(13)
 
+        self.mainRect.SetAccentColor(Color.HATTER_1)
 
 
 class Right(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 2):
         super(Right, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-
-        #self.imagePath = imgpath
         self.mul = mul
-        if self.mul == 1:
+        if self.mul == 2:
             self.imagePath = img.BEND_RIGHT
-        elif self.mul == 2:
+        elif self.mul == 3:
             self.imagePath = img.TURN_RIGHT
 
+        self.mainRect.SetAccentColor(Color.HATTER_2)
 
 
 class Left(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 2):
         super(Left, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
-        #self.imagePath = imgpath
         self.mul = mul
-        if self.mul == 1:
+        if self.mul == 2:
             self.imagePath = img.BEND_LEFT
-        elif self.mul == 2:
+        elif self.mul == 3:
             self.imagePath = img.TURN_LEFT
+
+        self.mainRect.SetAccentColor(Color.HATTER_2)
 
 
 
@@ -68,27 +74,42 @@ class Home(Command):
 
         self.imagePath = imgpath
         self.keycode = fa.HOME
+        self.SetKeyCodePadding(2)
+        self.mainRect.SetAccentColor(Color.HATTER_3)
 
 
 
 class PenDown(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenDown, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        self.imagePath = os.path.join(os.path.sep,"Resources", "pencil2.png")
 
-        #self.imagePath = imgpath
-        #self.keycode = fa.PEN
 
+        self.keycode = fa.PEN
+        self.SetKeyCodePadding(2)
+        self.mainRect.SetAccentColor(Color.HATTER_4)
 
 class PenUp(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenUp, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
-        #self.imagePath = "\\Resources\\pencil.png"
-
-        self.imagePath = imgpath
         self.keycode = fa.PEN
+        self.mainRect.SetAccentColor(Color.HATTER_4)
+        self.SetKeyCodePadding(2)
 
+        self.cross_points = [(self.x + 10, self.y + 5),
+                             (self.x + 5, self.y + 10),
+                             (self.x + self.w - 10, self.y + self.h - 5),
+                             (self.x + self.w - 5, self.y + self.h - 10)]
 
+    def DrawObject(self, screen):
+        super(PenUp, self).DrawObject(screen)
+        pygame.draw.polygon(screen, Color.RED, self.cross_points, 0)
+
+    def SetPosition(self, x, y):
+        super(PenUp, self).SetPosition(x, y)
+        self.cross_points = [(self.x + 8, self.y + 5),
+                             (self.x + 5, self.y + 8),
+                             (self.x + self.w - 8, self.y + self.h - 5),
+                             (self.x + self.w - 5, self.y + self.h - 8)]
 
 class PenWidth(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
@@ -97,7 +118,7 @@ class PenWidth(Command):
         self.keycode = fa.PLACEHOLDER
 
         self.pen_width = 0
-
+        self.mainRect.SetAccentColor(Color.HATTER_6)
         self.width_rect = Rect(self.x, self.y, self.w, self.h, color=Color.BLACK)
 
     def DrawObject(self, screen):
@@ -112,6 +133,9 @@ class PenWidth(Command):
         super(PenWidth, self).SetPosition(x, y)
         self.width_rect.SetPosition(x, y)
 
+    def SetPenWidth(self, witdh):
+        self.pen_width = witdh
+
 class PenColor(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
         super(PenColor, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
@@ -121,23 +145,22 @@ class PenColor(Command):
 
         self.colorlist = Color.COLOR_LIST
         self.current_color_index = 1
-
+        self.mainRect.SetAccentColor(Color.HATTER_6)
         self.pen_color = self.colorlist[self.current_color_index]
-
-        self.color_rect = Rect(self.x + 10, self.y + 10, self.w - 20, self.h - 20, color=self.pen_color)
 
     def DrawObject(self, screen):
         self.mainRect.DrawObject(screen)
-        self.color_rect.DrawObject(screen)
+        pygame.draw.circle(screen, self.pen_color, (self.x + self.w / 2, self.y + self.h /2), 15, 0 )
 
     def ChangeColor(self):
         self.current_color_index = (self.current_color_index + 1) % len(self.colorlist)
         self.pen_color = self.colorlist[self.current_color_index]
-        self.color_rect.SetColor(self.pen_color)
 
     def SetPosition(self, x, y):
         super(PenColor, self).SetPosition(x, y)
-        self.color_rect.SetPosition(x + 10, y + 10)
+
+    def SetColor(self, color):
+        self.pen_color = color
 
 class FloodFill(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
@@ -145,7 +168,7 @@ class FloodFill(Command):
 
         self.imagePath = imgpath
         self.keycode = fa.FLOODFILL
-
+        self.mainRect.SetAccentColor(Color.HATTER_3)
 
 
 class Reset(Command):
@@ -171,13 +194,14 @@ class ShowTurtle(Command):
         super(ShowTurtle, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
         self.keycode = fa.EYE_SEE
+        self.mainRect.SetAccentColor(Color.HATTER_4)
 
-
-class HideTurlte(Command):
+class HideTurtle(Command):
     def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(HideTurlte, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+        super(HideTurtle, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
 
         self.keycode = fa.EYE_NOT_SEE
+        self.mainRect.SetAccentColor(Color.HATTER_4)
 
 
 
@@ -189,8 +213,10 @@ class Loop(Command):
         self.keycode = fa.LOOP
         self.loopend = None
 
-        self.cycle_nubmer = 3
-        self.remaining_cycle = self.cycle_nubmer
+        self.cycle_number = 3
+        self.remaining_cycle = self.cycle_number
+
+        self.color = random.randint(0, len(Color.LOOP_COLORS)-1)
 
         self.compile_information = {
             "compiled" : False,
@@ -199,8 +225,11 @@ class Loop(Command):
         }
 
         self.running = False
+        self.mainRect.SetAccentColor(Color.HATTER_5)
 
         self.InitCycleDisplayMatrix()
+
+        self.loop_id = None
 
     def InitCycleDisplayMatrix(self):
         self.cycle_display_matrix = []
@@ -263,7 +292,7 @@ class Loop(Command):
         if self.running:
             amount = self.remaining_cycle
         else:
-            amount = self.cycle_nubmer
+            amount = self.cycle_number
         for i in range(3):
             for j in range(3):
                 if self.cycle_display_matrix[amount][i * 3 + j]:
@@ -277,9 +306,10 @@ class Loop(Command):
     def DrawLoopend(self, screen):
         if self.loopend:
             #self.loopend.DrawObject(screen)
-            pygame.draw.line(screen, Color.BLUE, (int(self.x + self.w * 0.75), int(self.y + self.h / 2)),
-                      (int(self.loopend.x + self.loopend.w / 2),int(self.loopend.y + self.loopend.h / 2)),1)
-
+            point_list = self.CalclatePointList()
+            #pygame.draw.line(screen, Color.BLUE, (int(self.x + self.w * 0.75), int(self.y + self.h / 2)),
+            #          (int(self.loopend.x + self.loopend.w / 2),int(self.loopend.y + self.loopend.h / 2)),1)
+            pygame.draw.aalines(screen, Color.LOOP_COLORS[self.color], False, point_list, 1)
 
     def SetCompileInfo(self, pre_test, loopend_index):
         self.compile_information["compiled"] = True
@@ -293,13 +323,25 @@ class Loop(Command):
         self.remaining_cycle -= 1
 
     def ResetCycleCounter(self):
-        self.remaining_cycle = self.cycle_nubmer
+        self.remaining_cycle = self.cycle_number
 
     def ChangeCycleNumber(self):
-        self.cycle_nubmer = (self.cycle_nubmer + 1) % 10
-        if not self.running and not self.cycle_nubmer:
-            self.cycle_nubmer = 1
-        self.remaining_cycle = self.cycle_nubmer
+        self.cycle_number = (self.cycle_number + 1) % 10
+        if not self.running and not self.cycle_number:
+            self.cycle_number = 1
+        self.remaining_cycle = self.cycle_number
+
+    def SetCycleNumber(self, number):
+        self.cycle_number = number
+        self.remaining_cycle = self.cycle_number
+
+    def CalclatePointList(self):
+        loop_start = (round(self.x + self.w), round(self.y + self.h / 2))
+        l0 = (round(self.x + self.w * 1.25), round(self.y + self.h / 2))
+        l1 = (round(self.x + self.w * 1.45) , (round((self.loopend.y + self.loopend.h / 2 ) + round(self.y + self.h / 2)) / 2))
+        l3 = (round(self.loopend.x + self.loopend.w * 1.25), round(self.loopend.y + self.loopend.h / 2))
+        loop_end = (round(self.loopend.x + self.loopend.w), round(self.loopend.y + self.loopend.h / 2))
+        return [loop_start, l0, l1, l3, loop_end]
 
 class LoopEnd(Command):
     def __init__(self, vec2_pos=None, size=None):
@@ -310,6 +352,11 @@ class LoopEnd(Command):
             "pre_test": False,
             "loopbase_index": -1
         }
+
+        self.loop_id = None
+        self.loopstart = None
+
+        self.mainRect.SetAccentColor(Color.HATTER_5)
 
     def DrawObject(self, screen):
         self.mainRect.DrawObject(screen)
@@ -322,3 +369,5 @@ class LoopEnd(Command):
     def ResetCompileInfo(self):
         self.compile_information["compiled"] = False
 
+    def SetLoopStart(self, loop):
+        self.loopstart = loop

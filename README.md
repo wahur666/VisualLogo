@@ -29,6 +29,7 @@ pip install {modul_neve}
 #### Verzio 2 (aktív)
 
 - Pygame
+- Pillow
 
 ### Futatási parancsok
 

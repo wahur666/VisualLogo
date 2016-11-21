@@ -6,6 +6,7 @@
 + Python 2
 + Modulok :
     +  Pygame
+    +  Pillow
 
 ### Futtatás
 

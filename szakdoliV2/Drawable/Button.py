@@ -6,6 +6,7 @@ from Sprite import Spirte
 from TextIcon import TextIcon
 from System.Constants import IMAGE_PATHS as C_IMG
 from System.Constants import FONT_AWESOME as C_FA
+from System.Constants import COLOR as Color
 
 class Button(AbstractDrawable):
 
@@ -19,6 +20,9 @@ class Button(AbstractDrawable):
         self.icon_padding = padding
         self.texticon = None
 
+        self.texticon_color = Color.BLACK
+
+        self.buttonsquircle = Rect(self.x  , self.y , self.w , self.h, width=1, transparent=False)
 
     def DrawObject(self, screen):
         if not self.texticon:
@@ -43,7 +47,12 @@ class Button(AbstractDrawable):
         if self.imgpath != C_IMG.PLACEHOLDER:
             self.sprite = Spirte(self.x + 2, self.y + 2, self.w - 5, self.h - 5, self.imgpath)
         elif self.keycode != C_FA.PLACEHOLDER:
-            self.texticon = TextIcon(self.x + 2 + self.icon_padding, self.y + 2, self.w - 5, self.h - 5, keycode=self.keycode)
+            self.texticon = TextIcon(self.x + 2 + self.icon_padding, self.y + 2, self.w - 5, self.h - 5, keycode=self.keycode, color=self.texticon_color)
         else:
             self.texticon = TextIcon(self.x + 2, self.y + 2, self.w - 5, self.h - 5, keycode=C_FA.PLACEHOLDER)
-        self.buttonsquircle = Rect(self.x  , self.y , self.w , self.h, width=1, transparent=False)
+
+    def SetAccentColor(self, accent):
+        self.buttonsquircle.SetAccentColor(accent)
+
+    def SetTextIconColor(self, color):
+        self.texticon_color = color

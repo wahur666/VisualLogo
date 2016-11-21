@@ -4,17 +4,40 @@
 ____
 
 
-## TODO List
+# TODO List
 
-+ DeltaTime implementálás, __magas prioritás__
-+ "global global_counter" kódrészek törlése, ez egy maradványa az egyik implementációs módszernek, amit nem sikerült működésre bírni, mivel nem egyszerű python objektumot szinkronizálni több szál között
-+ Kivizsgálni, hogy miért szaggat a program futása, ha 60+ block kerül a programozó blokkok közé, komoly otptimalizási problémákkal van tele a kód, minnél előbb ki kell takarítani, probléma eddig csak egy Intel 877 processorral rendelkező gépen fordult elő, __közepes prioritás__
-+ __LogoModule.Turtle__ FloodFill implementálása
+
+## Critical Issue
+
+
 + Az UML diagrammot napra készre tenni!
++ ~~Middle click automatikusan hozzáadja a kiválasztott elemet, alternatív hozzáadás mód kell még hogy touchpad felhasználók is tudják ezt használni~~
++ ~~__LogoModule.Turtle__ FloodFill implementálása~~
++ ~~Mentést és visszatöltést megoldani, egy új panel létrehozása, ahol 21 fájlra van hely~~
++ ~~A __Exit__ gombot le kell cserélni egy színváltoztató gombra, ami a fő hátteret cserélni meg az __ApplicationCore__ osztálynak a *Run* metódusában~~  
++ ~~A __Clear és Reset__ parancsokat értlemes helyre rakni~~
++ ~~__Pencolor__ beállítás négyzetét lecserélni egy körre, a könnyebben értlemezhetőségért~~
++ ~~A __Settings__ menü alatt kivágni a kikapcsolás gombot, mert így semmi értelme nincs, mert ki lehet lépni ESC-el és a felső X el is~~
++ ~~Felcserélni a cseruzákat, és a jobb oldalit áthúzni pirossal~~
++ ~~"global global_counter" kódrészek törlése, ez egy maradványa az egyik implementációs módszernek, amit nem sikerült működésre bírni, mivel nem egyszerű python objektumot szinkronizálni több szál között~~
++ ~~Színkódolni a parancsokat~~
++ ~~Alternativ navigázió a sidepanelre, touchpad felhasználóknak~~
++ ~~Mikor be akarunk szúrni egy elemet, de a vége már lement a lapról, autómatikus görgetés bekapcsolása~~ 
++ ~~Nyíl ami jelzi hol tart a program futása, autómatikus görgetés fontos~~ 
++ ~~Kukázni a panelek tartalmát könnyen és egyszerűen, valószínüleg egy kis X gomb a bal felső sarokba, vagy jobbclick és ott egy felugrómenü~~
++ ~~Csökkenteni a fordulást finomabb vonalak létrehozása~~
++ ~~__Loop__ összekötő vonalat szebben kirajzolni~~
+
+
+### Feature request
+
++ Flood Fill algoritmus gyorsítása, __közepes prioritás__
++ Kivizsgálni, hogy miért szaggat a program futása, ha 60+ block kerül a programozó blokkok közé, komoly otptimalizási problémákkal van tele a kód, minnél előbb ki kell takarítani, probléma eddig csak egy Intel Celeron 877 processorral rendelkező gépen fordult elő, __közepes prioritás__
++ DeltaTime implementálás
 + *Etc.dt_example.py* egy DeltaTime implementáció, további feldolgozásra vár
-+  A __Tab__ osztály újratervezést igényel nem maradhat így sokkal tovább, mert csak hátráltat, kódban feltüntetve a kritikus helyek, __alacsony prioritás__
++  ~~A __Tab__ osztály újratervezést igényel nem maradhat így sokkal tovább, mert csak hátráltat, kódban feltüntetve a kritikus helyek~~ *Elvetve*
++ ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően~~
 + ~~__LogoModule.DrawableCommands__ maradék iconok elkészítése~~
-+ ~~A mainpanel átméretezése az elemek számától függően, és annak mozgatása fel-le irányban a görgőtől függően,~~ és húzás bal egérgombbal
 + ~~A maradék ikonok beszerzése és helyfoglalók kicserélése. Továbbá a parancsok implementálása~~
 + ~~__PythonApplication1__ át kell alakítani egy osztályá, és minimalizálni a kódot ebben a fájlban~~
 + ~~A *Logo Moduls* még csak a szerkezeti felépítést tartalmazza, amit le kell implementálni!~~
@@ -23,7 +46,64 @@ ____
 + ~~__ConfigParser__ ez nem maradhat így, vagy vissza kell hogy kerüljön a fő programba, vagy teljesen elvetni a külső konigurációs fájl használatát, jelenleg hátráltatja a gyors és dinamukus változtatás lehetőségét.~~
 
 
-## 2016.11.10. (Update 38)
+## 2016.11.21 (Update 39) Release 1.0
+
+
++ Fejlesztési napló kapott egy új szegmenst, ahol a 2016.11.10.-i megbeszélés alkalmával felvetődött javításokat foglaltam össsze, és nyilvántartom azok állapotát
++ Szakdolgozat dokumentáció bővült
++ __Base.Command__ kapott pár kisegítő függvényt, ahhoz, hogy korrigálni lehessen a Font Awesome pozícióját, és a színkódoláshoz függvényt
++ __LogoModule.DrawableCommands__ a különböző osztályok megkapták a színkódolást, Font Awesome korrigációt
+  + __PenUp/PenDown__ jelek helyes felrajzolása 
+  + __Left/Right__ 45°,90° átváltottam az egészet 15°-os rendszerbe, így az enyhén fordulás 30° ás a nagyobb fordulás pedig 45°, így elméletileg ki lehet rajzolni bármit ami 15° segítségével lehetséges
+  + __Pencolor__ négyzet helyett kör a jel, hogy egyértelműen meg lehessen különböztetni a stop gombtól
+  + __Reset/Clear__ parancsok lekerültek a *Sidepanelről*, mivel nem volt sok értelmük ott
+  + __Reset__ külön gomb lett a vezérlések mellett
+  + __Loop__ kapott egy loop_id mezőt ami segít Serializálni a parancsot fájlba írákor, továbbá "szebben" van kirajzolva az összekötővonal, futás közbeni hibát javítottam, mikor újraindítottuk a programot miközben futott, a ciklus számláló nem állt vissza az alaphelyzetbe
+  + __LoopEnd__ tudja melyik __Loop__-hoz tartozik, Serializáláshoz kellett
++ __LogoModule.Turtle__ hiba javítva, nem került alaphelyzetbe a láthatósága, *Flood Fill* implementálva
++ __Button__ kapott színkódolást
++ Új osztályok: 
+    + __DataManagementScreen__, egy új panel, ami kezeli a mentést és a visszatöltést, így nem kell más megjelenítő keretrendszerekre hagyatkozni, mint Tkinter vagy WX, és ezzel is közelebb vagyok egy tiszta SDL programhoz, ez tartalmaz aegy belső osztályt, amik reprezentálják a mentési helyeket. Csak azért nincs külön fájlban, mert rövid és fölösleges lenne még több fájt létrehozni ezért, inkább összevonni, több kisebbet. Mikor ez a panel aktív nem lehet az alsó panel gombjait használni. Mikor megnyomjuk a mentés gombot, akkor a program autómatikusan elindul, és lefut, ez idő közben nem lehet semmi gombot megnyomni a panelen még a program végig nem fut. Elméletileg nem lehet végtlen ciklust írni, ezért mindig terminálni fog a program, előbb utóbb
+    + __RunPointer__, feladata, hogy mikor fut a program mindig jelezze, hogy épp hol tart a program futása, így megkönnyebbítve a program értlemezését
++ __GUI__ változások
+    + Autómatikusan rejtve indul a beállítások menü
+    + Gyors lefuttatása a parancsoknak, köztes várakozások nélkül
+    + Implementáláva lett a külső fájlkezelés
+    + Színkódolása a parancsoknak
+    + global global_counter felszámolása
+    + Mikor ment a program, le van tiltva minden bemenet, és gyors program futás következik, eléletben minden esetben le kellene állnia a programnak, előbb utóbb
+    + Alternatív vezérlés implementációk
+    + Mentéskor készül egy screenshot, hogy nézett ki a program futás után, így mikor vissza akarjuk majd tölteni rögtön látjuk mi is volt az amit csináltunk
++ __ScrollingPlane__ válotzások
+    + Mostmár jelzi, hogy hol tart a kód futás közben
+    + Gomb arra, hogy egy kattintással kiürítsük az összes parancsot a mezőből, így egyszerűsítve a tölést
+    + Autómatikus görgetése a kódnak, hogy mindig lássuk hol tart a kód futása melyik parancson
+    + Kényelmi funkciók toucpad felhasználóknak, betűk segítségével is lehet kódot manipulálni
+    + Hiba javítva, ha már egyszer le lett fordítva a kód, de megváltoztattuk az elemeket, nem feltétlen lett újrafordítva, ezért rosszul működött a program, és ki lett javítva, hogy ha változik, akkor rögtön töröljön minden fordítási adatot, és újra fordítsa
+    + Megváltozott a fordulás mértéke, 30° és 45° fokra
+    + Új elrendezés a parancsoknak, egyszerűbb kezelés és színkódolás miatt
+    + __Reset és Clear__ nem meghívható parancsok, nem volt értelmük ebben a formában
+    + Csak páratlan számok lehetnek vonalvastagságok, és a minimum 3
+    + Kisebb otpimalizálások, kódisméltlés csökkentése
+    + Setter/Getter függvények, amik nem lesznek használva
++ __Rectangle__, takarítás, és accentColor hozzáadása, hogy színkodolhatók legyen a parancsok
++ __Sprite__, PIL használata, hogy a kép minősége nem romoljon, mert a pygame beépített funkciói nem elég jók
++ __TextIcon__, még több kontroll, eltolás és szín beállításokra
++ __System.Constants__, még több szín és Font Awesome konstans hozzáadása, továbbá szín lista a __Loop__ összeköttettés színesítéséhez
++ __SupportFunctions__:
+  + *SerializeCommands*, ez a függvény készíti el, és menti le a vizuális program kódot egy fájlba 
+  + *LoadSerializedCommands* ez a függvény tölti be a fájlból a Serializált adatokat, és jeleníti meg a felhasználónak
++ __VisualLogo__ állítható háttérszín hozzáadása, továbbá *UserData* kigenerálása program indításakor, át lett nevezve a __PythonApplication1__-ről
++ *setup. py* cx_Freeze-hez, de valószínüleg nem lesz használva
++ *README*-k frissítve mindkettő, mivel egy külöső modulra van szükség a program futásához, PIL, (Pillow), __Python Imaging Library__ ez felel a képek helyes lekicsinyítéséért, mivel a pygame beépített képkezelő függvényei katasztrofális képminőséghez vezetnek, és ez elfogadhatatlan volt
++ *Resources* törölve a nem használt képek, hozzáadva egy template kép, *UserData* kigenerálásához
++ *UserData* távolja a lementett munkákat, autómatikusan generálódik, minden mentéshez tartozik egy __.dat__ és egy __.jpg__ fájl. Az egyik a parancsokat tartalamazza, a másik pedig a parancsok lefuttatása után kapott képet, így egyértelműen tudjuk, hogy mit töltüónk be vagy épp mentünk le
+
+
+---
+
+
+### 2016.11.10. (Update 38)
 
 + Szakdolgozat írt változata hozzáadva a projekthez
 + Vázlatrajz hozzáadva a szerkezeti felépítésről, UML

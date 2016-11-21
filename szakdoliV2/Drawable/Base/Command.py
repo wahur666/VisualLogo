@@ -18,6 +18,7 @@ class Command(AbstractDrawable):
         self.imagePath = None
         self.texticon = None
         self.keycode = None
+        self.keycode_pad = 0
 
     def execute_command(self):
         raise RuntimeError("Event didn't binded")
@@ -37,6 +38,7 @@ class Command(AbstractDrawable):
     def LoadSprite(self):
         if self.imagePath is None and self.keycode is not None:
             self.texticon = TextIcon(self.x, self.y, self.w, self.h, keycode=self.keycode)
+            self.texticon.SetPaddning(self.keycode_pad)
         elif self.imagePath is not None and self.keycode is None:
             self.sprite = Spirte(self.x, self.y, self.w, self.h, imgpath=self.imagePath)
         else:
@@ -68,3 +70,9 @@ class Command(AbstractDrawable):
 
     def Bind(self, function_pointer):
         self.execute_command = function_pointer
+
+    def SetAccentColor(self, accent):
+        self.mainRect.SetAccentColor(accent)
+
+    def SetKeyCodePadding(self, x):
+        self.keycode_pad = x

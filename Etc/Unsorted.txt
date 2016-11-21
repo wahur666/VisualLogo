@@ -77,3 +77,7 @@ def point_inside_polygon(x,y,poly):
         p1x,p1y = p2x,p2y
 
     return inside
+
+
+http://stackoverflow.com/questions/30578068/pygame-draw-anti-aliased-thick-line
+https://en.wikipedia.org/wiki/Flood_fill

@@ -4,13 +4,14 @@ import copy
 
 from Base import AbstractDrawable
 
-from Drawable.Rectangle import Rect
 from Drawable.Tab import Tab
+from RunPointer import RunPointer
 from LogoModule.DrawableCommands import *
+from Button import Button
 
 from System.Vector2 import Vector2
 from System.SupportFunctions import MoveListElement
-from System.Constants import MOUSE as Mouse
+from System.Constants import MOUSE as Mouse, FONT_AWESOME as fa
 
 import Drawable.LogoModule.DrawableCommands as logo
 
@@ -24,12 +25,13 @@ class ScrollingPlane(AbstractDrawable):
         self.items = []
 
         self.clicked = None
-        self.plateitems = []             # Ez egy lista ami listákat tárol majd #Listacpetion
+        self.plateitems = []             # Ez egy lista ami listákat tárol majd #Listaception
         self.currentActivePlane = 0
         self.InitBefore()
         self.GenerateWindow()
         self.InitAfter()
         self.selectedCommand = None
+        self.loopend = None
 
         self.sidepanel_active = True
 
@@ -51,8 +53,12 @@ class ScrollingPlane(AbstractDrawable):
                 if item.IsInside(position):
                     self.clicked = item
                     return True
+            if self.clearCommandsButton.IsInside(position):
+                if self.plateitems[self.currentActivePlane]:
+                    self.clicked = self.clearCommandsButton
+                    return True
 
-        print self.plateitems[self.currentActivePlane]
+
         for item in self.plateitems[self.currentActivePlane]:
             if item.IsInside(position):
                 self.clicked = item
@@ -62,6 +68,8 @@ class ScrollingPlane(AbstractDrawable):
             if item.IsInside(position):
                 self.clicked = item
                 return True
+
+
         return False
 
 
@@ -80,6 +88,8 @@ class ScrollingPlane(AbstractDrawable):
             self.sidepanel.DrawObject(screen)
             for elem in self.grid:
                 elem.DrawObject(screen)
+            if self.plateitems[self.currentActivePlane]:
+                self.clearCommandsButton.DrawObject(screen)
 
         if self.selectedCommand:
             self.selectedCommand.DrawObject(screen)
@@ -91,9 +101,10 @@ class ScrollingPlane(AbstractDrawable):
             tab = Tab(self.x + i * tabwidth, self.y, tabwidth, tabhight, id=i, width=1, transparent=False)
             self.Add(tab)
 
-        self.sidepanel = Rect(vec2_pos=Vector2(700, 75), size=(121, 570), width=1, transparent=False)
-        #sidepanel.SetClickable(False)
-        #self.Add(self.sidepanel)
+        self.sidepanel = Rect(vec2_pos=Vector2(700, 75), size=(121, 520), width=1, transparent=False)
+        self.clearCommandsButton = Button(771, 594, 50, 50, keycode=fa.ROUND_X, padding=4)
+        self.clearCommandsButton.bind(self.ClearCurrentSource)
+        self.clearCommandsButton.SetTextIconColor(Color.RED)
 
         self.PrepareSidePanelForLogo()
 
@@ -109,6 +120,7 @@ class ScrollingPlane(AbstractDrawable):
         self.items.append(elem)
 
     def OnDrag(self, event):
+        adjustment_needed = False
         if self.selectedCommand:
             self.selectedCommand.drag(event.pos)
             if self.selectedCommand not in self.plateitems[self.currentActivePlane] and self.mainpanel.IsInside((event.pos)):
@@ -128,6 +140,7 @@ class ScrollingPlane(AbstractDrawable):
                             if item.loopend == self.selectedCommand:
                                 self.plateitems[self.currentActivePlane].remove(item)
                                 self.selectedCommand = None
+                                adjustment_needed = True
                                 break
                 self.RearrangeCommands()
             self.ResizeSourceBlock()
@@ -137,6 +150,15 @@ class ScrollingPlane(AbstractDrawable):
                         if item.y - item.h / 2 < self.selectedCommand.y:
                             MoveListElement(self.plateitems[self.currentActivePlane], self.selectedCommand, self.plateitems[self.currentActivePlane].index(item))
                             self.RearrangeCommands(ignore=self.selectedCommand)
+            if self.mainpanel.x < event.pos[0] and event.pos[0] < self.mainpanel.x + self.mainpanel.w:
+                if event.pos[1] < 20:
+                    self.MoveSourcePanel(1)
+                if event.pos[1] > 700:
+                    self.MoveSourcePanel(-1)
+            if adjustment_needed:
+                while self.mainpanel.y + self.mainpanel.h < 700 and self.mainpanel.h > 700:
+                    self.MoveSourcePanel(1)
+
 
 
     def OnRelease(self, event):
@@ -148,6 +170,11 @@ class ScrollingPlane(AbstractDrawable):
                     if isinstance(self.selectedCommand, Loop):
                         self.AddItemToCurrentPlane(self.selectedCommand.loopend)
             else:
+                while self.mainpanel.y + self.mainpanel.h < 700 and self.mainpanel.h > 700:
+                    self.MoveSourcePanel(1)
+                if self.mainpanel.h < 700:
+                    self.ResetPosition()
+                    self.ResizeSourceBlock()
                 if self.selectedCommand in self.plateitems[self.currentActivePlane]:
                     self.plateitems[self.currentActivePlane].remove(self.selectedCommand)
                 for item in self.plateitems[self.currentActivePlane]:
@@ -160,7 +187,7 @@ class ScrollingPlane(AbstractDrawable):
         self.selectedCommand = None
 
     def OnClick(self, event):
-        if event.button in [Mouse.LMB, Mouse.RMB]:
+        if event.button in [Mouse.LMB, Mouse.RMB, Mouse.MMB]:
             if isinstance(self.clicked, Tab):
                 id = self.clicked.GetId()
                 self.currentActivePlane = id
@@ -168,22 +195,16 @@ class ScrollingPlane(AbstractDrawable):
                 self.RepaintTabs(id)
                 self.ResizeSourceBlock()
             elif isinstance(self.clicked, Command):
-                if event.button == Mouse.LMB:
-                    if not self.mainpanel.IsInside(event.pos):
-                        self.clicked.UnloadIcon()
-                        self.selectedCommand = copy.deepcopy(self.clicked)
-                        self.clicked.LoadSprite()
-                        #DeepCopy Eseten muszaly ujra betolteni a kepet!!!
-                        self.selectedCommand.LoadSprite()
-                        if isinstance(self.selectedCommand, Loop):
-                            self.loopend = LoopEnd(vec2_pos=Vector2(self.selectedCommand.x, self.selectedCommand.y + 55), size=(50,50))
-                            self.selectedCommand.SetLoopend(self.loopend)
-                    else:
-                        self.selectedCommand = self.clicked
+                if event.button == Mouse.MMB or self.parent.button_down["a"] and event.button == Mouse.LMB:
+                    self.CreateACommandCopy()
+                    self.AddItemToCurrentPlane(self.selectedCommand)
+                    if isinstance(self.selectedCommand, Loop):
+                        self.AddItemToCurrentPlane(self.selectedCommand.loopend)
+                    self.selectedCommand = None
+                    self.RearrangeCommands()
+                    self.ResizeSourceBlock()
 
-                    self.selectedCommand.setDelta(event.pos)
-                    print "Copied"
-                else:
+                elif event.button == Mouse.RMB or self.parent.button_down["s"] and event.button == Mouse.LMB:
                     if isinstance(self.clicked, PenColor):
                         self.clicked.ChangeColor()
                     elif isinstance(self.clicked, PenWidth):
@@ -191,6 +212,33 @@ class ScrollingPlane(AbstractDrawable):
                     elif isinstance(self.clicked, Loop):
                         self.clicked.ChangeCycleNumber()
 
+                elif event.button == Mouse.LMB and self.parent.button_down["d"]:
+                    if self.mainpanel.IsInside(event.pos):
+                        self.selectedCommand = self.clicked
+                        if isinstance(self.selectedCommand, Loop):
+                            self.loopend = self.selectedCommand.loopend
+                        self.plateitems[self.currentActivePlane].remove(self.selectedCommand)
+                        if self.loopend:
+                            self.plateitems[self.currentActivePlane].remove(self.loopend)
+                        self.selectedCommand = None
+                        self.loopend = None
+                        self.RearrangeCommands()
+                        self.ResizeSourceBlock()
+
+                elif event.button == Mouse.LMB:
+                    if not self.mainpanel.IsInside(event.pos):
+                        self.CreateACommandCopy()
+                    else:
+                        self.selectedCommand = self.clicked
+                        if isinstance(self.selectedCommand, Loop):
+                            self.loopend = self.selectedCommand.loopend
+
+                    self.selectedCommand.setDelta(event.pos)
+
+
+
+            elif isinstance(self.clicked, Button):
+                self.clicked.OnClick()
             else:
                 print "Clicked element: ", self.clicked
         elif event.button in [Mouse.SCROLLDOWN, Mouse.SCROLLUP]:
@@ -202,7 +250,7 @@ class ScrollingPlane(AbstractDrawable):
                         self.MoveSourcePanel(1)
 
 
-    def MoveSourcePanel(self, direction = 1):
+    def MoveSourcePanel(self, direction = 1,reset=True):
         if self.items[0].y >= 20 and direction > 0:
             return
 
@@ -217,7 +265,7 @@ class ScrollingPlane(AbstractDrawable):
             if isinstance(item, Tab):
                 item.UpdatePoints()
 
-        self.RearrangeCommands()
+        self.RearrangeCommands(needreset=reset)
 
     def ResetPosition(self):
         for item in self.items:
@@ -232,10 +280,11 @@ class ScrollingPlane(AbstractDrawable):
         else:
             self.selectedCommand.SetPosition(self.mainpanel.x + self.mainpanel.w / 2 - 25, self.mainpanel.y + 5 + self.plateitems[self.currentActivePlane].index(self.selectedCommand) * 55)
 
-    def RearrangeCommands(self, ignore=None):
-        self.parent.NeedCompile()
-        self.ResetCompileInfos()
-        self.parent.reset = True
+    def RearrangeCommands(self, ignore=None, needreset=True):
+        if needreset:
+            self.parent.NeedCompile()
+            self.ResetCompileInfos()
+            self.parent.reset = True
         for item in self.plateitems[self.currentActivePlane]:
             if item:
                 if item is not ignore:
@@ -254,6 +303,7 @@ class ScrollingPlane(AbstractDrawable):
     def InitBefore(self):
         for i in range(self.tabs):
             self.plateitems.append([])
+        self.runpointer = RunPointer(0,0,40,40)
 
     def RepaintTabs(self, id):
         for item in self.items:
@@ -288,22 +338,10 @@ class ScrollingPlane(AbstractDrawable):
         command = logo.Right(vec2_pos=Vector2(0,0), size=(50, 50))
         self.grid.append(command)
 
-        command = logo.Left(vec2_pos=Vector2(0, 0), size=(50, 50), mul=2)
+        command = logo.Left(vec2_pos=Vector2(0, 0), size=(50, 50), mul=3)
         self.grid.append(command)
 
-        command = logo.Right(vec2_pos=Vector2(0, 0), size=(50, 50), mul=2)
-        self.grid.append(command)
-
-        command = logo.PenDown(vec2_pos=Vector2(0,0), size=(50, 50))
-        self.grid.append(command)
-
-        command = logo.PenUp(vec2_pos=Vector2(0,0), size=(50, 50))
-        self.grid.append(command)
-
-        command = logo.PenWidth(vec2_pos=Vector2(0,0), size=(50, 50))
-        self.grid.append(command)
-
-        command = logo.PenColor(vec2_pos=Vector2(0,0), size=(50, 50))
+        command = logo.Right(vec2_pos=Vector2(0, 0), size=(50, 50), mul=3)
         self.grid.append(command)
 
         command = logo.Home(vec2_pos=Vector2(0,0), size=(50, 50))
@@ -312,17 +350,31 @@ class ScrollingPlane(AbstractDrawable):
         command = logo.FloodFill(vec2_pos=Vector2(0,0), size=(50, 50))
         self.grid.append(command)
 
+        command = logo.PenWidth(vec2_pos=Vector2(0,0), size=(50, 50))
+        self.grid.append(command)
+
+        command = logo.PenColor(vec2_pos=Vector2(0,0), size=(50, 50))
+        self.grid.append(command)
+
+        command = logo.PenDown(vec2_pos=Vector2(0,0), size=(50, 50))
+        self.grid.append(command)
+
+        command = logo.PenUp(vec2_pos=Vector2(0,0), size=(50, 50))
+        self.grid.append(command)
+
         command = logo.ShowTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.grid.append(command)
 
-        command = logo.HideTurlte(vec2_pos=Vector2(0, 0), size=(50, 50))
+        command = logo.HideTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.grid.append(command)
 
+        '''
         command = logo.Reset(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.grid.append(command)
 
         command = logo.Clear(vec2_pos=Vector2(0, 0), size=(50, 50))
         self.grid.append(command)
+        '''
 
         command = logo.Loop(vec2_pos=Vector2(0, 0), size=(105, 50))
         self.grid.append(command)
@@ -346,20 +398,22 @@ class ScrollingPlane(AbstractDrawable):
 
     def Play(self, counter):
         i = self.plateitems[self.currentActivePlane][counter]
+        self.MoveSourceToShowPointer(i)
+        self.runpointer.SetPosition(i.x + 25 - 70, i.y + 25)
         if isinstance(i, Forward):
             self.parent.parent.logoCore.forward(distance=i.mul * 20)
         elif isinstance(i, Backward):
             self.parent.parent.logoCore.backward(distance=i.mul * 20)
         elif isinstance(i, Left):
-            self.parent.parent.logoCore.left(angle=45*i.mul)
+            self.parent.parent.logoCore.left(angle=15*i.mul)
         elif isinstance(i, Right):
-            self.parent.parent.logoCore.right(angle=45*i.mul)
+            self.parent.parent.logoCore.right(angle=15*i.mul)
         elif isinstance(i, PenDown):
             self.parent.parent.logoCore.pendown()
         elif isinstance(i, PenUp):
             self.parent.parent.logoCore.penup()
         elif isinstance(i, PenWidth):
-            self.parent.parent.logoCore.width(i.pen_width + 1)
+            self.parent.parent.logoCore.width((i.pen_width+1)*2 + 1)
         elif isinstance(i, PenColor):
             self.parent.parent.logoCore.color(i.pen_color)
         elif isinstance(i, Home):
@@ -368,7 +422,7 @@ class ScrollingPlane(AbstractDrawable):
             self.parent.parent.logoCore.fill()
         elif isinstance(i, ShowTurtle):
             self.parent.parent.logoCore.showturtle()
-        elif isinstance(i, HideTurlte):
+        elif isinstance(i, HideTurtle):
             self.parent.parent.logoCore.hideturtle()
         elif isinstance(i, Reset):
             self.parent.parent.logoCore.reset()
@@ -382,7 +436,6 @@ class ScrollingPlane(AbstractDrawable):
                     i.ResetCycleCounter()
                 else:
                     i.CountDown()
-                #print "Remaning Cycles : " , i.remaining_cycle
             else:
                 if i.remaining_cycle == 0:
                     i.ResetCycleCounter()
@@ -442,5 +495,52 @@ class ScrollingPlane(AbstractDrawable):
 
     def StopRunning(self):
         for elem in self.plateitems[self.currentActivePlane]:
-            if isinstance(elem, Loop) or isinstance(elem, LoopEnd):
+            if isinstance(elem, Loop):
                 elem.running = False
+                elem.ResetCycleCounter()
+            elif isinstance(elem, LoopEnd):
+                elem.running = False
+
+
+    def DrawRunPointer(self, screen):
+        self.runpointer.DrawObject(screen)
+
+    def MoveSourceToShowPointer(self, i):
+        flag = False
+        t = False
+        while i.y + i.h > 700 and not t:
+            flag = True
+            self.MoveSourcePanel(-1, False)
+        t = flag
+        while i.y < 20 and not t:
+            self.MoveSourcePanel(1, False)
+
+    def ClearCurrentSource(self):
+        self.plateitems[self.currentActivePlane] = []
+        self.ResetPosition()
+        self.ResizeSourceBlock()
+
+    def CreateACommandCopy(self):
+        self.clicked.UnloadIcon()
+        self.selectedCommand = copy.deepcopy(self.clicked)
+        self.clicked.LoadSprite()
+        # DeepCopy Eseten muszaj ujra betolteni a kepet!!!
+        self.selectedCommand.LoadSprite()
+        if isinstance(self.selectedCommand, Loop):
+            self.loopend = LoopEnd(vec2_pos=Vector2(self.selectedCommand.x, self.selectedCommand.y + 55),
+                                   size=(50, 50))
+            self.loopend.SetLoopStart(self.selectedCommand)
+            self.selectedCommand.SetLoopend(self.loopend)
+
+
+    def SetCurrentActiveCommandList(self, list):
+        self.plateitems[self.currentActivePlane] = list
+
+    def GetCurrentActiveCommandList(self):
+        return self.plateitems[self.currentActivePlane]
+
+    def GetCommandLists(self):
+        return self.plateitems
+
+    def SetCommandLists(self, list_of_lists):
+        self.plateitems = list_of_lists

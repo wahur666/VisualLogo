@@ -23,8 +23,20 @@ class COLOR:
     KINDAORANGE = (255, 128, 0)
     LIGHTGRAY = (238, 238, 238)
 
+    HATTER_1 = (211, 255, 204) # halvany zold
+    HATTER_2 = (214, 255, 248) # halvany kek
+    HATTER_3 = (196, 201, 255) # lilaskek
+    HATTER_4 = (246, 255, 196) # halvanysarga
+    HATTER_5 = (255, 251, 160) # halvanyrozsaszin
+    HATTER_6 = (255, 236, 211) # kicsit erosebb sarga
+    HATTER_7 = (255, 201, 207) # halvanypiros
+    HATTER_8 = (216, 255, 255) # halovany nagyon kek
+
+
     COLOR_LIST = [WHITE, BLACK, RED, GREEN, BLUE, CYAN, GREY, LIGHTGRAY,
                   MAGENTA, YELLOW, LIGHTBLUE, LIGHTORANGE, KINDAORANGE ]
+
+    LOOP_COLORS = [BLACK, BLUE, RED, GREEN, CYAN, MAGENTA, KINDAORANGE]
 
 class IMAGE_PATHS:
     DEFALUT = PLACEHOLDER = os.path.join(os.sep, "Resources","icon-placeholder.png")
@@ -33,7 +45,8 @@ class IMAGE_PATHS:
     BEND_RIGHT = os.path.join(os.sep, "Resources", "bendright.png")
     TURN_LEFT = os.path.join(os.sep, "Resources", "turnleft.png")
     TURN_RIGHT = os.path.join(os.sep, "Resources", "turnright.png")
-
+    RED_PENCIL = os.path.join(os.sep,"Resources", "pencil2.png")
+    ICON = os.path.join(os.sep, "Resources", "visuallogoicon.png")
 
 
 class FONT_AWESOME:
@@ -70,3 +83,9 @@ class FONT_AWESOME:
     LONG_DOWN = u"\uF175"
     EYE_SEE = u"\uF06E"
     EYE_NOT_SEE = u"\uF070" # http://imgur.com/w8vx7A6
+    BACKGROUND_PICTURE = u"\uF03E"
+    STICKY_NOTE = u"\uF24A"
+    ROUND_X = u"\uF05C"
+    SQUARE_X = u"\uF2D4"
+    CHECK = u"\uF00C"
+    CLOSE = u"\uF00D"

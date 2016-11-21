@@ -3,6 +3,8 @@
 
 from os import getcwd
 from System.Constants import IMAGE_PATHS as img
+import PIL
+from PIL import Image
 
 import pygame
 
@@ -34,16 +36,15 @@ class Spirte(AbstractDrawable):
 
     def LoadImage(self):
         f = getcwd()+self.imgpath
-        self.image = pygame.image.load(f)
-        image_w, image_h =  self.image.get_rect().size
-
+        image = Image.open(f)
+        image_w, image_h =  image.size
         if self.w is None:
             self.w = image_w
         if self.h is None:
             self.h = image_h
 
-        imageRect = pygame.Rect(self.x, self.y, self.w, self.h)
-        self.image = pygame.transform.scale(self.image, imageRect.size)
+        image = image.resize((self.w, self.h), PIL.Image.ANTIALIAS)
+        self.image = pygame.image.fromstring(image.tobytes(), image.size, image.mode)
         self.image = self.image.convert_alpha()
 
     def RotateTo(self, angle):

@@ -2,7 +2,7 @@
 
 from math import sin, cos, floor, radians
 from System.Constants import COLOR as Color
-from System.Line import Line
+from System.RenderItems import Line, Flood
 
 class Turtle:
 
@@ -73,16 +73,17 @@ class Turtle:
         self.pen_color = color
 
     def fill(self):
-        #Itt szükseg lesz a vaszonra!!!
-        pass
+        flood = Flood((self.pos_x, self.pos_y), self.pen_color)
+        self.lines.append(flood)
 
     def reset(self):
         self.pos_x, self.pos_y = self.base["x"], self.base["y"]
         self.lines = []
         self.rotation = 0
         self.pen_color = 0
-        self.pen_witdh = 1
+        self.pen_witdh = 3
         self.pen_down = True
+        self.show_turtle = True
 
     def clear(self):
         self.lines = []

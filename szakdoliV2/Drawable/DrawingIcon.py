@@ -4,6 +4,7 @@ from System.Constants import COLOR as Color
 from Polygon import Polygon
 
 from math import radians, sin, cos
+import pygame
 
 class DrawingIcon(Polygon):
 
@@ -34,6 +35,7 @@ class DrawingIcon(Polygon):
     def DrawObject(self, screen, rot):
         self.RotateToAngle(rot)
         super(DrawingIcon, self).DrawObject(screen)
+        pygame.draw.lines(screen, Color.BLACK, False, self.coordinates, 1)
 
 
     def ResetPosition(self):
@@ -60,7 +62,7 @@ class DrawingIcon(Polygon):
         points.append(p3)
         points.append(p1)
         points.append(p2)
-
+        points.append(origo)
 
         return points
 

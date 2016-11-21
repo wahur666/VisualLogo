@@ -16,26 +16,9 @@ class Rect(AbstractDrawable):
         self.movable = movable
         self.transparent = transparent
         self.accentColor = Color.WHITE
-        self.checkMove()
         self.Clickable = True
 
-    def checkMove(self):
-        self.move('UP')
-        self.move('DOWN')
-        self.move('LEFT')
-        self.move('RIGHT')
 
-    def move(self, direction ,tick = 1):
-        if direction == 'UP':
-            self.y += 1
-        elif direction == 'DOWN':
-            self.y -= 1
-        elif direction == 'RIGHT':
-            self.x += tick
-        elif direction == 'LEFT':
-            self.x -= 1
-        else:
-            raise NameError(direction + " : direction not defined")
 
     def DrawObject(self, screen):
         if not self.transparent:
@@ -73,3 +56,6 @@ class Rect(AbstractDrawable):
     def Extend(self, y, h):
         self.h = h
         self.y = y
+
+    def SetAccentColor(self, accent):
+        self.accentColor = accent
