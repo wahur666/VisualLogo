@@ -20,7 +20,15 @@ ____
 + DeltaTime implementálás
 
 
-## 2016.11.21. (Update 40) Release 1.1.0
+## 2016.11.23. (Update 41) Release 1.1.1
+
+
++ Crash Fix Flood Fill használatakor
++ Flood Fill gyorsítás
++ Turtle reset hiba javítás
+
+
+### 2016.11.21. (Update 40) Release 1.1.0
 
 
 + _Import \*_ lecserélése, körkörös importálás problémája miatt

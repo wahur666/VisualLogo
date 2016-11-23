@@ -80,7 +80,7 @@ class Turtle:
         self.pos_x, self.pos_y = self.base["x"], self.base["y"]
         self.lines = []
         self.rotation = 0
-        self.pen_color = 0
+        self.pen_color = Color.BLACK
         self.pen_witdh = 3
         self.pen_down = True
         self.show_turtle = True

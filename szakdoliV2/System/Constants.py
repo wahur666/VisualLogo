@@ -9,28 +9,28 @@ class MOUSE:
     SCROLLDOWN = 5
 
 class COLOR:
-    WHITE = (255, 255, 255)
-    BLACK = (0, 0, 0)
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
-    CYAN = (0, 255, 255)
-    GREY = (127, 127, 127)
-    MAGENTA = (255, 0, 255)
-    YELLOW = (255, 236, 4)
-    LIGHTBLUE = (168, 244, 255)
-    LIGHTORANGE = (255, 233, 127)
-    KINDAORANGE = (255, 128, 0)
-    LIGHTGRAY = (238, 238, 238)
+    WHITE = (255, 255, 255, 255)
+    BLACK = (0, 0, 0, 255)
+    RED = (255, 0, 0, 255)
+    GREEN = (0, 255, 0, 255)
+    BLUE = (0, 0, 255, 255)
+    CYAN = (0, 255, 255, 255)
+    GREY = (127, 127, 127, 255)
+    MAGENTA = (255, 0, 255, 255)
+    YELLOW = (255, 236, 4, 255)
+    LIGHTBLUE = (168, 244, 255, 255)
+    LIGHTORANGE = (255, 233, 127, 255)
+    KINDAORANGE = (255, 128, 0, 255)
+    LIGHTGRAY = (238, 238, 238, 255)
 
-    HATTER_1 = (211, 255, 204) # halvany zold
-    HATTER_2 = (214, 255, 248) # halvany kek
-    HATTER_3 = (196, 201, 255) # lilaskek
-    HATTER_4 = (246, 255, 196) # halvanysarga
-    HATTER_5 = (255, 251, 160) # halvanyrozsaszin
-    HATTER_6 = (255, 236, 211) # kicsit erosebb sarga
-    HATTER_7 = (255, 201, 207) # halvanypiros
-    HATTER_8 = (216, 255, 255) # halovany nagyon kek
+    HATTER_1 = (211, 255, 204, 255) # halvany zold
+    HATTER_2 = (214, 255, 248, 255) # halvany kek
+    HATTER_3 = (196, 201, 255, 255) # lilaskek
+    HATTER_4 = (246, 255, 196, 255) # halvanysarga
+    HATTER_5 = (255, 251, 160, 255) # halvanyrozsaszin
+    HATTER_6 = (255, 236, 211, 255) # kicsit erosebb sarga
+    HATTER_7 = (255, 201, 207, 255) # halvanypiros
+    HATTER_8 = (216, 255, 255, 255) # halovany nagyon kek
 
 
     COLOR_LIST = [WHITE, BLACK, RED, GREEN, BLUE, CYAN, GREY, LIGHTGRAY,

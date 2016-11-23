@@ -45,6 +45,9 @@ class Flood:
     def flood_fill(self, screen, node, replacement_colour, px):
         current_colour = screen.get_at((self.vec2pos[0], self.vec2pos[1]))
 
+        if replacement_colour == current_colour:
+            return px
+
         q = []
         q.append(node)
         while q:
@@ -52,6 +55,5 @@ class Flood:
             if screen.get_at((n.x, n.y)) == current_colour:
                 px[n.x, n.y] = replacement_colour
                 if n.x - 1 >= 20 and n.y - 1 >= 20 and n.x + 1 < 650 and n.y + 1 < 620:
-                    q += [Node(n.x - 1, n.y), Node(n.x + 1, n.y), Node(n.x, n.y - 1), Node(n.x, n.y + 1)    #]
-                          ,Node(n.x - 1, n.y - 1), Node(n.x + 1, n.y + 1), Node(n.x + 1, n.y - 1), Node(n.x - 1, n.y + 1)]
+                    q += [Node(n.x - 1, n.y), Node(n.x + 1, n.y), Node(n.x, n.y - 1), Node(n.x, n.y + 1) ]
         return px
