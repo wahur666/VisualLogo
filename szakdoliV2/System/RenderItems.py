@@ -39,21 +39,40 @@ class Flood:
             self.surface = pa.make_surface()
             self.caluclaated = True
             del pa
-        screen.blit(self.surface, (20,20), (20,20,650,620))
+        screen.blit(self.surface, (20,20), (20,20,630,600))
 
 
     def flood_fill(self, screen, node, replacement_colour, px):
-        current_colour = screen.get_at((self.vec2pos[0], self.vec2pos[1]))
+        current_colour = px[node.x, node.y]
 
         if replacement_colour == current_colour:
             return px
 
-        q = []
+        q = list()
         q.append(node)
         while q:
             n = q.pop()
-            if screen.get_at((n.x, n.y)) == current_colour:
+            if px[n.x, n.y] == current_colour:
                 px[n.x, n.y] = replacement_colour
-                if n.x - 1 >= 20 and n.y - 1 >= 20 and n.x + 1 < 650 and n.y + 1 < 620:
-                    q += [Node(n.x - 1, n.y), Node(n.x + 1, n.y), Node(n.x, n.y - 1), Node(n.x, n.y + 1) ]
+            else:
+                continue
+
+            w = Node(n.x + 1, n.y)
+            while w.x <= 650 and px[w.x, w.y] == current_colour:
+                px[w.x, w.y] = replacement_colour
+
+                q.append(Node(w.x, w.y - 1))
+                q.append(Node(w.x, w.y + 1))
+
+                w.x += 1
+
+            e = Node(n.x - 1, n.y)
+            while e.x >= 20 and px[e.x, e.y] == current_colour:
+                px[e.x, e.y] = replacement_colour
+
+                q.append(Node(e.x, e.y - 1))
+                q.append(Node(e.x, e.y + 1))
+
+                e.x -= 1
+
         return px

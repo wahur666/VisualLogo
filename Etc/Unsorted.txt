@@ -81,3 +81,4 @@ def point_inside_polygon(x,y,poly):
 
 http://stackoverflow.com/questions/30578068/pygame-draw-anti-aliased-thick-line
 https://en.wikipedia.org/wiki/Flood_fill
+http://stackoverflow.com/questions/38645391/python-pygame-error-failed-loading-libpng-dylib-dlopenlibpng-dylib-2-imag/39425923#39425923

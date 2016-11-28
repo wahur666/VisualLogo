@@ -48,7 +48,7 @@ class Right(Command):
         self.mul = mul
         if self.mul == 2:
             self.imagePath = img.BEND_RIGHT
-        elif self.mul == 3:
+        elif self.mul == 6:
             self.imagePath = img.TURN_RIGHT
 
         self.mainRect.SetAccentColor(Color.HATTER_2)
@@ -61,7 +61,7 @@ class Left(Command):
         self.mul = mul
         if self.mul == 2:
             self.imagePath = img.BEND_LEFT
-        elif self.mul == 3:
+        elif self.mul == 6:
             self.imagePath = img.TURN_LEFT
 
         self.mainRect.SetAccentColor(Color.HATTER_2)
@@ -216,7 +216,7 @@ class Loop(Command):
         self.cycle_number = 3
         self.remaining_cycle = self.cycle_number
 
-        self.color = random.randint(0, len(Color.LOOP_COLORS)-1)
+        self.RollColor()
 
         self.compile_information = {
             "compiled" : False,
@@ -230,6 +230,7 @@ class Loop(Command):
         self.InitCycleDisplayMatrix()
 
         self.loop_id = None
+        self.ark_level = 0
 
     def InitCycleDisplayMatrix(self):
         self.cycle_display_matrix = []
@@ -336,12 +337,38 @@ class Loop(Command):
         self.remaining_cycle = self.cycle_number
 
     def CalclatePointList(self):
-        loop_start = (round(self.x + self.w), round(self.y + self.h / 2))
-        l0 = (round(self.x + self.w * 1.25), round(self.y + self.h / 2))
-        l1 = (round(self.x + self.w * 1.45) , (round((self.loopend.y + self.loopend.h / 2 ) + round(self.y + self.h / 2)) / 2))
-        l3 = (round(self.loopend.x + self.loopend.w * 1.25), round(self.loopend.y + self.loopend.h / 2))
+        point_list = []
+        if self.ark_level == 0:
+            if self.y < self.loopend.y:
+                loop_start = (round(self.x + self.w * .75), round(self.y + self.h))
+            else:
+                loop_start = (round(self.x + self.w * .75), round(self.y))
+            l3 = (round(self.x + self.w * .75), round(self.loopend.y + self.loopend.h / 2))
+            point_list.append(loop_start)
+            point_list.append(l3)
+        elif self.ark_level == 1:
+            loop_start = (round(self.x + self.w), round(self.y + self.h / 2))
+            l0 = (round(self.x + self.w * 1.25), round(self.y + self.h / 2))
+            l3 = (round(self.x + self.w * 1.25), round(self.loopend.y + self.loopend.h / 2))
+            point_list.append(loop_start)
+            point_list.append(l0)
+            point_list.append(l3)
+        elif self.ark_level > 1:
+            loop_start = (round(self.x + self.w), round(self.y + self.h / 2))
+            l0 = (round(self.x + self.w * 1.40), round(self.y + self.h / 2))
+        #l1 = (round(self.x + self.w * 1.45) , (round((self.loopend.y + self.loopend.h / 2 ) + round(self.y + self.h / 2)) / 2))
+            l3 = (round(self.x + self.w * 1.40), round(self.loopend.y + self.loopend.h / 2))
+            point_list.append(loop_start)
+            point_list.append(l0)
+            point_list.append(l3)
+
         loop_end = (round(self.loopend.x + self.loopend.w), round(self.loopend.y + self.loopend.h / 2))
-        return [loop_start, l0, l1, l3, loop_end]
+        point_list.append(loop_end)
+        return point_list
+
+    def RollColor(self):
+        self.color = random.randint(0, len(Color.LOOP_COLORS) - 1)
+
 
 class LoopEnd(Command):
     def __init__(self, vec2_pos=None, size=None):

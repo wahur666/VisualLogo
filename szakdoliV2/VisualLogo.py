@@ -110,7 +110,7 @@ class ApplicationCore:
         for (dirpath, dirnames, filenames) in os.walk("UserData"):
             files.extend(filenames)
         for i in range(21):
-            if "data" + str(i) + ".vls" not in filenames:
+            if "data" + str(i) + ".zip" not in filenames:
                 shutil.copyfile(os.getcwd() + os.path.join(os.sep, "Resources", "data.jpg"),
                                     os.getcwd() + os.path.join(os.sep, "UserData", "data" + str(i) + ".jpg"))
                 open(os.getcwd() + os.path.join(os.sep, "UserData", "data" + str(i) + ".dat"), "w")

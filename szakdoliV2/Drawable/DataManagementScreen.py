@@ -25,6 +25,7 @@ class DataManagementScreen(AbstractDrawable):
         self.text_save = None
         self.selected = None
         self.parent = parent
+        self.timer = 0
 
     def IsInside(self, position):
         if self.x <= position[0] and self.x + self.w >= position[0] and self.y <= position[1] and self.y + self.h >= position[1]:
@@ -49,7 +50,8 @@ class DataManagementScreen(AbstractDrawable):
         screen.blit(self.text, (self.x + 415, self.y + 10))
         self.button_ok.DrawObject(screen)
         self.button_cancel.DrawObject(screen)
-
+        if self.timer:
+            self.timer -= 1
 
 
     def PrepareCheckboxes(self):
@@ -61,6 +63,7 @@ class DataManagementScreen(AbstractDrawable):
                 self.radiobuttons.append(checkbox)
 
     def SetMode(self, mode):
+        self.timer = 0
         self.mode = mode
         if not self.font:
             self.LoadFont()
@@ -82,6 +85,10 @@ class DataManagementScreen(AbstractDrawable):
             for elem in self.radiobuttons:
                 if elem is self.selected:
                     elem.SetSelected(True)
+                    if self.timer:
+                        self.ProcessData(elem.index)
+                        self.parent.CloseDataManagementWindow()
+                    self.timer = 60
                 else:
                     elem.SetSelected(False)
         elif isinstance(self.selected, Button):
@@ -91,16 +98,9 @@ class DataManagementScreen(AbstractDrawable):
                     if elem.GetSelected():
                         index = elem.index
                 if index > -1:
-                    if self.mode == "Save":
-                        self.parent.CloseDataManagementWindow()
-                        self.parent.SaveData(index)
-                        print "Saved", index
-                    else:
-                        self.parent.LoadData(index)
-                        print  "Loaded", index
+                    self.ProcessData(index)
                 else:
                     print "no elem selected"
-
             else:
                 print "cancel"
 
@@ -113,6 +113,17 @@ class DataManagementScreen(AbstractDrawable):
     def LoadAllImages(self):
         for elem in self.radiobuttons:
             elem.LoadImage()
+
+
+    def ProcessData(self, index):
+        if self.mode == "Save":
+            self.parent.CloseDataManagementWindow()
+            self.parent.SaveData(index)
+            print "Saved", index
+        else:
+            self.parent.LoadData(index)
+            print  "Loaded", index
+
 
 
 class CheckboxRect(AbstractDrawable):

@@ -128,7 +128,7 @@ def LoadSerializedCommands(index):
             elif command_dict['class'] == "HideTurtle":
                 command = DC.HideTurtle(vec2_pos=Vector2(0, 0), size=(50, 50))
             elif command_dict['class'] == "Loop":
-                command = DC.Loop(vec2_pos=Vector2(0, 0), size=(100, 50))
+                command = DC.Loop(vec2_pos=Vector2(0, 0), size=(105, 50))
                 command.loop_id = command_dict["loop_index"]
                 command.SetCycleNumber(int(command_dict["cycle_number"]))
             elif command_dict['class'] == "LoopEnd":
@@ -142,21 +142,23 @@ def LoadSerializedCommands(index):
         if isinstance(elem, DC.Loop):
             for item in command_list:
                 if isinstance(item, DC.LoopEnd):
-                    if item.loop_id == elem.loop_id:
-                        elem.SetLoopend(item)
-                        item.SetLoopStart(elem)
-                        elem.loop_id = None
-                        item.loop_id = None
-                        break
+                    if item.loopstart is None:
+                        if item.loop_id == elem.loop_id:
+                            elem.SetLoopend(item)
+                            item.SetLoopStart(elem)
+                            elem.loop_id = None
+                            item.loop_id = None
+                            break
         elif isinstance(elem, DC.LoopEnd):
             for item in command_list:
                 if isinstance(item, DC.Loop):
-                    if item.loop_id == elem.loop_id:
-                        elem.SetLoopStart(item)
-                        item.SetLoopend(elem)
-                        elem.loop_id = None
-                        item.loop_id = None
-                        break
+                    if item.loopend is None:
+                        if item.loop_id == elem.loop_id:
+                            elem.SetLoopStart(item)
+                            item.SetLoopend(elem)
+                            elem.loop_id = None
+                            item.loop_id = None
+                            break
     return command_list
 
 def SplitCommand(command):
@@ -175,7 +177,7 @@ def SplitCommand(command):
 
 
 def CreateZip(index):
-    with zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".vls"), "w") as datazip:
+    with zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".zip"), "w") as datazip:
         datafile = os.path.join("UserData", "data" + str(index) + ".dat")
         datazip.write(datafile, os.path.basename(datafile))
         dataimage = os.path.join("UserData", "data" + str(index) + ".jpg")
@@ -184,14 +186,14 @@ def CreateZip(index):
     os.remove(os.path.join("UserData", "data" + str(index) + ".jpg"))
 
 def LoadZip_Data(index):
-    datazip = zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".vls"), "r")
+    datazip = zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".zip"), "r")
     return datazip.read("data" + str(index) + ".dat")
 
 
 def LoadZip_Image(index):
     from PIL import Image
     import StringIO
-    datazip = zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".vls"), "r")
+    datazip = zipfile.ZipFile(os.path.join("UserData", "data" + str(index) + ".zip"), "r")
     image = datazip.read("data" + str(index) + ".jpg")
     buff = StringIO.StringIO()
     buff.write(image)

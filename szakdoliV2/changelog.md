@@ -9,6 +9,7 @@ ____
 
 ## Critical Issue
 
+
 + Az UML diagrammot napra készre tenni!
 
 
@@ -20,9 +21,24 @@ ____
 + DeltaTime implementálás
 
 
-## 2016.11.23. (Update 41) Release 1.1.1
+## 2016.11.25. (Update 42) Release 1.2.0
 
 
++ Dupla klick mentés és betöltés
++ __ScrollingPlane__ hibajavítás
++ Szinezési hiba javítása
++ Dokumentáció írás
++ A 45°-os fordulás 90°-ra átírva
++ VLS formátumot átírtam vissza ZIP formátumra
++ Egyenes Loop összekötők
++ Visszatöltési hiba javítása
++ Grafikai hibák javítása
++ Flood Fill gyorsabb
+
+
+### 2016.11.23. (Update 41) Release 1.1.1
+
+    
 + Crash Fix Flood Fill használatakor
 + Flood Fill gyorsítás
 + Turtle reset hiba javítás
@@ -40,7 +56,7 @@ ____
 + __VisualLogo__ már az új formátumot generálja
 
 
-### 2016.11.21. (Update 39) Release 1.0
+### 2016.11.21. (Update 39) Release 1.0.0
 
 
 + Fejlesztési napló kapott egy új szegmenst, ahol a 2016.11.10.-i megbeszélés alkalmával felvetődött javításokat foglaltam össsze, és nyilvántartom azok állapotát
