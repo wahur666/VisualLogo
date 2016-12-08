@@ -10,9 +10,6 @@ ____
 ## Critical Issue
 
 
-+ Az UML diagrammot napra készre tenni!
-
-
 ### Feature request
 
 
@@ -21,7 +18,16 @@ ____
 + DeltaTime implementálás
 
 
-## 2016.11.25. (Update 42) Release 1.2.0
+## 2016.12.08. (Update 43) Release 1.2.2
+
++ Gyorsítása a FloodFill algoritmusnak
++ AbstractDrawable osztályból kivéve a descriptor mező, mivle nem volt használva
++ Dokumentáció frissítése
++ Memórahibák javítása
++ UML diagram elkészítése
+
+
+### 2016.11.28. (Update 42) Release 1.2.0
 
 
 + Dupla klick mentés és betöltés
@@ -293,6 +299,7 @@ ___
 +  ~~*Etc* FontAwesome tesztelélsek, a __t . py__ fájlban~~
 + ~~Az event handert még be kell állítani, hogy értlems műveletet végezzen.~~ 
 + ~~__ConfigParser__ ez nem maradhat így, vagy vissza kell hogy kerüljön a fő programba, vagy teljesen elvetni a külső konigurációs fájl használatát, jelenleg hátráltatja a gyors és dinamukus változtatás lehetőségét.~~
++ ~~Az UML diagrammot napra készre tenni!~~
 
 
 

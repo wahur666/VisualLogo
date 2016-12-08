@@ -9,7 +9,7 @@ from RunPointer import RunPointer
 from LogoModule.DrawableCommands import *
 from Button import Button
 
-from System.Vector2 import Vector2
+from System.SupportFunctions import Vector2
 from System.SupportFunctions import MoveListElement
 from System.Constants import MOUSE as Mouse, FONT_AWESOME as fa
 
@@ -17,8 +17,8 @@ import Drawable.LogoModule.DrawableCommands as logo
 
 class ScrollingPlane(AbstractDrawable):
 
-    def __init__(self, x, y, w, h, tabs=2, descriptor="", vec2_pos=None, size=None, parent=None):
-        super(ScrollingPlane, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size, descriptor=descriptor)
+    def __init__(self, x, y, w, h, tabs=2, vec2_pos=None, size=None, parent=None):
+        super(ScrollingPlane, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size)
         self.parent = parent
 
         self.tabs = tabs
@@ -196,13 +196,14 @@ class ScrollingPlane(AbstractDrawable):
                 self.ResizeSourceBlock()
             elif isinstance(self.clicked, Command):
                 if event.button == Mouse.MMB or self.parent.button_down["a"] and event.button == Mouse.LMB:
-                    self.CreateACommandCopy()
-                    self.AddItemToCurrentPlane(self.selectedCommand)
-                    if isinstance(self.selectedCommand, Loop):
-                        self.AddItemToCurrentPlane(self.selectedCommand.loopend)
-                    self.selectedCommand = None
-                    self.RearrangeCommands()
-                    self.ResizeSourceBlock()
+                    if not isinstance(self.clicked, LoopEnd):
+                        self.CreateACommandCopy()
+                        self.AddItemToCurrentPlane(self.selectedCommand)
+                        if isinstance(self.selectedCommand, Loop):
+                            self.AddItemToCurrentPlane(self.selectedCommand.loopend)
+                        self.selectedCommand = None
+                        self.RearrangeCommands()
+                        self.ResizeSourceBlock()
 
                 elif event.button == Mouse.RMB or self.parent.button_down["s"] and event.button == Mouse.LMB:
                     if isinstance(self.clicked, PenColor):
@@ -232,7 +233,8 @@ class ScrollingPlane(AbstractDrawable):
 
                 elif event.button == Mouse.LMB:
                     if not self.mainpanel.IsInside(event.pos):
-                        self.CreateACommandCopy()
+                        if not isinstance(self.clicked, LoopEnd):
+                            self.CreateACommandCopy()
                     else:
                         self.selectedCommand = self.clicked
                         if isinstance(self.selectedCommand, Loop):

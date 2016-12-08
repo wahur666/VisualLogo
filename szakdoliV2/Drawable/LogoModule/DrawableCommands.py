@@ -12,8 +12,8 @@ from System.Constants import COLOR as Color
 
 class Forward(Command):
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
-        super(Forward, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None,  imgpath=None, mul = 1):
+        super(Forward, self).__init__(x, y, w, h, vec2_pos, size)
         self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
@@ -27,8 +27,8 @@ class Forward(Command):
 
 
 class Backward(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 1):
-        super(Backward, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None,  imgpath=None, mul = 1):
+        super(Backward, self).__init__(x, y, w, h, vec2_pos, size)
         self.imagePath = imgpath
         self.mul = mul
         if self.mul == 1:
@@ -42,8 +42,8 @@ class Backward(Command):
 
 
 class Right(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 2):
-        super(Right, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None, mul = 2):
+        super(Right, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.mul = mul
         if self.mul == 2:
@@ -55,8 +55,8 @@ class Right(Command):
 
 
 class Left(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None, mul = 2):
-        super(Left, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None,  imgpath=None, mul = 2):
+        super(Left, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.mul = mul
         if self.mul == 2:
@@ -69,8 +69,8 @@ class Left(Command):
 
 
 class Home(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(Home, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None,  imgpath=None):
+        super(Home, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.imagePath = imgpath
         self.keycode = fa.HOME
@@ -80,8 +80,8 @@ class Home(Command):
 
 
 class PenDown(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(PenDown, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(PenDown, self).__init__(x, y, w, h, vec2_pos, size)
 
 
         self.keycode = fa.PEN
@@ -89,8 +89,8 @@ class PenDown(Command):
         self.mainRect.SetAccentColor(Color.HATTER_4)
 
 class PenUp(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(PenUp, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(PenUp, self).__init__(x, y, w, h, vec2_pos, size)
         self.keycode = fa.PEN
         self.mainRect.SetAccentColor(Color.HATTER_4)
         self.SetKeyCodePadding(2)
@@ -112,8 +112,8 @@ class PenUp(Command):
                              (self.x + self.w - 5, self.y + self.h - 8)]
 
 class PenWidth(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(PenWidth, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(PenWidth, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.keycode = fa.PLACEHOLDER
 
@@ -137,8 +137,8 @@ class PenWidth(Command):
         self.pen_width = witdh
 
 class PenColor(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(PenColor, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(PenColor, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.keycode = fa.PLACEHOLDER
 
@@ -163,8 +163,8 @@ class PenColor(Command):
         self.pen_color = color
 
 class FloodFill(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(FloodFill, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(FloodFill, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.imagePath = imgpath
         self.keycode = fa.FLOODFILL
@@ -172,8 +172,8 @@ class FloodFill(Command):
 
 
 class Reset(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(Reset, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None,  imgpath=None):
+        super(Reset, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.imagePath = imgpath
         self.keycode = fa.RESET
@@ -181,8 +181,8 @@ class Reset(Command):
 
 
 class Clear(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(Clear, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(Clear, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.imagePath = imgpath
         self.keycode = fa.CLEAR
@@ -190,15 +190,15 @@ class Clear(Command):
 
 
 class ShowTurtle(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(ShowTurtle, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(ShowTurtle, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.keycode = fa.EYE_SEE
         self.mainRect.SetAccentColor(Color.HATTER_4)
 
 class HideTurtle(Command):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(HideTurtle, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None,  imgpath=None):
+        super(HideTurtle, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.keycode = fa.EYE_NOT_SEE
         self.mainRect.SetAccentColor(Color.HATTER_4)
@@ -207,8 +207,8 @@ class HideTurtle(Command):
 
 class Loop(Command):
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", imgpath=None):
-        super(Loop, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, imgpath=None):
+        super(Loop, self).__init__(x, y, w, h, vec2_pos, size)
 
         self.keycode = fa.LOOP
         self.loopend = None

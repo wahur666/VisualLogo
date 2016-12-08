@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-from System.Vector2 import Vector2
+from System.SupportFunctions import Vector2
 
 class AbstractDrawable:
     __metaclass__ = ABCMeta
 
-    def __init__(self, x = None, y = None, w = None, h = None, vec2_pos = None, size = None, descriptor = ""):
+    def __init__(self, x = None, y = None, w = None, h = None, vec2_pos = None, size = None):
         if x is not None and y is not None:
             self.x = x
             self.y = y
@@ -28,8 +28,6 @@ class AbstractDrawable:
             self.h = size[1]
         else:
             raise ValueError("Not enough parameter, give W and H, or size=tuple(int,int)")
-
-        self.descriptor = descriptor
 
         self.base = {
             "x" : self.x,

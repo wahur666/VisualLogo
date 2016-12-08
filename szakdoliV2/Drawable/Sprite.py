@@ -13,8 +13,8 @@ from System.SupportFunctions import LoadZip_Image
 
 class Spirte(AbstractDrawable):
 
-    def __init__(self, x = None, y = None, w = None, h = None, imgpath = img.PLACEHOLDER, descriptor="", vec2_pos = None, size = None, mode=0, index = None):
-        super(Spirte, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size, descriptor=descriptor)
+    def __init__(self, x = None, y = None, w = None, h = None, imgpath = img.PLACEHOLDER, vec2_pos = None, size = None, mode=0, index = None):
+        super(Spirte, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size)
         self.imgpath = imgpath
         self.image = None
         self.base_rotation = 0

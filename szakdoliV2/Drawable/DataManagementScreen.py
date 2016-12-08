@@ -10,8 +10,8 @@ import pygame.font
 
 class DataManagementScreen(AbstractDrawable):
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", parent=None):
-        super(DataManagementScreen, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, parent=None):
+        super(DataManagementScreen, self).__init__(x, y, w, h, vec2_pos, size)
         self.radiobuttons = []
         self.button_ok = Button(self.x + 325, self.y + 450, 75, 75, keycode=FONT_AWESOME.CHECK)
         self.button_ok.SetTextIconColor(COLOR.GREEN)
@@ -128,8 +128,8 @@ class DataManagementScreen(AbstractDrawable):
 
 class CheckboxRect(AbstractDrawable):
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", color=COLOR.BLACK, index = None):
-        super(CheckboxRect, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, color=COLOR.BLACK, index = None):
+        super(CheckboxRect, self).__init__(x, y, w, h, vec2_pos, size)
         self.main_rect = Rect(self.x, self.y, self.w, self.h, color=color, width=1, transparent=False)
         self.selected = False
         self.index = index

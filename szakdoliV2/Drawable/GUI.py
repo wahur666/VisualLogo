@@ -26,9 +26,6 @@ class GUI:
         self.show_settings = False
         self.initilize()
 
-    def __del__(self):
-        print "GUI destruktor lefutott"
-
     def DrawGUI(self, screen):
         self.timer.tick()
         for item in self.items:
@@ -62,7 +59,7 @@ class GUI:
 
 
     def initilize(self):
-        self.drawingWindow = Rect(20, 20, 630, 600, "Drawingwindow", Color.BLACK, 1, transparent=False)
+        self.drawingWindow = Rect(20, 20, 630, 600, Color.BLACK, 1, transparent=False)
         self.Add(self.drawingWindow)
 
         buttonPlay = Button(380,640,60,60, keycode=FA.PLAY, padding=5)
@@ -159,7 +156,6 @@ class GUI:
                     if item.IsInside(event.pos):
                         if isinstance(item, Rect):
                             return
-                            pass
                         elif isinstance(item, Button):
                             item.OnClick(event)
                             return
@@ -177,7 +173,7 @@ class GUI:
                 if self.DataManagmentWindow.IsInside(event.pos):
                     self.DataManagmentWindow.OnClick(event)
         else:
-            return False
+            return
 
 
     def OnRelease(self, event):
@@ -219,7 +215,7 @@ class GUI:
         print "Stop"
 
     def OnClickStepOver(self, event):
-        if not self.reset:
+        if not self.reset and self.show_run_pointer:
             self.running = False
             self.skip_wait = False
             self.StepOver()

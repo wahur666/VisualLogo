@@ -8,8 +8,8 @@ from System.Constants import COLOR as Color
 
 class Rect(AbstractDrawable):
 
-    def __init__(self, x=None, y=None, w=None, h=None, descriptor="", color=Color.BLACK, width=0, movable = False, vec2_pos=None, size=None, transparent = True):
-        super(Rect, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size, descriptor=descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, color=Color.BLACK, width=0, movable = False, vec2_pos=None, size=None, transparent = True):
+        super(Rect, self).__init__(x=x, y=y, w=w, h=h, vec2_pos=vec2_pos, size=size)
         self.delta = 0, 0
         self.color = color
         self.width = width
@@ -25,8 +25,6 @@ class Rect(AbstractDrawable):
             pygame.draw.rect(screen, self.accentColor, (self.x, self.y, self.w, self.h), 0)
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.w, self.h), self.width)
 
-    def print_name(self):
-        print self.descriptor + " Clicked"
 
     def IsInside(self, position):
         if self.Clickable:
@@ -46,12 +44,6 @@ class Rect(AbstractDrawable):
 
     def isMovable(self):
         return self.movable
-
-    def SetClickable(self, state):
-        self.Clickable = state
-
-    def SetColor(self, color):
-        self.color = color
 
     def Extend(self, y, h):
         self.h = h

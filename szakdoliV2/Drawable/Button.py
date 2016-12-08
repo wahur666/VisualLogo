@@ -10,8 +10,8 @@ from System.Constants import COLOR as Color
 
 class Button(AbstractDrawable):
 
-    def __init__(self, x=None, y=None, w=None, h=None, imgpath = C_IMG.PLACEHOLDER, descriptor="", size = None, vec2_pos = None, keycode=u"\uf071", padding=0):
-        super(Button, self).__init__(x=x, y=y, w=w, h=h, size=size, vec2_pos=vec2_pos, descriptor=descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, imgpath = C_IMG.PLACEHOLDER, vec2_pos = None, size = None,  keycode=u"\uf071", padding=0):
+        super(Button, self).__init__(x=x, y=y, w=w, h=h, size=size, vec2_pos=vec2_pos)
 
         self.imgpath = imgpath
         self.sprite = None

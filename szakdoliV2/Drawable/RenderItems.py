@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Constants import COLOR as Color
+from System.Constants import COLOR as Color
 import pygame
 
 
@@ -45,7 +45,7 @@ class Flood:
     def flood_fill(self, screen, node, replacement_colour, px):
         current_colour = px[node.x, node.y]
 
-        if replacement_colour == current_colour:
+        if screen.map_rgb(replacement_colour) == current_colour:
             return px
 
         q = list()

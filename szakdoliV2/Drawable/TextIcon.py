@@ -7,8 +7,8 @@ from System.Constants import FONT_AWESOME as fa
 import pygame
 
 class TextIcon(AbstractDrawable):
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor="", keycode=u"\uf071", color = Color.BLACK):
-        super(TextIcon, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, keycode=u"\uf071", color = Color.BLACK):
+        super(TextIcon, self).__init__(x, y, w, h, vec2_pos, size)
         self.keycode = keycode
         self.font = None
         self.text = None

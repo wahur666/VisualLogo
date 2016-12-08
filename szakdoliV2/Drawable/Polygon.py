@@ -26,8 +26,5 @@ class Polygon(AbstractDrawable):
     def ResetPosition(self):
         self.coordinates = self.base["coords"]
 
-    def SaveCoords(self):
-        self.base = {"coords": self.coordinates}
-
     def GetParameters(self):
         pass

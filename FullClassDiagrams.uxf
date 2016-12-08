@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>581</x>
+      <y>7</y>
+      <w>210</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>Command
+--
++ execute_command : Function()
++ deta : (int, int)
++ imagepath : string
++ keycode : string
++ keycode_pad : int
++ mainRect : Rect
++ sprite : Sprite
++ texticon : Texitcon
+--
++ Command(int, int, int, int, Vector2, (int, int))
++ LoadSprite() : void
++ deltepos((int, int)) : (int, int)
++ drag((int, int)) : (int, int)
++ setDeltapos((int, int)) : (int, int)
++ UnloadIcon() : void
++ Bind(Function()) : void
++ SetAccentColor((int, int int, int)) : void
++ SetKeyCodePadding(int) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>7</y>
+      <w>238</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>AbstractDrawable
+--
++ base : Dictionary
++ x : int
++ y : int
++ w : int
++ h : int
+--
++ AbstractDrawable(int, int, int, int, Vector2, (int, int))
+/+ DrawObject(pygame.display) : void/
+/+ IsInside(int, int) : boolean/
++ SetPosition(int, int) : void
++ ResetPosition() : void
++ GetParameters() : (int, int, int, int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>175</y>
+      <w>266</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>Button
+--
++ Onclick : Function()
++ buttonsqurcle : Rect
++ icon_padding : int
++ texticon : Texticon
++ imagepath : string
++ keycode : string
++ sprite : Sprite
++ texticon_color : (int, int, int, int)
+--
++ Button(int, int, int, int, string, Vector2, (int, int), string, int)
++ bind(Function()) : void
++ LoadImage() : void
++ SetAccentColor((int, int, int, int)) : void
++ SetTextIcon((int, int, int, int)) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>7</y>
+      <w>294</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>DataManagementScreen
+--
++ button_cancel : Button
++ button_ok : Button
++ font : pygame.font.Font
++ main_rect : Rect
++ mode : string
++ parent : GUI
++ radiobuttons : List(CheckboxRect)
++ selected : CheckboxRect
++ text : string
++ text_load : string
++ text_save : string
++ timer : int
+--
++ DataManagementScreen(int, int, int, int, Vector2, (int, int), GUI)
++ PrepareCheckboxes() : void
++ SetMode(string) : void
++ LoadFont() : void
++ OnClick(pygame.event) : void
++ DeselectAllRadioButtons() : void
++ LoadAllImages() : void
++ ProcessData(int) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>273</y>
+      <w>308</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>CheckboxRect
+--
++ imgpath : string
++ index : int
++ main_rect : Rect
++ selected : boolean
++ sprite : Sprite
+--
++ CheckboxRect(int, int, int, int, Vector2, (int, int), (int, int, int, int), int)
++ SetSelected(boolean) : void
++ LoadImage() : void
++ GetSelected() : boolean
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>371</y>
+      <w>217</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>DrawingIcon
+--
++ x : int
++ y : int
++ w : int
++ h : int
++ base_coordiantes : List((int, int))
++ base_rotation : int
++ color : (int, int, int, int)
++ width : int
++ transparent : boolean
+--
++ DrawingIcon(int, int, int, int, (int, int,int, int), int)
++ UpdatePoints() : void
++ CalculatePoints() : List((int, int))
++ RotateToAngle(int) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>553</y>
+      <w>196</w>
+      <h>196</h>
+    </coordinates>
+    <panel_attributes>ApplicationCore
+--
++ SCREEN_WIDHT : int = 1100
++ SCREEN_HEIGHT : int = 720
++ background_color : (int, int, int, int)
++ background_color_index : int
++ clock : pygame.time.Clock
++ gameExit : boolean
++ gui : GUI
++ logoCore : Turtle
++ screen : pygame.display
+--
++ ApplicationCore()
++ Exit() : void
++ Run() : void
++ debug() : void
++ ChangeBackgroundColor() :  void
++ CreateUserData() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>763</y>
+      <w>350</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>Rect
+--
++ delta : (int, int)
++ color : (int, int, int, int)
++ widh : int
++ mobable : boolean
++ transparent : boolean
++ accentColor : (int, int, int, int)
++ Clickable : boolean
+--
++ Rect(int, int, int, int, (int, int, int, int), int, boolean, Vector2, (int, int), boolean )
++ deltapos((int, int)) : (int, int)
++ drag((int, int)) : void
++ setDelta((int, int)) : void
++ isMovable() : boolean
++ Extend() : void
++ SetAccentColor((int, int, int, int)) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>581</x>
+      <y>406</y>
+      <w>196</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>Polygon
+--
++ accentColor : (int, int, int, int)
++ color : (int, int, int, int)
++ transparent : boolean
++ width : int
++ coordinates : List((int, int))
+--
++ Polygon(List((int, int)), (int, int, int, int), int)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>581</x>
+      <y>245</y>
+      <w>217</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>RunPointer
+--
++ x : int
++ y : int 
++ w : int
++ h : int
++ base_coordiantes : List((int, int))
++ color : (int, int, int, int)
++ transparent : boolean
++ width : int
+--
++ RunPointer(int, int, int, int, (int, int, int,int), int)
++ CalculatePoints() : List((int, int))
++ UpdatePoints() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1491</x>
+      <y>28</y>
+      <w>245</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Forward
+--
++ keycode : string
++ mul : int
++ imgpath : string
+--
++ Forward(int, int, int, int, Vector2, (int, int), string, int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>581</y>
+      <w>322</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>Tab
+--
++ x : int
++ y : int
++ w : int
++ h : int
++ id : int
++ color : (int, int, int, int)
++ darkAccent : (int, int, int, int)
++ lightAccent : (int, int, int, int)
++ selected : boolean
+--
++ Tab(int, int, int, int, (int, int, int, int), int, int, (int, int), Vecotr2, boolean)
++ GetId(): int
++ CalculatePoints() : List((int, int))
++ UpdatePoints() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>511</y>
+      <w>238</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>Sprite
+--
++ imgpath : str
++ base_rotation : int
++ index : int
++ image : pygame.Image
+--
++ Sprite(int, int, int, int, str, Vector2, (int, int), int, int)
++ LoadImage(int) : void
++ RotateTo(int) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>427</y>
+      <w>294</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>TextIcon
+--
++ keycode : string
++ font : pygame.font.Font
++ text : string
++ pad_x : int
++ color : (int, int, int, int)
+--
++ TextIcon(int, int,int, int, Vector2, (int, int), string, (int, int, int, int))
++ LoadFont() : void
++ SetPadding(int) : void
++ SetColor((int, int, int, int)) : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>546</x>
+      <y>630</y>
+      <w>259</w>
+      <h>406</h>
+    </coordinates>
+    <panel_attributes>Turtle
+--
++ base : Dictionarty
++ boundaries : Dictionary
++ distorsion : 0
++ lines : RenderItems
++ pencolor : (int, int, int, int)
++ pen_down : boolean
++ pen_width : int
++ pos_x : int
++ pos_y : int
++ rotation : int
++ show_turtle : boolean
+--
++ Turlte()
++ forward(int) : void
++ backward(int) : void
++ left(int) : void
++ right(int) : void
++ home() : void
++ pendown() : void
++ penup() : void
++ width(int) : void
++ color((int, int, int, int)) : void
++ fill() : void
++ reset() : void
++ clear() : void
++ showturtle() : void
++ hideturtle() : void
++ move(int, int) : void
++ debug() : void
++ GetTurtleInforamtionToRender() : (int, int), int, boolean
++ GetLinesForRenderer() : List(RenderItems)
++ SetDistorsion(int) : void
++ SetBoundaries((int, int),(int, int))
++ NormalizeMovement() : void
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>7</x>
+      <y>147</y>
+      <w>266</w>
+      <h>301</h>
+    </coordinates>
+    <panel_attributes>COLOR
+--
++ WHITE : (int, int, int, int) = (255, 255, 255, 255)
++ BLACK : (int, int, int, int) = (0, 0, 0, 255)
++ RED : (int, int, int, int) = (255, 0, 0, 255)
++ GREEN : (int, int, int, int) = (0, 255, 0, 255)
++ BLUE : (int, int, int, int) = (0, 0, 255, 255)
++ CYAN : (int, int, int, int) = (0, 255, 255, 255)
++ GREY : (int, int, int, int) = (127, 127, 127, 255)
++ MAGENTA : (int, int, int, int) = (255, 0, 255, 255)
++ YELLOW : (int, int, int, int) = (255, 236, 4, 255)
++ LIGHTBLUE : (int, int, int, int) = (168, 244, 255, 255)
++ LIGHTORANGE : (int, int, int, int) = (255, 233, 127, 255)
++ KINDAORANGE : (int, int, int, int) = (255, 128, 0, 255)
++ LIGHTGRAY : (int, int, int, int) = (238, 238, 238, 255)
++ HATTER_1 : (int, int, int, int) = (211, 255, 204, 255) 
++ HATTER_2 : (int, int, int, int) = (214, 255, 248, 255) 
++ HATTER_3 : (int, int, int, int) = (196, 201, 255, 255) 
++ HATTER_4 : (int, int, int, int) = (246, 255, 196, 255) 
++ HATTER_5 : (int, int, int, int) = (255, 251, 160, 255)
++ HATTER_6 : (int, int, int, int) = (255, 236, 211, 255) 
++ HATTER_7 : (int, int, int, int) = (255, 201, 207, 255) 
++ HATTER_8 : (int, int, int, int) = (216, 255, 255, 255) 
++ COLOR_LIST : List((int, int, int, int))
++ LOOP_COLORS : List((int, int, int, int))
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>7</x>
+      <y>455</y>
+      <w>147</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>IMAGE_PATHS
+--
++ DEFALUT : string
++ TURTLE : string
++ BEND_LEFT : string
++ BEND_RIGHT : string
++ TURN_LEFT : string
++ TURN_RIGHT : string
++ RED_PENCIL : string
++ ICON : string
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>287</w>
+      <h>1113</h>
+    </coordinates>
+    <panel_attributes>Constants</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>7</x>
+      <y>21</y>
+      <w>147</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>MOUSE
+--
++ LMB : int = 1
++ RMB : int = 3
++ MMB : int = 2
++ SCROLLUP : int = 4
++ SCROLLDOWN : int = 5
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>7</x>
+      <y>595</y>
+      <w>245</w>
+      <h>483</h>
+    </coordinates>
+    <panel_attributes>FONT_AWESOME
+--
++ FONT_PATH : string
++ SETTINGS : string = u"\uF085"
++ LOAD : string = u"\uF115"
++ SAVE : string = u"\uF0C7"
++ SCREENSHOT : string = CAMERA = u"\uF083"
++ EXIT : string = u"\uF011"
++ PLAY : string = u"\uF04B"
++ STEPOVER : string = u"\uF051"
++ STOP : string = u"\uF04D"
++ UP : string = u"\uF062"
++ DOWN : string = u"\uF063"
++ RIGHT : string = u"\uF064"
++ LEFT : string = u"\uF112"
++ PEN : string = u"\uF040"
++ HOME : string = u"\uF015"
++ FLOODFILL : string = u"\uF1FC"
++ RESET : string = u"\uF014"
++ CLEAR : string = u"\uF12D"
++ LOOP : string = u"\uF0E2"
++ PLACEHOLDER : string = u"\uF071"
++ BOOKMARK : string = u"\uF097"
++ ANGLE_DOUBLE_DOWN : string = u"\uF103"
++ ANGLE_DOUBLE_LEFT : string = u"\uF100"
++ ANGLE_DOUBLE_RIGHT : string = u"\uF101"
++ ANGLE_DOUBLE_UP : string = u"\uF102"
++ ANGLE_UP : string = u"\uF106"
++ ANGLE_RIGHT : string = u"\uF105"
++ ANGLE_LEFT : string = u"\uF104"
++ ANGLE_DOWN : string = u"\uF107"
++ LONG_UP : string = u"\uF176"
++ LONG_DOWN : string = u"\uF175"
++ EYE_SEE : string = u"\uF06E"
++ EYE_NOT_SEE : string = u"\uF070" 
++ BACKGROUND_PICTURE : string = u"\uF03E"
++ STICKY_NOTE : string = u"\uF24A"
++ ROUND_X : string = u"\uF05C"
++ SQUARE_X : string = u"\uF2D4"
++ CHECK : string = u"\uF00C"
++ CLOSE : string = u"\uF00D"
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>294</x>
+      <y>931</y>
+      <w>112</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Timer
+--
++ counter : int
+
+--
++ Timer()
++ wait(int) : void
++ tick() : void
++ is_waiting() : boolean
++ stop() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1176</x>
+      <y>7</y>
+      <w>252</w>
+      <h>595</h>
+    </coordinates>
+    <panel_attributes>GUI
+--
++ DataManagmentWindow : DataManagementScreen
++ button_down : Dictionary
++ compile_needed : boolean
++ data_index : int
++ disable_input : boolean
++ drawingWindow : Rect
++ drawing_arrow : DrawingIcon
++ global_counter : int
++ items : AbstractDrawable
++ mouseDown : boolean
++ parent : ApplicationCore
++ reset : boolean
++ running : boolean
++ scrollplane : ScrollingPlane
++ settings_buttons : List(Button)
++ show_data_management_panel : boolean
++ show_run_pointer : boolean
++ show_settings : boolean
++ skip_wait : boolean
++ step_over_mode : boolean
++ timer : Timer
++ wait_next_draw : boolean
+--
++ GUI(ApplicationCore)
++ DrawGUI(pygame.display) : void
++ initilize() : void
++ MainEventHandler(pygame.event) : void
++ OnClick(pygame.event) : void
++ OnRelease(pygame.event) : void
++ OnDrag(pygame.event) : void
++ Add(elem) : void
++ AddToSettings(elem) : void
++ OnClickPlay(pygame.event) : void
++ OnClickStop(pygame.event) : void
++ OnClickStepOver(pygame.event) : void
++ OnClickSettings(pygame.event) : void
++ OnClickLoad(pygame.event) : void
++ OnClickSave(pygame.event) : void
++ OnClickScreenshot(pygame.event) : void
++ OnClickBackground(pygame.event) : void
++ OnClickReset(pygame.event) : void
++ RunCode(boolean) : void
++ StepOver() : void
++ Compile() : void
++ NeedCompile() : void
++ ColseDataManagementWindow() : void
++ LoadData(int) : void
++ SaveData(int) : void
++ CreateDataScreenshot() : void
++ StartRunningCode() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>434</x>
+      <y>924</y>
+      <w>84</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Node
+--
++ x : int
++ y : int
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>294</x>
+      <y>777</y>
+      <w>238</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>SupportFunctions
+--
++ DC : Import Module
+
+--
++ MoveListElement(List(elem), elem, int) : List(elem) 
++ SerializeCommands(List(Command), int) : void
++ LoadSerializedCommands(int) : List(Command)
++ SplitCommand(string) : Dictionary
++ CreateZip(int) : void
++ LoadZip_Data(int) : string
++ LoadZip_Image(int) : StingIO
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>434</x>
+      <y>1008</y>
+      <w>84</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Vector2
+--
++ x : int
++ y : int
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>546</x>
+      <y>1057</y>
+      <w>252</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Line
+--
++ vec2start : (int, int)
++ vec2end : (int, int)
++ color : (int, int, int, int)
++ pen_width : int
++ pen_down : boolean
+--
++ Line((int, int), (int, int), (int, int, int, int), int, boolean)
++ DrawObject(pygame.display) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>819</x>
+      <y>973</y>
+      <w>343</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Flood
+--
++ vec2pos : (int, int)
++ color : (int, int, int, int)
++ caluclaated : boolean
++ surface : pygame.Surface
+--
++ Flood((int, int), (int, int, int, int))
++ DrawObject(pygame.display) : void
++ flood_fill(Node, (int, int, int, int), pygame.PixelArray) : pygame.PixelArray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1169</x>
+      <y>616</y>
+      <w>301</w>
+      <h>560</h>
+    </coordinates>
+    <panel_attributes>ScrollingPlane
+--
++ base : Disctonary
++ clearCommandButton : Button
++ clicked : DrawableCommands
++ counter : int
++ currentActivePlane : int
++ grid : List(DrawableCommands)
++ items : List(AbstractDrawable)
++ loopend : LoopEnd
++ mainpanel : Rect
++ parent : ApplicationCore
++ plateitems : List(List(DrawableCommands))
++ runpointer : RunPointer
++ selectedCommand : DrawableCommands
++ sidepanel : Rect
++ sidepanel_active : boolean
++ tabs : List(Tab)
+--
++ ScrollingPlane(int, int, int, int, int, Vector2, (int, int), GUI)
++ GenerateWindow() : void
++ Add(AbstarctDrwabale) : void
++ OnDrag(pygame.event) : void
++ OnRelease(pygame.event) : void
++ OnClick(pygame.event) : void
++ MoveSourcePanel(int, boolean) : void
++ ResetPOsition() : void
++ SetCommandPosition() : void
++ RearrangeCommands(DrawingCommands, boolean) : void 
++ AddItemToCurrentPlane(DrawingCommands, int) : void
++ ResizeSourceBlock() : void
++ InitBefore() : void
++ RepaintTabs(id) : void 
++ InitAfter() : void
++ PrepareSidePanelForLogo() : void
++ DrawGrid() : void
++ Play(int) : int 
++ HasNext(int) : boolean
++ EnableSidepanel(boolean) : void
++ FindLoopBase(LoopEnd) : Loop
++ FindLoopEnd(Loop) : LoopEnd
++ CompileLoops() : void
++ ResetCompileInfos() : void
++ StopRunning() : void
++ DrawRunPointer(pygame.display) : void
++ MoveSourceToShowPointer(i) : void
++ ClearCurrentSource() : void
++ CreateACommandCopy() :  void
++ SetCurrentActiveCommandList(List(DrawableCommands)) : void 
++ GetCurrentActiveCommandList() : List(DrawableCommands)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1491</x>
+      <y>119</y>
+      <w>245</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Backward
+--
++ keycode : string
++ mul : int
++ imgpath : string
+--
++ Backward(int, int, int, int, Vector2, (int, int), string, int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1491</x>
+      <y>203</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Right
+--
++ keycode : string
++ mul : int
++ imgpath : string
+--
++ Right(int, int, int, int, Vector2, (int, int), string, int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1498</x>
+      <y>287</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Left
+--
++ keycode : string
++ mul : int
++ imgpath : string
+--
++ Left(int, int, int, int, Vector2, (int, int), string, int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1498</x>
+      <y>378</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Home
+--
++ keycode : string
++ imgpath : string
+--
++ Home(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1498</x>
+      <y>763</y>
+      <w>231</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>LoopEnd
+--
++ keycode : string
++ imgpath : string
++ compile_information : Dictionary
++ loopid : int
++ loopstart : Loop
+--
++ LoopEnd(Vector2, (int, int), string)
++ SetCompileInfo(int, int) : void
++ ResetCompileInfo() : void
++ SetLoopStart() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1498</x>
+      <y>546</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>PenUp
+--
++ keycode : string
++ imgpath : string
++ cross_points : List((int, int))
+--
++ PenUp(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1498</x>
+      <y>637</y>
+      <w>231</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>PenWidth
+--
++ keycode : string
++ imgpath : string
++ pen_width : int
++ width_rect : Rect
+--
++ PenWidth(int, int, int, int, Vector2, (int, int), string)
++ Extend() : void
++ SetPenWidth(int) : void </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1743</x>
+      <y>28</y>
+      <w>245</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>PenColor
+--
++ keycode : string
++ colorlist : List((int, int, int, int))
++ current_color_index : int
++ pen_color : (int, int, int, int)
+--
++ PenColor(int, int, int, int, Vector2, (int, int), string)
++ ChangeColor() : void
++ SetColor((int, int, int, int)) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1750</x>
+      <y>154</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>FloodFill
+--
++ keycode : string
++ imgpath : string
+--
++ FloodFill(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1750</x>
+      <y>238</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Reset
+--
++ keycode : string
++ imgpath : string
+--
++ Reset(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1757</x>
+      <y>322</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Clear
+--
++ keycode : string
++ imgpath : string
+--
++ Clear(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1757</x>
+      <y>406</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>ShowTurtle
+--
++ keycode : string
++ imgpath : string
+--
++ ShowTurtle(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1757</x>
+      <y>490</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>HideTurtle
+--
++ keycode : string
++ imgpath : string
+--
++ HideTurtle(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1757</x>
+      <y>574</y>
+      <w>231</w>
+      <h>301</h>
+    </coordinates>
+    <panel_attributes>Loop
+--
++ keycode : string
++ imgpath : string
++ ark_level : int
++ color : (int, int, int, int)
++ compile_information : Dictionary
++ cycle_display_matrix : List(List(object))
++ cycle_number : int
++ loopid : int
++ loopend : LoopEnd
++ remaining_cycle : int
++ running : boolean
+--
++ Loop(int, int, int, int, Vector2, (int, int), string)
++ InitCycleDisplayMatrix() : void
++ DrawRemainingCycleMatrix(pygame.display) : void
++ SetLoopEnd(LoopEnd) : void
++ DrawLoopend(pygame.display) : void
++ SetCompileInfo(boolean, int) : void
++ ResetCompileInfo() : void
++ CountDown() : void
++ ResetCycleCounter() : void
++ ChangeCycleNumber() : void
++ SetCycleNumber(int) : void
++ CalculatePointList() : List((int, int))
++ RollColor() : void  </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1498</x>
+      <y>462</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>PenDown
+--
++ keycode : string
++ imgpath : string
+--
++ PenDown(int, int, int, int, Vector2, (int, int), string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1484</x>
+      <y>7</y>
+      <w>518</w>
+      <h>896</h>
+    </coordinates>
+    <panel_attributes>DrawableCommands</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

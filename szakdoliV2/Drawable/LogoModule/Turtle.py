@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from math import sin, cos, floor, radians
+from math import sin, cos, radians
+
+from Drawable.RenderItems import Line, Flood
 from System.Constants import COLOR as Color
-from System.RenderItems import Line, Flood
+
 
 class Turtle:
 

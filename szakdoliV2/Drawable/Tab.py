@@ -7,7 +7,7 @@ from System.Constants import COLOR as Color
 #TODO: Tényleg újragondolni az egészet, és az AbstractDrawable osztályból származtatni
 class Tab(Polygon):
 
-    def __init__(self, x, y, w, h, color = Color.BLACK , id = None, width = 0, descriptor = "", size = None, vec2_pos = None, transparent=True):
+    def __init__(self, x, y, w, h, color = Color.BLACK , id = None, width = 0, size = None, vec2_pos = None, transparent=True):
         self.x = x
         self.y = y
         self.w = w
@@ -18,7 +18,6 @@ class Tab(Polygon):
         self.lightAccent = (200, 200, 200)    #implicit szinmegadás, már már a magic number határát karistolja
         self.accentColor = None
         self.width = width
-        self.descriptor = descriptor
         self.transparent = transparent
         self.selected = False
         self.coordinates = self.CalculatePoints()

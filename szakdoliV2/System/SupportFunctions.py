@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from Vector2 import Vector2
+# -*- coding: utf-8 -*-M
 
 import sys
 import re
@@ -9,6 +7,14 @@ import os, os.path
 import zipfile
 
 DC = None
+
+class Vector2:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
 
 def MoveListElement(list , element, index):
     # type: (list, object, int)

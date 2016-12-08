@@ -11,8 +11,8 @@ from Drawable.TextIcon import TextIcon
 
 class Command(AbstractDrawable):
 
-    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None, descriptor=""):
-        super(Command, self).__init__(x, y, w, h, vec2_pos, size, descriptor)
+    def __init__(self, x=None, y=None, w=None, h=None, vec2_pos=None, size=None):
+        super(Command, self).__init__(x, y, w, h, vec2_pos, size)
         self.mainRect = Rect(self.x, self.y, self.w, self.h, width=1, transparent=False)
         self.sprite = None
         self.imagePath = None
