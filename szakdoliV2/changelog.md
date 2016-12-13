@@ -18,7 +18,15 @@ ____
 + DeltaTime implementálás
 
 
-## 2016.12.08. (Update 43) Release 1.2.2
+## 2016.12.13. (Update 44) Release 1.2.3.
+
+
++ Unittestek
++ Stepover tudja indítani a programot
++ Dokumentáció friistés
+
+
+### 2016.12.08. (Update 43) Release 1.2.2
 
 + Gyorsítása a FloodFill algoritmusnak
 + AbstractDrawable osztályból kivéve a descriptor mező, mivle nem volt használva

@@ -215,7 +215,11 @@ class GUI:
         print "Stop"
 
     def OnClickStepOver(self, event):
-        if not self.reset and self.show_run_pointer:
+        if not self.running and not self.step_over_mode:
+            self.global_counter = 0
+            self.OnClickPlay(event)
+            self.scrollplane.EnableSidepanel(False)
+        if self.show_run_pointer:
             self.running = False
             self.skip_wait = False
             self.StepOver()
@@ -279,6 +283,7 @@ class GUI:
         else:
             self.scrollplane.EnableSidepanel(True)
             self.show_run_pointer = False
+            self.step_over_mode = False
 
     def Compile(self):
         self.scrollplane.CompileLoops()

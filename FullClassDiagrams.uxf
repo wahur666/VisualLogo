@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>7</zoom_level>
+  <zoom_level>3</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>581</x>
-      <y>7</y>
-      <w>210</w>
-      <h>217</h>
+      <x>336</x>
+      <y>198</y>
+      <w>93</w>
+      <h>93</h>
     </coordinates>
     <panel_attributes>Command
 --
@@ -28,16 +28,17 @@
 + UnloadIcon() : void
 + Bind(Function()) : void
 + SetAccentColor((int, int int, int)) : void
-+ SetKeyCodePadding(int) : void</panel_attributes>
++ SetKeyCodePadding(int) : void
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>308</x>
-      <y>7</y>
-      <w>238</w>
-      <h>154</h>
+      <x>726</x>
+      <y>204</y>
+      <w>114</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>AbstractDrawable
 --
@@ -53,16 +54,17 @@
 + SetPosition(int, int) : void
 + ResetPosition() : void
 + GetParameters() : (int, int, int, int)
-</panel_attributes>
+
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>308</x>
-      <y>175</y>
-      <w>266</w>
-      <h>182</h>
+      <x>726</x>
+      <y>276</y>
+      <w>114</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>Button
 --
@@ -79,16 +81,17 @@
 + bind(Function()) : void
 + LoadImage() : void
 + SetAccentColor((int, int, int, int)) : void
-+ SetTextIcon((int, int, int, int)) : void</panel_attributes>
++ SetTextIcon((int, int, int, int)) : void
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>7</y>
-      <w>294</w>
-      <h>252</h>
+      <x>435</x>
+      <y>198</y>
+      <w>150</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>DataManagementScreen
 --
@@ -113,16 +116,17 @@
 + DeselectAllRadioButtons() : void
 + LoadAllImages() : void
 + ProcessData(int) : void
-</panel_attributes>
+
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>273</y>
-      <w>308</w>
-      <h>133</h>
+      <x>435</x>
+      <y>312</y>
+      <w>150</w>
+      <h>57</h>
     </coordinates>
     <panel_attributes>CheckboxRect
 --
@@ -138,16 +142,17 @@
 + GetSelected() : boolean
 
 
-</panel_attributes>
+
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>308</x>
-      <y>371</y>
-      <w>217</w>
-      <h>175</h>
+      <x>726</x>
+      <y>360</y>
+      <w>114</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>DrawingIcon
 --
@@ -164,16 +169,17 @@
 + DrawingIcon(int, int, int, int, (int, int,int, int), int)
 + UpdatePoints() : void
 + CalculatePoints() : List((int, int))
-+ RotateToAngle(int) : void</panel_attributes>
++ RotateToAngle(int) : void
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>308</x>
-      <y>553</y>
-      <w>196</w>
-      <h>196</h>
+      <x>726</x>
+      <y>438</y>
+      <w>114</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>ApplicationCore
 --
@@ -192,16 +198,17 @@
 + Run() : void
 + debug() : void
 + ChangeBackgroundColor() :  void
-+ CreateUserData() : void</panel_attributes>
++ CreateUserData() : void
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>763</y>
-      <w>350</w>
-      <h>189</h>
+      <x>1200</x>
+      <y>294</y>
+      <w>150</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>Rect
 --
@@ -220,16 +227,18 @@
 + isMovable() : boolean
 + Extend() : void
 + SetAccentColor((int, int, int, int)) : void
-</panel_attributes>
+
+
+group=8</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>581</x>
-      <y>406</y>
-      <w>196</w>
-      <h>98</h>
+      <x>336</x>
+      <y>369</y>
+      <w>93</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Polygon
 --
@@ -239,16 +248,17 @@
 + width : int
 + coordinates : List((int, int))
 --
-+ Polygon(List((int, int)), (int, int, int, int), int)</panel_attributes>
++ Polygon(List((int, int)), (int, int, int, int), int)
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>581</x>
-      <y>245</y>
-      <w>217</w>
-      <h>154</h>
+      <x>336</x>
+      <y>300</y>
+      <w>93</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>RunPointer
 --
@@ -263,16 +273,17 @@
 --
 + RunPointer(int, int, int, int, (int, int, int,int), int)
 + CalculatePoints() : List((int, int))
-+ UpdatePoints() : void</panel_attributes>
++ UpdatePoints() : void
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1491</x>
-      <y>28</y>
-      <w>245</w>
-      <h>77</h>
+      <x>855</x>
+      <y>213</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Forward
 --
@@ -281,16 +292,17 @@
 + imgpath : string
 --
 + Forward(int, int, int, int, Vector2, (int, int), string, int)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>581</y>
-      <w>322</w>
-      <h>175</h>
+      <x>1200</x>
+      <y>210</y>
+      <w>150</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>Tab
 --
@@ -308,16 +320,17 @@
 + GetId(): int
 + CalculatePoints() : List((int, int))
 + UpdatePoints() : void
-</panel_attributes>
+
+group=8</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>560</x>
-      <y>511</y>
-      <w>238</w>
-      <h>105</h>
+      <x>336</x>
+      <y>414</y>
+      <w>102</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>Sprite
 --
@@ -329,16 +342,17 @@
 + Sprite(int, int, int, int, str, Vector2, (int, int), int, int)
 + LoadImage(int) : void
 + RotateTo(int) : void
-</panel_attributes>
+
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>427</y>
-      <w>294</w>
-      <h>140</h>
+      <x>441</x>
+      <y>372</y>
+      <w>144</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>TextIcon
 --
@@ -353,16 +367,17 @@
 + SetPadding(int) : void
 + SetColor((int, int, int, int)) : void
 
-</panel_attributes>
+
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>546</x>
-      <y>630</y>
-      <w>259</w>
-      <h>406</h>
+      <x>1086</x>
+      <y>210</y>
+      <w>108</w>
+      <h>174</h>
     </coordinates>
     <panel_attributes>Turtle
 --
@@ -402,16 +417,17 @@
 + NormalizeMovement() : void
 
 
-</panel_attributes>
+
+group=8</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>7</x>
-      <y>147</y>
-      <w>266</w>
-      <h>301</h>
+      <x>594</x>
+      <y>261</y>
+      <w>114</w>
+      <h>129</h>
     </coordinates>
     <panel_attributes>COLOR
 --
@@ -440,16 +456,17 @@
 + LOOP_COLORS : List((int, int, int, int))
 --
 
-</panel_attributes>
+
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>7</x>
-      <y>455</y>
-      <w>147</w>
-      <h>126</h>
+      <x>594</x>
+      <y>393</y>
+      <w>114</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>IMAGE_PATHS
 --
@@ -463,27 +480,29 @@
 + ICON : string
 --
 
-</panel_attributes>
+
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
-      <y>0</y>
-      <w>287</w>
-      <h>1113</h>
+      <x>591</x>
+      <y>198</y>
+      <w>123</w>
+      <h>468</h>
     </coordinates>
-    <panel_attributes>Constants</panel_attributes>
+    <panel_attributes>Constants
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>7</x>
-      <y>21</y>
-      <w>147</w>
-      <h>105</h>
+      <x>594</x>
+      <y>207</y>
+      <w>114</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>MOUSE
 --
@@ -494,16 +513,17 @@
 + SCROLLDOWN : int = 5
 --
 
-</panel_attributes>
+
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>7</x>
-      <y>595</y>
-      <w>245</w>
-      <h>483</h>
+      <x>594</x>
+      <y>453</y>
+      <w>114</w>
+      <h>207</h>
     </coordinates>
     <panel_attributes>FONT_AWESOME
 --
@@ -547,16 +567,17 @@
 + CHECK : string = u"\uF00C"
 + CLOSE : string = u"\uF00D"
 --
-</panel_attributes>
+
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>294</x>
-      <y>931</y>
-      <w>112</w>
-      <h>112</h>
+      <x>726</x>
+      <y>588</y>
+      <w>54</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Timer
 --
@@ -567,16 +588,18 @@
 + wait(int) : void
 + tick() : void
 + is_waiting() : boolean
-+ stop() : void</panel_attributes>
++ stop() : void
+
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1176</x>
-      <y>7</y>
-      <w>252</w>
-      <h>595</h>
+      <x>1086</x>
+      <y>393</y>
+      <w>108</w>
+      <h>255</h>
     </coordinates>
     <panel_attributes>GUI
 --
@@ -629,16 +652,17 @@
 + LoadData(int) : void
 + SaveData(int) : void
 + CreateDataScreenshot() : void
-+ StartRunningCode() : void</panel_attributes>
++ StartRunningCode() : void
+group=8</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>434</x>
-      <y>924</y>
-      <w>84</w>
-      <h>77</h>
+      <x>792</x>
+      <y>588</y>
+      <w>48</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Node
 --
@@ -646,16 +670,18 @@
 + y : int
 --
 
-</panel_attributes>
+
+
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>294</x>
-      <y>777</y>
-      <w>238</w>
-      <h>133</h>
+      <x>726</x>
+      <y>525</y>
+      <w>114</w>
+      <h>57</h>
     </coordinates>
     <panel_attributes>SupportFunctions
 --
@@ -669,16 +695,17 @@
 + CreateZip(int) : void
 + LoadZip_Data(int) : string
 + LoadZip_Image(int) : StingIO
-</panel_attributes>
+
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>434</x>
-      <y>1008</y>
-      <w>84</w>
-      <h>77</h>
+      <x>792</x>
+      <y>627</y>
+      <w>48</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Vector2
 --
@@ -686,16 +713,18 @@
 + y : int
 --
 
-</panel_attributes>
+
+
+group=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>546</x>
-      <y>1057</y>
-      <w>252</w>
-      <h>119</h>
+      <x>336</x>
+      <y>465</y>
+      <w>102</w>
+      <h>51</h>
     </coordinates>
     <panel_attributes>Line
 --
@@ -706,16 +735,18 @@
 + pen_down : boolean
 --
 + Line((int, int), (int, int), (int, int, int, int), int, boolean)
-+ DrawObject(pygame.display) : void</panel_attributes>
++ DrawObject(pygame.display) : void
+
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>819</x>
-      <y>973</y>
-      <w>343</w>
-      <h>112</h>
+      <x>441</x>
+      <y>441</y>
+      <w>144</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Flood
 --
@@ -726,16 +757,18 @@
 --
 + Flood((int, int), (int, int, int, int))
 + DrawObject(pygame.display) : void
-+ flood_fill(Node, (int, int, int, int), pygame.PixelArray) : pygame.PixelArray</panel_attributes>
++ flood_fill(Node, (int, int, int, int), pygame.PixelArray) : pygame.PixelArray
+
+group=7</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1169</x>
-      <y>616</y>
-      <w>301</w>
-      <h>560</h>
+      <x>1200</x>
+      <y>378</y>
+      <w>150</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>ScrollingPlane
 --
@@ -787,16 +820,17 @@
 + CreateACommandCopy() :  void
 + SetCurrentActiveCommandList(List(DrawableCommands)) : void 
 + GetCurrentActiveCommandList() : List(DrawableCommands)
-</panel_attributes>
+
+group=8</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1491</x>
-      <y>119</y>
-      <w>245</w>
-      <h>77</h>
+      <x>855</x>
+      <y>252</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Backward
 --
@@ -805,16 +839,17 @@
 + imgpath : string
 --
 + Backward(int, int, int, int, Vector2, (int, int), string, int)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1491</x>
-      <y>203</y>
-      <w>231</w>
-      <h>77</h>
+      <x>855</x>
+      <y>288</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Right
 --
@@ -823,16 +858,17 @@
 + imgpath : string
 --
 + Right(int, int, int, int, Vector2, (int, int), string, int)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1498</x>
-      <y>287</y>
-      <w>231</w>
-      <h>77</h>
+      <x>858</x>
+      <y>324</y>
+      <w>102</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Left
 --
@@ -841,16 +877,17 @@
 + imgpath : string
 --
 + Left(int, int, int, int, Vector2, (int, int), string, int)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1498</x>
-      <y>378</y>
-      <w>231</w>
-      <h>77</h>
+      <x>858</x>
+      <y>363</y>
+      <w>102</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Home
 --
@@ -858,16 +895,17 @@
 + imgpath : string
 --
 + Home(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1498</x>
-      <y>763</y>
-      <w>231</w>
-      <h>133</h>
+      <x>858</x>
+      <y>528</y>
+      <w>102</w>
+      <h>57</h>
     </coordinates>
     <panel_attributes>LoopEnd
 --
@@ -880,16 +918,17 @@
 + LoopEnd(Vector2, (int, int), string)
 + SetCompileInfo(int, int) : void
 + ResetCompileInfo() : void
-+ SetLoopStart() : void</panel_attributes>
++ SetLoopStart() : void
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1498</x>
-      <y>546</y>
-      <w>231</w>
-      <h>77</h>
+      <x>858</x>
+      <y>435</y>
+      <w>102</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>PenUp
 --
@@ -898,16 +937,17 @@
 + cross_points : List((int, int))
 --
 + PenUp(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1498</x>
-      <y>637</y>
-      <w>231</w>
-      <h>119</h>
+      <x>858</x>
+      <y>474</y>
+      <w>102</w>
+      <h>51</h>
     </coordinates>
     <panel_attributes>PenWidth
 --
@@ -918,16 +958,17 @@
 --
 + PenWidth(int, int, int, int, Vector2, (int, int), string)
 + Extend() : void
-+ SetPenWidth(int) : void </panel_attributes>
++ SetPenWidth(int) : void 
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1743</x>
-      <y>28</y>
-      <w>245</w>
-      <h>112</h>
+      <x>963</x>
+      <y>213</y>
+      <w>105</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>PenColor
 --
@@ -939,16 +980,17 @@
 + PenColor(int, int, int, int, Vector2, (int, int), string)
 + ChangeColor() : void
 + SetColor((int, int, int, int)) : void
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1750</x>
-      <y>154</y>
-      <w>231</w>
-      <h>77</h>
+      <x>963</x>
+      <y>267</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>FloodFill
 --
@@ -956,16 +998,17 @@
 + imgpath : string
 --
 + FloodFill(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1750</x>
-      <y>238</y>
-      <w>231</w>
-      <h>77</h>
+      <x>963</x>
+      <y>303</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Reset
 --
@@ -973,16 +1016,17 @@
 + imgpath : string
 --
 + Reset(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1757</x>
-      <y>322</y>
-      <w>231</w>
-      <h>77</h>
+      <x>963</x>
+      <y>339</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Clear
 --
@@ -990,16 +1034,17 @@
 + imgpath : string
 --
 + Clear(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1757</x>
-      <y>406</y>
-      <w>231</w>
-      <h>77</h>
+      <x>963</x>
+      <y>375</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>ShowTurtle
 --
@@ -1007,16 +1052,17 @@
 + imgpath : string
 --
 + ShowTurtle(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1757</x>
-      <y>490</y>
-      <w>231</w>
-      <h>77</h>
+      <x>963</x>
+      <y>411</y>
+      <w>105</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>HideTurtle
 --
@@ -1024,16 +1070,17 @@
 + imgpath : string
 --
 + HideTurtle(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1757</x>
-      <y>574</y>
-      <w>231</w>
-      <h>301</h>
+      <x>963</x>
+      <y>447</y>
+      <w>105</w>
+      <h>129</h>
     </coordinates>
     <panel_attributes>Loop
 --
@@ -1061,16 +1108,17 @@
 + ChangeCycleNumber() : void
 + SetCycleNumber(int) : void
 + CalculatePointList() : List((int, int))
-+ RollColor() : void  </panel_attributes>
++ RollColor() : void  
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1498</x>
-      <y>462</y>
-      <w>231</w>
-      <h>77</h>
+      <x>858</x>
+      <y>399</y>
+      <w>102</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>PenDown
 --
@@ -1078,18 +1126,20 @@
 + imgpath : string
 --
 + PenDown(int, int, int, int, Vector2, (int, int), string)
-</panel_attributes>
+
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>1484</x>
-      <y>7</y>
-      <w>518</w>
-      <h>896</h>
+      <x>852</x>
+      <y>204</y>
+      <w>222</w>
+      <h>384</h>
     </coordinates>
-    <panel_attributes>DrawableCommands</panel_attributes>
+    <panel_attributes>DrawableCommands
+group=1</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

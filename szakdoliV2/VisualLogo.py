@@ -31,7 +31,7 @@ class ApplicationCore:
         pygame.display.update()
 
         icon = pygame.image.load(os.getcwd() + img.ICON)
-        pygame.display.set_caption("Visual Logo 1.2.1")
+        pygame.display.set_caption("Visual Logo 1.2.3")
         pygame.display.set_icon(icon)
 
         self.logoCore = Turtle()
