@@ -62,3 +62,5 @@ target/
 .ipynb_checkpoints
 
 .idea/
+docs/.history/
+szakdoliV2/UserData/

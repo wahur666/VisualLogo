@@ -1,5 +1,5 @@
 import { AbstractDrawable } from "./Base/AbstractDrawable.js";
-import { COLOR } from "../System/Contants.js";
+import { COLOR } from "../System/Constants.js";
 import { DrawRect } from "../System/SupportFunctions.js";
 
 export class Rect extends AbstractDrawable {
@@ -17,7 +17,7 @@ export class Rect extends AbstractDrawable {
     
     DrawObject(screen) {
         if(!this.transparent){
-            DrawRect(screen, this.accentColor, this.x, this.y, this.w, this.h, 0);
+            DrawRect(screen, this.accentColor, this.x, this.y, this.w, this.h);
         }
         DrawRect(screen, this.color, this.x, this.y, this.w, this.h, this.width);
     }

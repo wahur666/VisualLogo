@@ -2,6 +2,9 @@ import { Vector2 } from "../../System/SupportFunctions.js";
 
 export class AbstractDrawable {
     constructor(x = null, y = null, w = null, h = null, vec2_pos = null, size = null) {
+        if(x == null && y == null && w == null && h == null && vec2_pos == null && size == null){
+            return;
+        }
         if ( x != null && y != null) {
             this.x = x;
             this.y = y;

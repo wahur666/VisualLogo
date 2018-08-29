@@ -106,6 +106,8 @@ class ApplicationCore:
 
     def CreateUserData(self):
         files = []
+        if not os.path.exists("UserData"):
+            os.makedirs("UserData")
         for (dirpath, dirnames, filenames) in os.walk("UserData"):
             files.extend(filenames)
         for i in range(21):
