@@ -23,14 +23,14 @@ class COLOR:
     KINDAORANGE = (255, 128, 0, 255)
     LIGHTGRAY = (238, 238, 238, 255)
 
-    HATTER_1 = (211, 255, 204, 255) # halvany zold
-    HATTER_2 = (214, 255, 248, 255) # halvany kek
-    HATTER_3 = (196, 201, 255, 255) # lilaskek
-    HATTER_4 = (246, 255, 196, 255) # halvanysarga
-    HATTER_5 = (255, 251, 160, 255) # halvanyrozsaszin
-    HATTER_6 = (255, 236, 211, 255) # kicsit erosebb sarga
-    HATTER_7 = (255, 201, 207, 255) # halvanypiros
-    HATTER_8 = (216, 255, 255, 255) # halovany nagyon kek
+    HATTER_1 = (211, 255, 204, 255) 
+    HATTER_2 = (214, 255, 248, 255) 
+    HATTER_3 = (196, 201, 255, 255) 
+    HATTER_4 = (246, 255, 196, 255) 
+    HATTER_5 = (255, 251, 160, 255) 
+    HATTER_6 = (255, 236, 211, 255) 
+    HATTER_7 = (255, 201, 207, 255) 
+    HATTER_8 = (216, 255, 255, 255) 
 
 
     COLOR_LIST = [WHITE, BLACK, RED, GREEN, BLUE, CYAN, GREY, LIGHTGRAY,

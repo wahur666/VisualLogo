@@ -1,8 +1,10 @@
 import { Rect } from "./Drawable/Rectangle.js";
-import { COLOR } from "./System/Constants.js";
+import { COLOR, FONT_AWESOME } from "./System/Constants.js";
 import { Polygon } from "./Drawable/Polygon.js";
 import { DrawLines } from "./System/SupportFunctions.js";
 import { DrawingIcon } from "./Drawable/DrawingIcon.js";
+import { Sprite } from "./Drawable/Sprite.js";
+import { TextIcon } from "./Drawable/TextIcon.js";
 
 
 var canvas = document.querySelector('canvas');
@@ -30,4 +32,24 @@ rect1.DrawObject(canvasContext);
 //poly1.DrawObject(canvasContext);
 
 var drawingIcon = new DrawingIcon(50,50,30,30,COLOR.RED, 0);
-drawingIcon.DrawObject(canvasContext, 0);
+
+var sprite = new Sprite(150, 150, 50, 50, undefined, undefined, undefined, undefined, undefined);
+var img = new Image();
+img.src = "../szakdoliV2/Resources/icon-placeholder.png";
+
+var textIcon = new TextIcon(200, 100, 50, 50, undefined, undefined, FONT_AWESOME.STICKY_NOTE, COLOR.BLUE);
+
+//img.onload = () => { canvasContext.drawImage(img, 150, 150, 50, 50); console.log("loaded"); } 
+
+function mainLoop() {
+    drawingIcon.DrawObject(canvasContext, 0);
+    sprite.DrawObject(canvasContext, 0);
+    //canvasContext.drawImage(img, 150, 150, 50, 50);
+    textIcon.DrawObject(canvasContext);
+    requestAnimationFrame(mainLoop);
+}
+
+
+mainLoop();
+
+

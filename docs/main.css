@@ -1,3 +1,19 @@
+@font-face {
+    font-family: 'nimbus_roman_no9_lregular';
+    src: url('NimbusRomNo9L-Reg-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fontawesome';
+    src: url('fontawesome-webfont.woff') format('woff');
+}
+
+h1 {
+    font-family: nimbus_roman_no9_lregular;
+}
+
 .center {
     text-align: center;
 }
@@ -10,3 +26,4 @@ div {
     width: 100%;
     height: 100%;
 }
+
