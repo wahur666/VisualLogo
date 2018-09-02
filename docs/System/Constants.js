@@ -34,14 +34,14 @@ export class COLOR {
 
 
 export class IMG {
-    static get PLACEHOLDER() { return "../szakdoliV2/Resources/icon-placeholder.png" }
-    static get TURTLE() { return "../szakdoliV2/Resources/turtle.png" }
-    static get BEND_LEFT() { return "../szakdoliV2/Resources/bendleft.png" }
-    static get BEND_RIGHT() { return "../szakdoliV2/Resources/icon-bendright.png" }
-    static get TURN_LEFT() { return "../szakdoliV2/Resources/turnleft.png" }
-    static get TURN_RIGHT() { return "../szakdoliV2/Resources/icon-turnright.png" }
-    static get RED_PENCIL() { return "../szakdoliV2/Resources/pencil2.png" }
-    static get ICON() { return "../szakdoliV2/Resources/visuallogoicon.png" }
+    static get PLACEHOLDER() { return "./Images/icon-placeholder.png" }
+    static get TURTLE() { return "./Images/turtle.png" }
+    static get BEND_LEFT() { return "./Images/bendleft.png" }
+    static get BEND_RIGHT() { return "./Images/icon-bendright.png" }
+    static get TURN_LEFT() { return "./Images/turnleft.png" }
+    static get TURN_RIGHT() { return "./Images/icon-turnright.png" }
+    static get RED_PENCIL() { return "./Images/pencil2.png" }
+    static get ICON() { return "./Images/visuallogoicon.png" }
 }
 
 export class FONT_AWESOME {

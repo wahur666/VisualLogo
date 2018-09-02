@@ -35,7 +35,7 @@ var drawingIcon = new DrawingIcon(50,50,30,30,COLOR.RED, 0);
 
 var sprite = new Sprite(150, 150, 50, 50, undefined, undefined, undefined, undefined, undefined);
 var img = new Image();
-img.src = "../szakdoliV2/Resources/icon-placeholder.png";
+img.src = "../Images/icon-placeholder.png";
 
 var textIcon = new TextIcon(200, 100, 50, 50, undefined, undefined, FONT_AWESOME.STICKY_NOTE, COLOR.BLUE);
 
@@ -46,6 +46,7 @@ function mainLoop() {
     sprite.DrawObject(canvasContext, 0);
     //canvasContext.drawImage(img, 150, 150, 50, 50);
     textIcon.DrawObject(canvasContext);
+    console.log("updating");
     requestAnimationFrame(mainLoop);
 }
 
