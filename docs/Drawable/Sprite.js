@@ -12,10 +12,16 @@ export class Sprite extends AbstractDrawable {
         this.imgpath = imgpath;
         this.image = new Image();
         this.image.src = this.imgpath;
+
+        this.loaded = false;
+
+        this.image.onload = () => this.loaded = true;
     }
 
     DrawObject(screen, rotation = 0) {
-        this.DrawRotatedImage(screen, rotation);
+        if(this.loaded){
+            this.DrawRotatedImage(screen, rotation);
+        }
     }
 
     DrawRotatedImage(screen, rotation) {
