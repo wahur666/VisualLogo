@@ -78,3 +78,13 @@ export function DrawLines(canvasContext, color, closed, pointlist, width = 1) {
     }
 
 }
+
+export function DrawLine(canvasContext, color, startPos, endPos, width=1) {
+    canvasContext.lineCap = "round";
+    canvasContext.beginPath();
+    canvasContext.strokeStyle = color;
+    canvasContext.lineWidth = width;
+    canvasContext.moveTo(startPos[0], startPos[1]);
+    canvasContext.lineTo(endPos[0], endPos[1]);
+    canvasContext.stroke();
+}

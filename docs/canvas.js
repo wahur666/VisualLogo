@@ -5,6 +5,7 @@ import { DrawLines } from "./System/SupportFunctions.js";
 import { DrawingIcon } from "./Drawable/DrawingIcon.js";
 import { Sprite } from "./Drawable/Sprite.js";
 import { TextIcon } from "./Drawable/TextIcon.js";
+import { Line } from "./Drawable/RenderItems.js";
 
 
 var canvas = document.querySelector('canvas');
@@ -66,6 +67,8 @@ var img = new Image();
 img.src = "../Images/icon-placeholder.png";
 
 var textIcon = new TextIcon(200, 100, 50, 50, undefined, undefined, FONT_AWESOME.STICKY_NOTE, COLOR.BLUE);
+var line1 = new Line([90, 40], [400, 300], undefined, 5, undefined)
+var line2 = new Line([55, 70], [753, 159], undefined, 3, undefined)
 
 //img.onload = () => { canvasContext.drawImage(img, 150, 150, 50, 50); console.log("loaded"); } 
 
@@ -74,6 +77,11 @@ function mainLoop() {
     sprite.DrawObject(canvasContext, 0);
     //canvasContext.drawImage(img, 150, 150, 50, 50);
     textIcon.DrawObject(canvasContext);
+
+    line1.DrawObject(canvasContext);
+    line2.DrawObject(canvasContext);
+
+
     requestAnimationFrame(mainLoop);
 }
 
