@@ -17,7 +17,7 @@ export class Rect extends AbstractDrawable {
 
     DrawObject(screen) {
         if (!this.transparent) {
-            DrawRect(screen, this.accentColor, this.x, this.y, this.w, this.h);
+            DrawRect(screen, this.accentColor, this.x, this.y, this.w, this.h, 0);
         }
         DrawRect(screen, this.color, this.x, this.y, this.w, this.h, this.width);
     }
@@ -49,7 +49,7 @@ export class Rect extends AbstractDrawable {
     }
 
     SetAccentColor(accent) {
-        this.SetAccentColor = accent;
+        this.accentColor = accent;
     }
 
 }
