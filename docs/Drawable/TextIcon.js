@@ -3,9 +3,8 @@ import { FONT_AWESOME, COLOR } from "../System/Constants.js";
 
 export class TextIcon extends AbstractDrawable {
 
-    constructor(x = null, y = null, w = null, h = null, vec2_pos = null, size = null, keycode = FONT_AWESOME.PLACEHOLDER, color = COLOR.BLACK) {
-        super(x, y, w, h, vec2_pos, size);
-        console.log("This is x" + this.x);
+    constructor(x = null, y = null, w = null, h = null, keycode = FONT_AWESOME.PLACEHOLDER, color = COLOR.BLACK) {
+        super(x, y + w * 0.8, w, h);
 
         this.keycode = keycode;
         this.text = null;
@@ -18,7 +17,6 @@ export class TextIcon extends AbstractDrawable {
     }
 
     DrawObject(screen) {
-        console.log(this.x + " " + this.pad_x);
         screen.save();
 
         screen.font =  this.h - 6 + "px FontAwesome";

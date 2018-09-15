@@ -2,11 +2,12 @@ import { AbstractDrawable } from "./AbstractDrawable.js";
 import { Rect } from "../Rectangle.js";
 import { TextIcon } from "../TextIcon.js";
 import { Sprite } from "../Sprite.js";
+import { IMG } from "../../System/Constants.js";
 
 export class Command extends AbstractDrawable {
-    constructor(x = null, y = null, w = null, h = null, vec2_pos = null, size = null) {
-        super(x, y, w, h, vec2_pos, size);
-        this.mainRect = new Rect(x, y, w, h, undefined, 1, undefined, vec2_pos, size, false);
+    constructor(x = null, y = null, w = null, h = null) {
+        super(x, y, w, h);
+        this.mainRect = new Rect(x, y, w, h, undefined, 1, undefined, false);
         this.sprite = null;
         this.imagePath = null;
         this.textIcon = null;
@@ -37,8 +38,9 @@ export class Command extends AbstractDrawable {
 
     LoadSprite() {
         if (this.imagePath == null && this.keyCode != null) {
-            this.textIcon = new TextIcon(this.x, this.y, this.w, this.h, undefined, undefined, this.keyCode, undefined);
+            this.textIcon = new TextIcon(this.x, this.y, this.w, this.h, this.keyCode, undefined);
             this.textIcon.SetPadding(this.keyCodePad)
+            
         } else if (this.imagePath != null && this.keyCode == null) {
             this.sprite = new Sprite(this.x, this.y, this.w, this.h, this.imagePath);
         } else {
@@ -86,7 +88,7 @@ export class Command extends AbstractDrawable {
         this.mainRect.SetAccentColor(accent);
     }
 
-    SetKeyCodePadding(self, x){
+    SetKeyCodePadding(x){
         this.keyCodePad = x;
     }
 

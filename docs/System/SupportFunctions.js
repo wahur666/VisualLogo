@@ -1,10 +1,3 @@
-export class Vector2 {
-    constructor(x, y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
 export function MoveElementList(list, element, index) {
     list.splice(list.indexOf(element), 1);
     list.splice(index, 0, element);

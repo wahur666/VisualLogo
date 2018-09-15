@@ -3,7 +3,7 @@ import { COLOR } from "../System/Constants.js";
 
 export class Tab extends Polygon {
 
-    constructor(x, y, w, h, color = COLOR.BLACK, id = null, width = 0, size = null, vec2_pos = null, transparent = true) {
+    constructor(x, y, w, h, color = COLOR.BLACK, id = null, width = 0, transparent = true) {
         super(null, color, width);
         this.x = x;
         this.y = y;

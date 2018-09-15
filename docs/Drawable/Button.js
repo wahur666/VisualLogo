@@ -5,8 +5,8 @@ import { Sprite } from "./Sprite.js";
 import { TextIcon } from "./TextIcon.js";
 
 export class Button extends AbstractDrawable {
-    constructor(x = null, y = null, w = null, h = null, imgPath = IMG.PLACEHOLDER, vec2_pos = null, size = null, keyCode=FONT_AWESOME.PLACEHOLDER, padding = 0) {
-        super(x, y, w, h, vec2_pos, size);
+    constructor(x = null, y = null, w = null, h = null, imgPath = IMG.PLACEHOLDER, keyCode=FONT_AWESOME.PLACEHOLDER, padding = 0) {
+        super(x, y, w, h);
 
         this.imgPath = imgPath;
         this.sprite = null;
@@ -17,12 +17,11 @@ export class Button extends AbstractDrawable {
         
         this.textIconColor = COLOR.BLACK;
 
-        this.buttonRect = new Rect(x, y, w, h, undefined, 1, undefined, undefined, undefined, false);
+        this.buttonRect = new Rect(x, y, w, h, undefined, 1, undefined, false);
     }
 
     DrawObject(screen) {
         if(!this.textIcon){
-            console.log("TextIconLoad");
             this.LoadImage();
         }
         this.buttonRect.DrawObject(screen);
@@ -50,10 +49,10 @@ export class Button extends AbstractDrawable {
         if(this.imgPath != IMG.PLACEHOLDER) {
             this.sprite = new Sprite(this.x + 2, this.y + 2, this.w - 5, this.h + 5, this.imgPath)
         } else if (this.keyCode != FONT_AWESOME.PLACEHOLDER) {
-            this.textIcon = new TextIcon(this.x + 5, this.y + this.w * 0.8, this.w - 2, this.h - 5, undefined, undefined, this.keyCode, this.textIconColor);
+            this.textIcon = new TextIcon(this.x + 5, this.y, this.w - 2, this.h - 5, this.keyCode, this.textIconColor);
             this.textIcon.SetPadding(this.iconPadding);
         } else {
-            this.textIcon = new TextIcon(this.x + 5, this.y + this.w * 0.8, this.w - 5, this.h - 5, undefined, undefined, FONT_AWESOME.PLACEHOLDER);
+            this.textIcon = new TextIcon(this.x + 5, this.y, this.w - 5, this.h - 5, FONT_AWESOME.PLACEHOLDER);
         }
     }
 

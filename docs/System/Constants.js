@@ -25,7 +25,7 @@ export class COLOR {
 
     static get COLOR_LIST() {
         return [this.WHITE, this.BLACK, this.RED, this.GREEN, this.BLUE, this.CYAN, this.GREY, this.LIGHTGRAY,
-        this.MAGENTA, this.YELLOW, this.LIGHTBLUE, this.LIGHTORANGE, KINDAORANGE]
+        this.MAGENTA, this.YELLOW, this.LIGHTBLUE, this.LIGHTORANGE, this.KINDAORANGE]
     }
 
     static get LOOP_COLORS() { return [this.BLACK, this.BLUE, this.RED, this.GREEN, this.CYAN, this.MAGENTA, this.KINDAORANGE] }
@@ -37,9 +37,9 @@ export class IMG {
     static get PLACEHOLDER() { return "./Images/icon-placeholder.png" }
     static get TURTLE() { return "./Images/turtle.png" }
     static get BEND_LEFT() { return "./Images/bendleft.png" }
-    static get BEND_RIGHT() { return "./Images/icon-bendright.png" }
+    static get BEND_RIGHT() { return "./Images/bendright.png" }
     static get TURN_LEFT() { return "./Images/turnleft.png" }
-    static get TURN_RIGHT() { return "./Images/icon-turnright.png" }
+    static get TURN_RIGHT() { return "./Images/turnright.png" }
     static get RED_PENCIL() { return "./Images/pencil2.png" }
     static get ICON() { return "./Images/visuallogoicon.png" }
 }

@@ -4,8 +4,8 @@ import { DrawRect } from "../System/SupportFunctions.js";
 
 export class Rect extends AbstractDrawable {
 
-    constructor(x = null, y = null, w = null, h = null, color = COLOR.BLACK, width = 0, movable = false, vec2_pos = null, size = null, transparent = true) {
-        super(x, y, w, h, vec2_pos, size);
+    constructor(x = null, y = null, w = null, h = null, color = COLOR.BLACK, width = 0, movable = false, transparent = true) {
+        super(x, y, w, h);
         this.delta = [0, 0];
         this.color = color;
         this.width = width;

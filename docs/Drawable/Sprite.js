@@ -4,8 +4,8 @@ import { IMG } from "../System/Constants.js";
 
 export class Sprite extends AbstractDrawable {
 
-    constructor(x = null, y = null, w = null, h = null, imgpath = IMG.PLACEHOLDER, vec2_pos = null, size = null, mode = 0, index = null ) {
-        super(x, y, w, h, vec2_pos, size);
+    constructor(x = null, y = null, w = null, h = null, imgpath = IMG.PLACEHOLDER, mode = 0, index = null ) {
+        super(x, y, w, h);
         this.base_rotation = 0;
         this.index = index;
         
