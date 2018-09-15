@@ -4,7 +4,7 @@ import { FONT_AWESOME, COLOR } from "../System/Constants.js";
 export class TextIcon extends AbstractDrawable {
 
     constructor(x = null, y = null, w = null, h = null, keycode = FONT_AWESOME.PLACEHOLDER, color = COLOR.BLACK) {
-        super(x, y + w * 0.8, w, h);
+        super(x, y + h * 0.8, w, h);
 
         this.keycode = keycode;
         this.text = null;

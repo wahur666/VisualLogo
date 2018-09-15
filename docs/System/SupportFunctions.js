@@ -81,3 +81,17 @@ export function DrawLine(canvasContext, color, startPos, endPos, width=1) {
     canvasContext.lineTo(endPos[0], endPos[1]);
     canvasContext.stroke();
 }
+
+export function DrawCircle(canvasContext, color, pos, radius, width = 0) {
+    canvasContext.beginPath();
+    if(width == 0){
+        canvasContext.fillStyle=color;
+        canvasContext.arc(pos[0], pos[1], radius, 0, 2 * Math.PI);
+        canvasContext.fill();
+    } else {
+        canvasContext.lineWidth = width;
+        canvasContext.strokeStyle=color;
+        canvasContext.arc(pos[0], pos[1], radius, 0, 2 * Math.PI);
+        canvasContext.stroke();
+    }
+}

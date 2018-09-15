@@ -29,8 +29,9 @@ export class DrawingIcon extends Polygon{
     }
 
     DrawObject(screen, rot){
-        //RotateToAngle(rot);
+        this.RotateToAngle(rot);
         super.DrawObject(screen);
+        
         DrawLines(screen, COLOR.BLACK, false, this.coordinates, 1);
     }
     
@@ -63,9 +64,23 @@ export class DrawingIcon extends Polygon{
         points.push(p1);
         points.push(p2);
         points.push(origo);
-    
+        
         return points;
     }
     
-
+    RotateToAngle(angle) {
+        var rot_diff = angle - this.base_rotation;
+        this.coordinates = [];
+        
+        this.base_coordinates.forEach(element => {
+            var sf = Math.sin(Math.PI / 180 * rot_diff);
+            var cf = Math.cos(Math.PI / 180 * rot_diff);
+            var x = element[0] - this.base_coordinates[0][0];
+            var y = element[1] - this.base_coordinates[0][1];
+            
+            var new_x = Math.trunc(Math.round(x * cf - y * sf)) + this.base_coordinates[0][0];
+            var new_y = Math.trunc(Math.round(x * sf - y * cf)) + this.base_coordinates[0][1];
+            this.coordinates.push([new_x, new_y]);
+        });
+    }
 }

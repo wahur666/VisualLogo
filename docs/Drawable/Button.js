@@ -6,7 +6,7 @@ import { TextIcon } from "./TextIcon.js";
 
 export class Button extends AbstractDrawable {
     constructor(x = null, y = null, w = null, h = null, imgPath = IMG.PLACEHOLDER, keyCode=FONT_AWESOME.PLACEHOLDER, padding = 0) {
-        super(x, y, w, h);
+        super(x, y + 3, w, h);
 
         this.imgPath = imgPath;
         this.sprite = null;

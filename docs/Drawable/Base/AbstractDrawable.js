@@ -11,8 +11,8 @@ export class AbstractDrawable {
         } 
 
         if (w != null && h != null) {
-            this.w = w
-            this.h = h
+            this.w = w;
+            this.h = h;
         } else {
             throw "Not enough parameter, give W and H";
         }

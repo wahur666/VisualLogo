@@ -85,7 +85,6 @@ export class ScrollingPlane extends AbstractDrawable {
         }
 
         this.sidePanel = new Rect(700, 75, 121, 520, undefined, 1, false, false);
-        console.log(this.sidePanel);
         
         this.clearCommandsButton = new Button(771, 594, 50, 50, undefined, FONT_AWESOME.ROUND_X, 4);
         this.clearCommandsButton.Bind(this.ClearCurrentSource);
@@ -196,6 +195,8 @@ export class ScrollingPlane extends AbstractDrawable {
         var command = new Logo.HideTurtle(0, 0, 50, 50);
         this.grid.push(command);
 
+        var command = new Logo.Loop(0, 0, 105, 50);
+        this.grid.push(command);
 
         this.DrawGrid();
     }

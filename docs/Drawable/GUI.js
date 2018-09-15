@@ -68,6 +68,14 @@ export class GUI {
         this.items.forEach(element => {
             element.DrawObject(screen);
         });
+
+        var [pos, rot, show] = this.application_core.logoCore.GetTurtleInformationToRender();
+        
+        if(show) {
+            this.drawing_arrow.SetPosition(pos[0], pos[1]);
+            this.drawing_arrow.DrawObject(screen, rot);
+        }
+
     }
 
     Add(item){
