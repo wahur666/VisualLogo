@@ -37,11 +37,7 @@ export class Button extends AbstractDrawable {
         return this.x <= position[0] && this.x + this.h >= position[0] && this.y <= position[1] && this.y + this.w >= position[1];
     }
 
-    Bind(funcPointer){
-        this.OnClick = funcPointer;
-    }
-
-    OnClick(eventType) {
+    OnClick(eventType, context) {
         console.log("Unbound button");
     }
 

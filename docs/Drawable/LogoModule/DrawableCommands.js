@@ -1,6 +1,6 @@
 import { Command } from "../Base/Command.js";
 import { FONT_AWESOME, COLOR, IMG } from "../../System/Constants.js";
-import { DrawPolygon, DrawCircle } from "../../System/SupportFunctions.js";
+import { DrawPolygon, DrawCircle, DrawLines } from "../../System/SupportFunctions.js";
 import { Rect } from "../Rectangle.js";
 
 export class Forward extends Command {
@@ -320,6 +320,88 @@ export class Loop extends Command {
 
     RollColor() {
         this.color = Math.floor(Math.random() * COLOR.LOOP_COLORS.length);
+    }
+
+    SetLoopend(loopend){
+        this.loopend = loopend;
+    }
+
+    DrawLoopend(screen){
+        if(this.loopend) {
+            var pointList = this.CalculatePointList();
+            DrawLines(screen, COLOR.LOOP_COLORS[this.color], false, pointList, 1);
+        }
+    }
+
+    SetCompileInfo(pre_test, loopend_index) {
+        this.compileInformation.compiled = true;
+        this.compileInformation.pre_test = pre_test;
+        this.compileInformation.loopend_index = loopend_index;
+    }
+
+    ResetCompileInfo() {
+        this.compileInformation.compiled = false;
+    }
+
+    CountDown() {
+        this.remainingCycle -= 1;
+    }
+
+    ResetCycleCounter() {
+        this.remainingCycle = this.cycleNumber;
+    }
+
+    ChangeCycleNumber() {
+        this.cycleNumber = (this.cycleNumber + 1) % 10;
+        if(!this.running && !this.cycleNumber) {
+            this.cycleNumber = 1;
+        }
+        this.remainingCycle = this.cycleNumber;
+    }
+
+    SetCycleNumber(number) {
+        this.cycleNumber = number;
+        this.remainingCycle = this.cycleNumber;
+    }
+
+    CalculatePointList() {
+        
+    }
+
+}
+
+export class LoopEnd extends Command {
+    constructor(x, y, z, h){
+        super(x, y, w, h);
+
+        this.compileInformation = {
+            "compiled" : false,
+            "pre_test" : false,
+            "loopbase_index" : -1
+        }
+
+        this.loopId = null;
+        this.loopStart = null;
+
+        this.mainRect.SetAccentColor(COLOR.HATTER_5);
+    }
+
+    DrawObject(screen) {
+        this.mainRect.DrawObject(screen);
+    }
+
+    SetCompileInfo(preTest, loopBaseIndex) {
+        this.compileInformation.compiled = true;
+        this.compileInformation.pre_test = preTest;
+        this.compileInformation.loopbase_index = loopBaseIndex;
+    }
+
+    ResetCompileInfo(){
+        this.compileInformation.compiled = false;
+    }
+
+    SetLoopBase(loop) {
+        this.loopStart = loop;
     }
 
 }

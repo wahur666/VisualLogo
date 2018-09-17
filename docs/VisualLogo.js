@@ -1,29 +1,51 @@
-import { COLOR } from "./System/Constants.js";
 import { Turtle } from "./Drawable/LogoModule/Turtle.js";
 import { GUI } from "./Drawable/GUI.js";
-import { DrawRect } from "./System/SupportFunctions.js";
 
 export class ApplicationCore {
 
     constructor(canvas) {
         this.canvas = canvas;
-        this.background_color = COLOR.LIGHTGRAY;
-        this.background_color_index = 7;
-        this.screen = canvas.getContext("2d");
-
         this.version = "1.2.3";
-        
+
         this.logoCore = new Turtle();
         this.logoCore.SetBoundaries([20, 20], [650, 620])
 
         this.gui = new GUI(this);
+        
+        this.SetupHandlers();
+    }
+
+    SetupHandlers() {
+        this.canvas.oncontextmenu = function (e) {
+            e.preventDefault();
+        };
+
+        this.canvas.addEventListener("mousedown", (event) => this.MouseHandler(event), false);
+
+        this.canvas.addEventListener("mouseup", (event) => this.MouseHandler(event), false);
+
+        this.canvas.addEventListener("wheel",  (event) => this.MouseHandler(event), false);
+
+        this.canvas.addEventListener("mousemove", (event) => this.MouseHandler(event), false);
+
+        this.canvas.addEventListener("mouseout", (event) => this.MouseHandler(event), false);
+
+        window.addEventListener("keydown", (event) => this.KeyboardHandler(event), false);
+        
+        window.addEventListener("keyup", (event) => this.KeyboardHandler(event), false);
 
     }
 
-    Run() {
-        DrawRect(this.screen, this.background_color, 0, 0, this.canvas.width, this.canvas.height, 0);
-        this.gui.DrawGUI(this.screen);
+    MouseHandler(event) {
+        this.gui.MouseHandler(event);
+    }
 
+    KeyboardHandler(event) {
+        this.gui.KeyboardHandler(event);
+    }
+
+    Run() {
+        this.gui.DrawGUI();
     }
 
     Debug() {
@@ -32,7 +54,5 @@ export class ApplicationCore {
         this.logoCore.Forward();
         this.logoCore.Debug();
     }
-
-    
 
 }

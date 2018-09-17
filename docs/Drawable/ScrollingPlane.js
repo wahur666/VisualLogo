@@ -87,7 +87,7 @@ export class ScrollingPlane extends AbstractDrawable {
         this.sidePanel = new Rect(700, 75, 121, 520, undefined, 1, false, false);
         
         this.clearCommandsButton = new Button(771, 594, 50, 50, undefined, FONT_AWESOME.ROUND_X, 4);
-        this.clearCommandsButton.Bind(this.ClearCurrentSource);
+        this.clearCommandsButton.OnClick = this.ClearCurrentSource.bind(this);
         this.clearCommandsButton.SetTextIconColor(COLOR.RED);
 
         this.PrepareSidePanelForLogo();
@@ -141,7 +141,15 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     RepaintTabs(id) {
-
+        this.items.forEach(item => {
+            if(item instanceof Tab) {
+                if( id == item.GetId()) {
+                    item.selected = true;
+                } else {
+                    item.selected = false;
+                }
+            }
+        });
     }
 
     PrepareSidePanelForLogo() {
@@ -246,7 +254,11 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     ResetCompileInfos() {
-
+        this.plateItems[this.currentActivePlane].forEach(element => {
+            if(element instanceof Logo.Loop || element instanceof Logo.LoopEnd) {
+                element.ResetCompileInfo();
+            } 
+        });
     }
 
     StopRunning() {
@@ -258,11 +270,23 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     MoveSourceToShowPointer(i) {
+        var flag = false;
+        var t = false;
 
+        while(i.y + i.h > 700 && !t) {
+            flag = true;
+            this.MoveSourcePanel(-1, false);
+        }
+        t = flag;
+        while (i.y < 20 && !t) {
+            this.MoveSourcePanel(1, false);
+        }
     }
 
     ClearCurrentSource() {
-
+        this.plateItems[this.currentActivePlane] = [];
+        this.ResetPosition();
+        this.ResizeSourceBlock();
     }
 
     CreateACommandCopy() {
