@@ -76,9 +76,10 @@ export class GUI {
     DrawGUI(){
         DrawRect(this.screen, this.background_color, 0, 0, this.canvas.width, this.canvas.height, 0);
 
-        this.items.forEach(element => {
+        for (const element of this.items) {
             element.DrawObject(this.screen);
-        });
+            
+        }
 
         var [pos, rot, show] = this.application_core.logoCore.GetTurtleInformationToRender();
         
@@ -160,11 +161,11 @@ export class GUI {
     }
 
     OnDrag(event){ 
-        this.items.forEach(element => {
+        for (const element of this.items) {
             if(element instanceof ScrollingPlane) {
                 element.OnDrag(event);
             }
-        });
+        }
     }
 
     OnRelease(event) {
@@ -174,7 +175,7 @@ export class GUI {
     OnClick(event) {
         this.mouseDown = true;
         if(!this.disable_input) {
-            this.items.forEach(item => {
+            for (const item of this.items) {
                 if(item.IsInside(this.EventPos(event))) {
                     if(item instanceof Rect){
                         return;
@@ -194,7 +195,7 @@ export class GUI {
                         return;
                     }
                 } 
-            });
+            }
         }
     }
 

@@ -19,7 +19,7 @@ export class Command extends AbstractDrawable {
         console.log("Event didn't bound");
     }
 
-    IsInside() {
+    IsInside(position) {
         return this.x <= position[0] && this.x + this.w >= position[0] && this.y <= position[1] && this.y + self.h >= position[1];
     }
 

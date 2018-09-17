@@ -72,7 +72,7 @@ export class DrawingIcon extends Polygon{
         var rot_diff = angle - this.base_rotation;
         this.coordinates = [];
         
-        this.base_coordinates.forEach(element => {
+        for (const element of this.base_coordinates) {
             var sf = Math.sin(Math.PI / 180 * rot_diff);
             var cf = Math.cos(Math.PI / 180 * rot_diff);
             var x = element[0] - this.base_coordinates[0][0];
@@ -81,6 +81,6 @@ export class DrawingIcon extends Polygon{
             var new_x = Math.trunc(Math.round(x * cf - y * sf)) + this.base_coordinates[0][0];
             var new_y = Math.trunc(Math.round(x * sf - y * cf)) + this.base_coordinates[0][1];
             this.coordinates.push([new_x, new_y]);
-        });
+        }
     }
 }

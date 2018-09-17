@@ -38,27 +38,63 @@ export class ScrollingPlane extends AbstractDrawable {
 
     }
 
-    IsInside() {
+    IsInside(position) {
+        if(this.sidePanelActive) {
+            this.sidePanel.IsInside(position);
+            for (const item of this.grid) {
+                if(item.IsInside(position)) {
+                    this.clicked = item;
+                    return true;
+                }
+            }
 
+            if(this.clearCommandsButton.IsInside(position)){
+                if(this.activePlaneItems.length) {
+                    this.clicked = this.clearCommandsButton;
+                    return true;
+                }
+            }
+        }
+
+        for (const item of this.activePlaneItems) {
+            if(item.IsInside(position)) {
+                this.clicked = item;
+                return true;
+            }
+        }
+
+        for (const item of this.items) {
+            if(item.IsInside(position)){
+                this.clicked = item;
+                return true;
+            }
+        }
     }
 
     DrawObject(screen) {
-        this.items.forEach(element => {
+        for (const element of this.items) {
             element.DrawObject(screen);
-        });
+            
+        }
 
-        this.plateItems[this.currentActivePlane].forEach(element => {
+        for (const element of this.activePlaneItems) {
             element.DrawObject(screen);
-        });
+        }
+
+        for (const element of this.activePlaneItems) {
+            if(element instanceof Logo.Loop) {
+                element.DrawLoopend(screen);
+            }
+        }
 
         if (this.sidePanelActive) {
             this.sidePanel.DrawObject(screen);
 
-            this.grid.forEach(element => {
+            for (const element of this.grid) {
                 element.DrawObject(screen);
-            });
+            }
 
-            if (this.plateItems[this.currentActivePlane].length) {
+            if (this.activePlaneItems.length) {
                 this.clearCommandsButton.DrawObject(screen);
             }
         }
@@ -72,6 +108,7 @@ export class ScrollingPlane extends AbstractDrawable {
         for (let index = 0; index < this.tabs; index++) {
             this.plateItems.push([]);
         }
+        this.activePlaneItems = this.plateItems[this.currentActivePlane];
 
         this.runPointer = new RunPointer(0, 0, 40, 40);
     }
@@ -117,15 +154,43 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     MoveSourcePanel(direction = 1, reset = true) {
+        if(this.items[0].y >=20 && direction > 0) {
+            return;
+        }
+
+        if(this.mainPanel.y + this.mainPanel.h <= 700 && direction < 0) {
+            return;
+        }
+
+        for (const item of this.items) {
+            if(item == this.sidePanel) {
+                return;
+            }
+            var position_y = item.y + 20 * direction;
+            item.SetPosition(item.x, position_y);
+            if(item instanceof Tab) {
+                item.UpdatePoints();
+            }
+        }
 
     }
 
     ResetPosition() {
-
+        for (const item of this.items) {
+            if(item == this.sidePanel) {
+                return;
+            }
+            item.ResetPosition();
+        }
+        this.RearrangeCommands();
     }
 
     SetCommandPosition() {
-
+        if(!this.selectedCommand in this.activePlaneItems) {
+            this.selectedCommand.SetPosition(this.mainPanel.x + this.mainPanel.w / 2 - 25, this.mainPanel.y + 5 + this.activePlaneItems.length * 55);
+        } else {
+            this.selectedCommand.SetPosition(this.mainPanel.x + this.mainPanel.w / 2 - 25, this.mainPanel.y + 5 + this.activePlaneItems.indexOf(this.selectedCommand) * 55);
+        }
     }
 
     RearrangeCommands(ignore = null, needReset = true) {
@@ -133,15 +198,19 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     AddItemToCurrentPlane(item, plane = null) {
-
+        if(plane) {
+            this.plateItems[plane].push(item);
+        } else {
+            this.activePlaneItems.push(item);
+        }
     }
 
     ResizeSourceBlock() {
-
+        this.mainPanel.h = Math.max(this.activePlaneItems.length * 55 + 5, this.base.h);
     }
 
     RepaintTabs(id) {
-        this.items.forEach(item => {
+        for (const item of this.items) {
             if(item instanceof Tab) {
                 if( id == item.GetId()) {
                     item.selected = true;
@@ -149,7 +218,7 @@ export class ScrollingPlane extends AbstractDrawable {
                     item.selected = false;
                 }
             }
-        });
+        }
     }
 
     PrepareSidePanelForLogo() {
@@ -234,7 +303,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     HasNext(counter) {
-        return counter < this.plateItems[this.currentActivePlane].length;
+        return counter < this.activePlaneItems.length;
     }
 
     EnableSidepanel(state) {
@@ -242,27 +311,67 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     FindLoopBase(loopEnd) {
-
+        for (const elem of this.activePlaneItems) {
+            if(elem instanceof Logo.Loop) {
+                if(elem.loopend == loopEnd) {
+                    return elem;
+                }
+            }
+        }
     }
 
     FindLoopEnd(loopBase) {
-
+        for (const elem of this.activePlaneItems) {
+            if(elem instanceof Logo.LoopEnd){
+                if(loopBase.loopend == elem) {
+                    return elem;
+                }
+            }
+        }
     }
 
     CompileLoops() {
-
+        for (const element of this.activePlaneItems) {
+            if(element instanceof Logo.Loop) {
+                if(!element.compileInformation.compiled) {
+                    var loopEnd = this.FindLoopEnd(element);
+                    var loopEndIndex = this.activePlaneItems.indexOf(loopEnd);
+                    var loopStartIndex = this.activePlaneItems.indexOf(element);
+                    var preTest = loopEndIndex > loopStartIndex;
+                    element.SetCompileInfo(preTest, loopEndIndex);
+                    loopEnd.SetCompileInfo(preTest, loopStartIndex);
+                }
+            }
+            if(element instanceof Logo.LoopEnd) {
+                if(!element.compileInformation.compiled) {
+                    var loopBase = this.FindLoopBase(element);
+                    var loopStartIndex = this.activePlaneItems.indexOf(loopBase);
+                    var loopEndIndex = this.activePlaneItems.indexOf(element);
+                    var preTest = loopEndIndex > loopStartIndex;
+                    element.SetCompileInfo(preTest, loopStartIndex);
+                    loopBase.SetCompileInfo(preTest, loopEndIndex);
+                }
+            }
+        }
     }
 
     ResetCompileInfos() {
-        this.plateItems[this.currentActivePlane].forEach(element => {
+        for (const element of this.activePlaneItems) {
             if(element instanceof Logo.Loop || element instanceof Logo.LoopEnd) {
                 element.ResetCompileInfo();
             } 
-        });
+        }
     }
 
     StopRunning() {
-
+        for (const elem of this.activePlaneItems) {
+            if(elem instanceof Logo.Loop) {
+                elem.running = false;
+                elem.ResetCycleCounter();
+            } else if (elem instanceof Logo.LoopEnd) {
+                elem.running = false;
+            }
+        }
     }
 
     DrawRunPointer(screen) {
@@ -284,21 +393,27 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     ClearCurrentSource() {
-        this.plateItems[this.currentActivePlane] = [];
+        this.activePlaneItems = [];
         this.ResetPosition();
         this.ResizeSourceBlock();
     }
 
     CreateACommandCopy() {
-
+        this.selectedCommand = JSON.parse(JSON.stringify(this.clicked));
+        if(this.selectedCommand instanceof Logo.Loop) {
+            this.selectedCommand.RollColor();
+            this.loopend = new Logo.LoopEnd(this.selectedCommand.x, this.selectedCommand.y + 55, 50, 50);
+            this.loopend.SetLoopBase(this.selectedCommand);
+            this.selectedCommand.SetLoopend(this.loopend);
+        }
     }
 
     SetCurrentActiveCommandList(list) {
-        this.plateItems[this.currentActivePlane] = list;
+        this.activePlaneItems = list;
     }
 
     GetCurrentActiveCommandList() {
-        return this.plateItems[this.currentActivePlane];
+        return this.activePlaneItems;
     }
 
 }
