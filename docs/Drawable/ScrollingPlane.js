@@ -3,8 +3,10 @@ import { RunPointer } from "./RunPointer.js";
 import { Tab } from "./Tab.js";
 import { Rect } from "./Rectangle.js";
 import { Button } from "./Button.js";
-import { FONT_AWESOME, COLOR } from "../System/Constants.js";
+import { FONT_AWESOME, COLOR, MOUSE } from "../System/Constants.js";
 import * as Logo from "./LogoModule/DrawableCommands.js";
+import { Command } from "./Base/Command.js";
+import { MoveElementList } from "../System/SupportFunctions.js";
 
 
 export class ScrollingPlane extends AbstractDrawable {
@@ -39,24 +41,26 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     IsInside(position) {
+        
         if(this.sidePanelActive) {
             this.sidePanel.IsInside(position);
             for (const item of this.grid) {
                 if(item.IsInside(position)) {
+                    console.log("Scrolling plane isinside");
                     this.clicked = item;
                     return true;
                 }
             }
 
             if(this.clearCommandsButton.IsInside(position)){
-                if(this.activePlaneItems.length) {
+                if(this.plateItems[this.currentActivePlane].length) {
                     this.clicked = this.clearCommandsButton;
                     return true;
                 }
             }
         }
 
-        for (const item of this.activePlaneItems) {
+        for (const item of this.plateItems[this.currentActivePlane]) {
             if(item.IsInside(position)) {
                 this.clicked = item;
                 return true;
@@ -77,11 +81,11 @@ export class ScrollingPlane extends AbstractDrawable {
             
         }
 
-        for (const element of this.activePlaneItems) {
+        for (const element of this.plateItems[this.currentActivePlane]) {
             element.DrawObject(screen);
         }
 
-        for (const element of this.activePlaneItems) {
+        for (const element of this.plateItems[this.currentActivePlane]) {
             if(element instanceof Logo.Loop) {
                 element.DrawLoopend(screen);
             }
@@ -94,7 +98,7 @@ export class ScrollingPlane extends AbstractDrawable {
                 element.DrawObject(screen);
             }
 
-            if (this.activePlaneItems.length) {
+            if (this.plateItems[this.currentActivePlane].length) {
                 this.clearCommandsButton.DrawObject(screen);
             }
         }
@@ -108,8 +112,6 @@ export class ScrollingPlane extends AbstractDrawable {
         for (let index = 0; index < this.tabs; index++) {
             this.plateItems.push([]);
         }
-        this.activePlaneItems = this.plateItems[this.currentActivePlane];
-
         this.runPointer = new RunPointer(0, 0, 40, 40);
     }
 
@@ -142,15 +144,187 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     OnDrag(event) {
-
+        var adjustmentNeeded = false;
+        if(this.selectedCommand) {
+            this.selectedCommand.Drag(event.realpos);
+            if(!this.selectedCommand in this.plateItems[this.currentActivePlane] && this.mainPanel.IsInside(event.realpos)) {
+                if(this.selectedCommand instanceof Logo.Loop) {
+                    this.selectedCommand.loopend.SetPosition(this.selectedCommand.x, this.selectedCommand.y + 55);
+                    this.AddItemToCurrentPlane(this.loopend);
+                }
+                this.AddItemToCurrentPlane(this.selectedCommand);
+                this.RearrangeCommands(this.selectedCommand);
+            }
+            if(this.selectedCommand in this.plateItems[this.currentActivePlane] && ! this.mainPanel.IsInside(event.realpos)) {
+                this.plateItems[this.currentActivePlane].remove(this.selectedCommand);
+                if(this.selectedCommand instanceof Logo.Loop) {
+                    if(this.selectedCommand.loopend in this.plateItems[this.currentActivePlane]) {
+                        this.plateItems[this.currentActivePlane].remove(this.selectedCommand.loopend);
+                    }
+                }
+                if(this.selectedCommand instanceof Logo.LoopEnd) {
+                    for (const item of this.plateItems[this.currentActivePlane]) {
+                        if(item instanceof Loop) {
+                            if(item.loopEnd == this.selectedCommand) {
+                                this.plateItems[this.currentActivePlane].remove(item);
+                                this.selectedCommand = null;
+                                adjustmentNeeded = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                this.RearrangeCommands();
+            }
+            this.ResizeSourceBlock();
+            if(this.selectedCommand in this.plateItems[this.currentActivePlane]) {
+                for (const item of this.plateItems[this.currentActivePlane]) {
+                    if(this.selectedCommand != item && item != null) {
+                        if (item.y - item.h / 2 < this.selectedCommand / 2) {
+                            MoveElementList(this.plateItems[this.currentActivePlane], this.selectedCommand, this.plateItems[this.currentActivePlane].indexOf(item));
+                            this.RearrangeCommands(this.selectedCommand);
+                        }
+                    }
+                }
+            }
+            if(this.mainPanel.x < event.realpos[0] && event.realpos[0] < this.mainPanel.x + this.mainPanel.w){
+                if(event.realpos[1] < 20) {
+                    this.MoveSourcePanel(1);
+                }
+                if(event.realpos[1] > 700) {
+                    this.MoveSourcePanel(-1);
+                }
+            }
+            if(adjustmentNeeded) {
+                while(this.mainPanel.y + this.mainPanel.h < 700 && this.mainPanel.h > 700) {
+                    this.MoveSourcePanel(1);
+                }
+            }
+        }
     }
 
     OnRelease(event) {
+        if(this.selectedCommand) {
+            if(this.mainPanel.IsInside(event.realpos)){
+                this.SetCommandPosition();
+                if(!this.selectedCommand in this.plateItems[this.currentActivePlane]) {
+                    this.AddItemToCurrentPlane(this.selectedCommand);
+                    if(this.selectedCommand instanceof Logo.Loop) {
+                        this.AddItemToCurrentPlane(this.selectedCommand.loopend);
+                    }
+                }
+            } else {
+                while (this.mainPanel.y + this.mainPanel.h < 700 && this.mainPanel.h > 700) {
+                    this.MoveSourcePanel(1);
+                }
+                if(this.mainPanel.h < 700);{
+                    this.ResetPosition();
+                    this.ResizeSourceBlock();
+                }
+                if(this.selectedCommand in this.plateItems[this.currentActivePlane]){
+                    this.plateItems[this.currentActivePlane].remove(this.selectedCommand);
+                }
+                for (const item of this.plateItems[this.currentActivePlane]) {
+                    if (item == null) {
+                        this.plateItems[this.currentActivePlane].remove(item);
+                    }
+                }
+                this.selectedCommand = null;
 
+                this.RearrangeCommands();
+
+            }
+        }
+        this.selectedCommand = null;
     }
 
     OnClick(event) {
 
+        //console.log("Event: ",  event);
+        console.log("button down: ", this.gui.button_down);
+        if(event.type == "mousedown"){
+            if(this.clicked instanceof Tab) {
+                var id = this.clicked.GetId();
+                this.currentActivePlane = id;
+                this.ResetPosition();
+                this.RepaintTabs(id);
+                this.ResizeSourceBlock();
+            } else if (this.clicked instanceof Command) {
+                console.log(this.gui.button_down.a, event.button, MOUSE.LMB);
+                
+                if(event.button == MOUSE.MMB || this.gui.button_down.a && event.button == MOUSE.LMB) {
+                    if(!this.clicked instanceof Logo.LoopEnd) {
+                        this.CreateACommandCopy();
+                        this.AddItemToCurrentPlane(this.selectedCommand);
+                        if(this.selectedCommand instanceof Logo.Loop) {
+                            this.AddItemToCurrentPlane(this.selectedCommand.loopend);
+                        }
+                        this.selectedCommand = null;
+                        this.RearrangeCommands();
+                        this.ResizeSourceBlock();
+                    }
+                } else if (event.button == MOUSE.RMB || this.gui.button_down.s && event.button == MOUSE.LMB) {
+                    
+                    if(this.clicked instanceof Logo.PenColor) {
+                        this.clicked.ChangeColor();
+                    } else if(this.clicked instanceof Logo.PenWidth) {
+                        this.clicked.Extend();
+                    } else if (this.clicked instanceof Logo.Loop) {
+                        this.clicked.ChangeCycleNumber();
+                    }
+                } else if (event.button == MOUSE.LMB && this.gui.button_down.d) {
+                    if(this.mainPanel.IsInside(event.realpos)) {
+                        this.selectedCommand = this.clicked;
+                        if(this.selectedCommand instanceof Logo.Loop) {
+                            this.loopend = this.selectedCommand.loopend;
+                        }
+                        this.plateItems[this.currentActivePlane].remove(this.selectedCommand);
+                        if(this.loopend) {
+                            this.plateItems[this.currentActivePlane].remove(this.loopend);
+                        }
+                        this.selectedCommand = null;
+                        this.loopend = null;
+                        this.RearrangeCommands();
+                        this.ResizeSourceBlock();
+                        while(this.mainPanel.y + this.mainPanel.h < 700 && this.mainPanel.h > 700) {
+                            this.MoveSourcePanel(1);
+                        }
+                        if(this.mainPanel.h < 700) {
+                            this.ResetPosition();
+                            this.ResizeSourceBlock();
+                        }
+                    }
+                } else if (event.button == MOUSE.LMB) {
+                    console.log("event", event);
+                    
+                    if(! this.mainPanel.IsInside(event.realpos)) {
+                        if(!this.clicked instanceof Logo.LoopEnd) {
+                            this.CreateACommandCopy();
+                        }
+                    } else {
+                        this.selectedCommand = this.clicked;
+                        if(this.selectedCommand instanceof Logo.Loop) {
+                            this.loopend = this.selectedCommand.loopend;
+                        }
+                    }
+                    this.selectedCommand.SetDelta(event.realpos);
+                }
+            } else if (this.clicked instanceof Button) {
+                this.clicked.OnClick(event);
+            } else {
+                console.log("Clicked element: ", this.clicked);
+            }
+        } else { // wheel
+            if(this.mainPanel.IsInside(event.realpos)) {
+                if(this.mainPanel.h > 600) {
+                    if(event.delta_y < 0) {
+                        this.MoveSourcePanel(-1);
+                    } else {
+                        this.MoveSourcePanel(1);
+                    }
+                }
+            }
+        }
     }
 
     MoveSourcePanel(direction = 1, reset = true) {
@@ -172,7 +346,7 @@ export class ScrollingPlane extends AbstractDrawable {
                 item.UpdatePoints();
             }
         }
-
+        this.RearrangeCommands(undefined, reset);
     }
 
     ResetPosition() {
@@ -186,10 +360,10 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     SetCommandPosition() {
-        if(!this.selectedCommand in this.activePlaneItems) {
-            this.selectedCommand.SetPosition(this.mainPanel.x + this.mainPanel.w / 2 - 25, this.mainPanel.y + 5 + this.activePlaneItems.length * 55);
+        if(!this.selectedCommand in this.plateItems[this.currentActivePlane]) {
+            this.selectedCommand.SetPosition(this.mainPanel.x + this.mainPanel.w / 2 - 25, this.mainPanel.y + 5 + this.plateItems[this.currentActivePlane].length * 55);
         } else {
-            this.selectedCommand.SetPosition(this.mainPanel.x + this.mainPanel.w / 2 - 25, this.mainPanel.y + 5 + this.activePlaneItems.indexOf(this.selectedCommand) * 55);
+            this.selectedCommand.SetPosition(this.mainPanel.x + this.mainPanel.w / 2 - 25, this.mainPanel.y + 5 + this.plateItems[this.currentActivePlane].indexOf(this.selectedCommand) * 55);
         }
     }
 
@@ -201,12 +375,12 @@ export class ScrollingPlane extends AbstractDrawable {
         if(plane) {
             this.plateItems[plane].push(item);
         } else {
-            this.activePlaneItems.push(item);
+            this.plateItems[this.currentActivePlane].push(item);
         }
     }
 
     ResizeSourceBlock() {
-        this.mainPanel.h = Math.max(this.activePlaneItems.length * 55 + 5, this.base.h);
+        this.mainPanel.h = Math.max(this.plateItems[this.currentActivePlane].length * 55 + 5, this.base.h);
     }
 
     RepaintTabs(id) {
@@ -303,7 +477,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     HasNext(counter) {
-        return counter < this.activePlaneItems.length;
+        return counter < this.plateItems[this.currentActivePlane].length;
     }
 
     EnableSidepanel(state) {
@@ -311,7 +485,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     FindLoopBase(loopEnd) {
-        for (const elem of this.activePlaneItems) {
+        for (const elem of this.plateItems[this.currentActivePlane]) {
             if(elem instanceof Logo.Loop) {
                 if(elem.loopend == loopEnd) {
                     return elem;
@@ -321,7 +495,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     FindLoopEnd(loopBase) {
-        for (const elem of this.activePlaneItems) {
+        for (const elem of this.plateItems[this.currentActivePlane]) {
             if(elem instanceof Logo.LoopEnd){
                 if(loopBase.loopend == elem) {
                     return elem;
@@ -331,12 +505,12 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     CompileLoops() {
-        for (const element of this.activePlaneItems) {
+        for (const element of this.plateItems[this.currentActivePlane]) {
             if(element instanceof Logo.Loop) {
                 if(!element.compileInformation.compiled) {
                     var loopEnd = this.FindLoopEnd(element);
-                    var loopEndIndex = this.activePlaneItems.indexOf(loopEnd);
-                    var loopStartIndex = this.activePlaneItems.indexOf(element);
+                    var loopEndIndex = this.plateItems[this.currentActivePlane].indexOf(loopEnd);
+                    var loopStartIndex = this.plateItems[this.currentActivePlane].indexOf(element);
                     var preTest = loopEndIndex > loopStartIndex;
                     element.SetCompileInfo(preTest, loopEndIndex);
                     loopEnd.SetCompileInfo(preTest, loopStartIndex);
@@ -345,8 +519,8 @@ export class ScrollingPlane extends AbstractDrawable {
             if(element instanceof Logo.LoopEnd) {
                 if(!element.compileInformation.compiled) {
                     var loopBase = this.FindLoopBase(element);
-                    var loopStartIndex = this.activePlaneItems.indexOf(loopBase);
-                    var loopEndIndex = this.activePlaneItems.indexOf(element);
+                    var loopStartIndex = this.plateItems[this.currentActivePlane].indexOf(loopBase);
+                    var loopEndIndex = this.plateItems[this.currentActivePlane].indexOf(element);
                     var preTest = loopEndIndex > loopStartIndex;
                     element.SetCompileInfo(preTest, loopStartIndex);
                     loopBase.SetCompileInfo(preTest, loopEndIndex);
@@ -356,7 +530,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     ResetCompileInfos() {
-        for (const element of this.activePlaneItems) {
+        for (const element of this.plateItems[this.currentActivePlane]) {
             if(element instanceof Logo.Loop || element instanceof Logo.LoopEnd) {
                 element.ResetCompileInfo();
             } 
@@ -364,7 +538,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     StopRunning() {
-        for (const elem of this.activePlaneItems) {
+        for (const elem of this.plateItems[this.currentActivePlane]) {
             if(elem instanceof Logo.Loop) {
                 elem.running = false;
                 elem.ResetCycleCounter();
@@ -393,12 +567,13 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     ClearCurrentSource() {
-        this.activePlaneItems = [];
+        this.plateItems[this.currentActivePlane] = [];
         this.ResetPosition();
         this.ResizeSourceBlock();
     }
 
     CreateACommandCopy() {
+        console.log("COPPPYY");
         this.selectedCommand = JSON.parse(JSON.stringify(this.clicked));
         if(this.selectedCommand instanceof Logo.Loop) {
             this.selectedCommand.RollColor();
@@ -409,11 +584,11 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     SetCurrentActiveCommandList(list) {
-        this.activePlaneItems = list;
+        this.plateItems[this.currentActivePlane] = list;
     }
 
     GetCurrentActiveCommandList() {
-        return this.activePlaneItems;
+        return this.plateItems[this.currentActivePlane];
     }
 
 }

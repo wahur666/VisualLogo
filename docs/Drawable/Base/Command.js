@@ -2,7 +2,6 @@ import { AbstractDrawable } from "./AbstractDrawable.js";
 import { Rect } from "../Rectangle.js";
 import { TextIcon } from "../TextIcon.js";
 import { Sprite } from "../Sprite.js";
-import { IMG } from "../../System/Constants.js";
 
 export class Command extends AbstractDrawable {
     constructor(x = null, y = null, w = null, h = null) {
@@ -20,7 +19,7 @@ export class Command extends AbstractDrawable {
     }
 
     IsInside(position) {
-        return this.x <= position[0] && this.x + this.w >= position[0] && this.y <= position[1] && this.y + self.h >= position[1];
+        return this.x <= position[0] && this.x + this.w >= position[0] && this.y <= position[1] && this.y + this.h >= position[1];
     }
 
     DrawObject(screen) {

@@ -44,7 +44,7 @@ export class ApplicationCore {
         this.gui.KeyboardHandler(event);
     }
 
-    Run() {
+    Update() {
         this.gui.DrawGUI();
     }
 

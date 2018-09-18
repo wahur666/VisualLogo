@@ -95,7 +95,6 @@ export class GUI {
     }
 
     MouseHandler(event) {
-        
         if(event.type == "mousemove") {
             if (this.mousedown) {
                 this.gui.OnDrag(event);
@@ -176,7 +175,8 @@ export class GUI {
         this.mouseDown = true;
         if(!this.disable_input) {
             for (const item of this.items) {
-                if(item.IsInside(this.EventPos(event))) {
+                event["realpos"] = this.EventPos(event);
+                if(item.IsInside(event.realpos)) {
                     if(item instanceof Rect){
                         return;
                     } else if (item instanceof Button) {

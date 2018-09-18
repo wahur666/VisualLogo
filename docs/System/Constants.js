@@ -84,3 +84,9 @@ export class FONT_AWESOME {
     static get CHECK() { return "\uF00C" }
     static get CLOSE() { return "\uF00D" }
 }
+
+export class MOUSE {
+    static get LMB() { return 0; }
+    static get MMB() { return 1; }
+    static get RMB() { return 2; }
+}

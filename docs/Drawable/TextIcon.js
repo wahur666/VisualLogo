@@ -13,7 +13,7 @@ export class TextIcon extends AbstractDrawable {
     }
 
     IsInside(position) {
-        return this.x <= position[0] && this.x + this.h >= position[0] && this.y <= position[1] && self.y + self.w >= position[1];
+        return this.x <= position[0] && this.x + this.h >= position[0] && this.y <= position[1] && this.y + this.w >= position[1];
     }
 
     DrawObject(screen) {
