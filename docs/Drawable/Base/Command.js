@@ -57,7 +57,7 @@ export class Command extends AbstractDrawable {
         }
 
         if(this.textIcon){
-            this.textIcon.SetPosition(x,y);
+            this.textIcon.SetPosition(x,y + this.h * 0.8);
         }
     }
 

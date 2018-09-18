@@ -28,6 +28,7 @@ export class Tab extends Polygon {
     }
 
     DrawObject(screen) {
+        super.coordinates = this.CalculatePoints();
         if (!this.transparent) {
             if (this.selected) {
                 this.accentColor = this.darkAccent;

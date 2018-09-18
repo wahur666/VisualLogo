@@ -371,7 +371,7 @@ export class Loop extends Command {
 }
 
 export class LoopEnd extends Command {
-    constructor(x, y, z, h){
+    constructor(x, y, w, h){
         super(x, y, w, h);
 
         this.compileInformation = {

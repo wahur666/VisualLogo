@@ -46,7 +46,6 @@ export class ScrollingPlane extends AbstractDrawable {
             this.sidePanel.IsInside(position);
             for (const item of this.grid) {
                 if(item.IsInside(position)) {
-                    console.log("Scrolling plane isinside");
                     this.clicked = item;
                     return true;
                 }
@@ -104,6 +103,8 @@ export class ScrollingPlane extends AbstractDrawable {
         }
 
         if(this.selectedCommand){
+            console.log(this.selectedCommand.x, this.selectedCommand.y);
+            
             this.selectedCommand.DrawObject(screen);
         }
     }
@@ -239,9 +240,6 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     OnClick(event) {
-
-        //console.log("Event: ",  event);
-        console.log("button down: ", this.gui.button_down);
         if(event.type == "mousedown"){
             if(this.clicked instanceof Tab) {
                 var id = this.clicked.GetId();
@@ -250,8 +248,6 @@ export class ScrollingPlane extends AbstractDrawable {
                 this.RepaintTabs(id);
                 this.ResizeSourceBlock();
             } else if (this.clicked instanceof Command) {
-                console.log(this.gui.button_down.a, event.button, MOUSE.LMB);
-                
                 if(event.button == MOUSE.MMB || this.gui.button_down.a && event.button == MOUSE.LMB) {
                     if(!this.clicked instanceof Logo.LoopEnd) {
                         this.CreateACommandCopy();
@@ -295,10 +291,8 @@ export class ScrollingPlane extends AbstractDrawable {
                         }
                     }
                 } else if (event.button == MOUSE.LMB) {
-                    console.log("event", event);
-                    
                     if(! this.mainPanel.IsInside(event.realpos)) {
-                        if(!this.clicked instanceof Logo.LoopEnd) {
+                        if(!(this.clicked instanceof Logo.LoopEnd)) {
                             this.CreateACommandCopy();
                         }
                     } else {
@@ -384,7 +378,7 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     RepaintTabs(id) {
-        for (const item of this.items) {
+        for (let item of this.items) {
             if(item instanceof Tab) {
                 if( id == item.GetId()) {
                     item.selected = true;
@@ -573,14 +567,14 @@ export class ScrollingPlane extends AbstractDrawable {
     }
 
     CreateACommandCopy() {
-        console.log("COPPPYY");
-        this.selectedCommand = JSON.parse(JSON.stringify(this.clicked));
+        this.selectedCommand = _.cloneDeep(this.clicked);
         if(this.selectedCommand instanceof Logo.Loop) {
             this.selectedCommand.RollColor();
             this.loopend = new Logo.LoopEnd(this.selectedCommand.x, this.selectedCommand.y + 55, 50, 50);
             this.loopend.SetLoopBase(this.selectedCommand);
             this.selectedCommand.SetLoopend(this.loopend);
         }
+        
     }
 
     SetCurrentActiveCommandList(list) {

@@ -95,9 +95,10 @@ export class GUI {
     }
 
     MouseHandler(event) {
+        event["realpos"] = this.EventPos(event);
         if(event.type == "mousemove") {
-            if (this.mousedown) {
-                this.gui.OnDrag(event);
+            if (this.mouseDown) {
+                this.OnDrag(event);
             }
         } else if(event.type == "mousedown" || event.type == "wheel") {
             this.OnClick(event);
@@ -168,14 +169,18 @@ export class GUI {
     }
 
     OnRelease(event) {
-
+        this.mouseDown = false;
+        for (const item of this.items) {
+            if(item instanceof ScrollingPlane) {
+                item.OnRelease(event);
+            }
+        }
     }
 
     OnClick(event) {
         this.mouseDown = true;
         if(!this.disable_input) {
             for (const item of this.items) {
-                event["realpos"] = this.EventPos(event);
                 if(item.IsInside(event.realpos)) {
                     if(item instanceof Rect){
                         return;
