@@ -64,7 +64,7 @@ export class Tab extends Polygon {
     }
 
     UpdatePoints() {
-        this.coordinates = this.CalculatePoints();
+        super.coordinates = this.CalculatePoints();
     }
 
     ResetPositions() {

@@ -214,4 +214,14 @@ export class GUI {
                     Math.round((event.clientY - this.canvasRect.top) / (this.canvasRect.bottom - this.canvasRect.top) * this.canvas.height)];
     }
 
+    Compile() {
+        this.scrollplane.CompileLoops();
+    }
+
+    NeedCompile() {
+        this.compile_needed = true;
+    }
+
+
+
 }

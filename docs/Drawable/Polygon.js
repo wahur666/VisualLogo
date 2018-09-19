@@ -25,7 +25,7 @@ export class Polygon extends AbstractDrawable{
     }
 
     ResetPosition(){
-        this.coordinates = this.base.coordinates;
+        this.coordinates = this.base.coords;
     }
 
     GetParameters(){

@@ -365,7 +365,35 @@ export class Loop extends Command {
     }
 
     CalculatePointList() {
-        
+        var pointList = [];
+        if(this.ark_level == 0) {
+            if (this.y < this.loopend.y) {
+                var loopStart = [Math.round(this.x + this.w * 0.75), Math.round(this.y + this.h)];
+            } else {
+                var loopStart = [Math.round(this.x + this.w * 0.75), Math.round(this.y)];
+            }
+            var l3 = [Math.round(this.x + this.w * 0.75), Math.round(this.loopend.y + this.loopend.h / 2)];
+            pointList.push(loopStart);
+            pointList.push(l3);
+        } else if (this.ark_level == 1) {
+            var loopStart = [Math.round(this.x + this.w), Math.round(this.y + this.h / 2)];
+            var l0 = [Math.round(this.x + this.w * 1.25), Math.round(this.y + this.h / 2)];
+            var l3 = [Math.round(this.x + this.w * 1.25), Math.round(this.loopend.y + this.loopend.h / 2)];
+            pointList.push(loopStart);
+            pointList.push(l0);
+            pointList.push(l3);
+        } else {
+            var loopStart = [Math.round(this.x + this.w), Math.round(this.y + this.h / 2)];
+            var l0 = [Math.round(this.x + this.w * 1.40), Math.round(this.y + this.h / 2)];
+            var l3 = [Math.round(this.x + this.w * 1.40), Math.round(this.loopend.y + this.loopend.h / 2)];
+            pointList.push(loopStart);
+            pointList.push(l0);
+            pointList.push(l3);
+        }
+
+        var loopEnd = [Math.round(this.loopend.x + this.loopend.w), Math.round(this.loopend.y + this.loopend.h / 2)];
+        pointList.push(loopEnd);
+        return pointList;
     }
 
 }
