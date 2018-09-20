@@ -1,7 +1,8 @@
 # Logo fejlesztőkörnyezet óvodás gyerekeknek 
 Szakdolgozat Verizókezelt Változata
 
-##Rövid leírás
+## Rövid leírás
+
 A Logo parancsnyelv, a Lisp egy könnyebben olvasható adaptációja. Manapság a teknőssel rajzoló program a legelterjedtebb változata. Ennek többféle implementációja van, Magyarországon a Comenius Logo van elterjedve. Ezt a programot széles körben használják arra, hogy elemi iskolásokat tanítsanak meg alapvető programozási technikákra.
 
 A munka a Logo nyelvhez hasonlóan működik, egy rajzfelületre lehet rajzolni parancsokkal. Ehhez
@@ -13,7 +14,7 @@ alacsony teljesítményű számítógépeken fusson, Windows és Linux környeze
 
 ## Futtatási infók
 
-- Telepített [Python2](https://www.python.org/)
+- Telepített [Python](https://www.python.org/)
 - Telepített PIP
 
 ### Szükséges mudulok
@@ -22,16 +23,32 @@ Parancs:
 ```sh
 pip install {modul_neve}
 ```
-#### Verzio 1
-- Tkinter
-- Pygame
 
-#### Verzio 2 (aktív)
+#### [Verzio 2](https://github.com/wahur666/VisualLogo/tree/master/szakdoliV2) (aktív)
 
-- Pygame
-- Pillow
+- Pyhon 2
+    - Pygame
+    - Pillow
 
-### Futatási parancsok
+##### Futatási parancs
 
     python VisualLogo.py
+
+#### [Verzio 3](https://github.com/wahur666/VisualLogo/tree/master/szakdoliV3) (migrált)
+
+- Python 3
+    - Pygame
+    - Pillowű
+
+##### Futatási parancs
+
+    python VisualLogo.py
+
+
+
+
+#### [Javascript Verzio](https://github.com/wahur666/VisualLogo/tree/master/docs) (újra implementált)
+
+- Interaktív [webapp](http://wahur666.github.io/VisualLogo/)
+- ES6 compatiblis asztali böngésző
 
