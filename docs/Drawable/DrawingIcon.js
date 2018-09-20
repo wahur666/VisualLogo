@@ -79,7 +79,7 @@ export class DrawingIcon extends Polygon{
             var y = element[1] - this.base_coordinates[0][1];
             
             var new_x = Math.trunc(Math.round(x * cf - y * sf)) + this.base_coordinates[0][0];
-            var new_y = Math.trunc(Math.round(x * sf - y * cf)) + this.base_coordinates[0][1];
+            var new_y = Math.trunc(Math.round(x * sf + y * cf)) + this.base_coordinates[0][1];
             this.coordinates.push([new_x, new_y]);
         }
     }

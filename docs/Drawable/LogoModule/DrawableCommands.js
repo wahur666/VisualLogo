@@ -185,9 +185,9 @@ export class FloodFill extends Command {
     constructor(x = null, y = null, w = null, h = null, imgPath = null) {
         super(x, y, w, h);
         
-        this.keyCode = FONT_AWESOME.FLOODFILL;
+        this.keyCode = FONT_AWESOME.CLOSE;
         this.mainRect.SetAccentColor(COLOR.HATTER_3);
-        super.SetKeyCodePadding(3);
+        super.SetKeyCodePadding(8);
     }
 }
 

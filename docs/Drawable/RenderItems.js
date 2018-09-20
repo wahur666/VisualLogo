@@ -11,7 +11,7 @@ export class Line {
     }
 
     DrawObject(screen) {
-        if(this.penDown) {
+        if (this.penDown) {
             DrawLine(screen, this.color, this.vec2Start, this.vec2End, this.width);
         }
     }
@@ -25,18 +25,15 @@ export class Node {
 }
 
 export class Flood {
-    constructor(vec2pos=null, color=COLOR.BLACK) {
+    constructor(vec2pos = null, color = COLOR.BLACK) {
         this.vec2pos = vec2pos;
         this.color = color;
         this.calculated = false;
-        this.surface = null;
+        this.pixelArray = null;
     }
 
     DrawObject(screen) {
-
+       
     }
 
-    FloodFill() {
-        
-    }
 }

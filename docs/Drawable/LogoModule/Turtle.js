@@ -1,5 +1,5 @@
 import { COLOR } from "../../System/Constants.js";
-import { Line } from "../RenderItems.js";
+import { Line, Flood } from "../RenderItems.js";
 
 export class Turtle {
     constructor() {
@@ -28,7 +28,7 @@ export class Turtle {
         [this.pos_x, this.pos_y] = this.Move(1, distance);
         this.NormalizeMovement();
         var [end_x, end_y] = [this.pos_x, this.pos_y];
-        line_o = new Line([start_x + this.distortion, start_y + this.distortion], [end_x + this.distortion, end_y + this.distortion],
+        var line_o = new Line([start_x + this.distortion, start_y + this.distortion], [end_x + this.distortion, end_y + this.distortion],
             this.pen_color, this.pen_width, this.pen_down);
         this.lines.push(line_o);
     }
@@ -38,7 +38,7 @@ export class Turtle {
         [this.pos_x, this.pos_y] = this.Move(-1, distance);
         this.NormalizeMovement();
         var [end_x, end_y] = [this.pos_x, this.pos_y];
-        line_o = new Line([start_x + this.distortion, start_y + this.distortion], [end_x + this.distortion, end_y + this.distortion],
+        var line_o = new Line([start_x + this.distortion, start_y + this.distortion], [end_x + this.distortion, end_y + this.distortion],
             this.pen_color, this.pen_width, this.pen_down);
         this.lines.push(line_o);
     }
@@ -55,9 +55,9 @@ export class Turtle {
 
     Home() {
         var [start_x, start_y] = [this.pos_x, this.pos_y];
-        this.pos_x, this.pos_y = this.base.x, this.base.y;
-        end_x, end_y = this.pos_x, this.pos_y;
-        line_o = Line([start_x + this.distortion, start_y + this.distortion], [end_x + this.distortion, end_y + this.distortion],
+        [this.pos_x, this.pos_y] = [this.base.x, this.base.y];
+        var [end_x, end_y] = [this.pos_x, this.pos_y];
+        var line_o = new Line([start_x + this.distortion, start_y + this.distortion], [end_x + this.distortion, end_y + this.distortion],
             this.pen_color, this.pen_width, this.pen_down);
         this.lines.push(line_o);
     }
@@ -128,9 +128,9 @@ export class Turtle {
         this.distortion = amount;
     }
 
-    SetBoundaries([top_x, top_y], [bot_x, bot_y]) {
-        this.boundaries.top = [top_x, top_y];
-        this.boundaries.bot = [bot_x, bot_y];
+    SetBoundaries(top, bot) {
+        this.boundaries.top = top;
+        this.boundaries.bot = bot;
     }
 
     NormalizeMovement() {

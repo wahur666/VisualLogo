@@ -22,13 +22,13 @@ export class RunPointer extends Polygon {
     CalculatePoints() {
         var points = [];
 
-        var p1 = (this.x + this.w / 2, this.y);
-        var p2 = (this.x - this.w / 2, this.y - this.h / 2);
-        var p3 = (this.x - this.w / 2, this.y + this.h / 2);
+        var p1 = [this.x + this.w / 2, this.y];
+        var p2 = [this.x - this.w / 2, this.y - this.h / 2];
+        var p3 = [this.x - this.w / 2, this.y + this.h / 2];
 
+        points.push(p3);
         points.push(p1);
         points.push(p2);
-        points.push(p3);
 
         return points;
     }

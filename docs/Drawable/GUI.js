@@ -1,4 +1,4 @@
-import { COLOR, FONT_AWESOME } from "../System/Constants.js";
+import { COLOR, FONT_AWESOME, MOUSE } from "../System/Constants.js";
 import { Timer } from "../System/Timer.js";
 import { Button } from "./Button.js";
 import { DrawingIcon } from "./DrawingIcon.js";
@@ -75,14 +75,26 @@ export class GUI {
 
     DrawGUI(){
         DrawRect(this.screen, this.background_color, 0, 0, this.canvas.width, this.canvas.height, 0);
-
+        
+        this.timer.tick();
         for (const element of this.items) {
-            element.DrawObject(this.screen);
-            
+            element.DrawObject(this.screen);            
+        }
+
+        if(this.running) {
+            this.RunCode(this.skip_wait);
+        }
+
+        if(this.show_run_pointer) {
+            this.scrollplane.DrawRunPointer(this.screen);
         }
 
         var [pos, rot, show] = this.application_core.logoCore.GetTurtleInformationToRender();
         
+        for (const line of this.application_core.logoCore.GetLinesForRenderer()) {
+            line.DrawObject(this.screen);
+        }
+
         if(show) {
             this.drawing_arrow.SetPosition(pos[0], pos[1]);
             this.drawing_arrow.DrawObject(this.screen, rot);
@@ -144,22 +156,6 @@ export class GUI {
         }
     }
 
-    OnClickPlay() {
-
-    }
-
-    OnClickStepOver() {
-
-    }
-
-    OnClickStop() {
-
-    }
-
-    OnClickReset() {
-
-    }
-
     OnDrag(event){ 
         for (const element of this.items) {
             if(element instanceof ScrollingPlane) {
@@ -204,14 +200,87 @@ export class GUI {
         }
     }
 
+    EventPos(event) {
+        return [Math.round((event.clientX - this.canvasRect.left) / (this.canvasRect.right - this.canvasRect.left) * this.canvas.width),
+                    Math.round((event.clientY - this.canvasRect.top) / (this.canvasRect.bottom - this.canvasRect.top) * this.canvas.height)];
+    }
+
+    OnClickPlay(event) {
+        if(!this.running) {
+            if(event.button == MOUSE.LMB) {
+                if(this.button_down.s) {
+                    this.skip_wait = true;
+                }
+                this.StartRunningCode();
+            } else if (event.button == MOUSE.RMB) {
+                this.skip_wait = true;
+                this.StartRunningCode();
+            }
+        }
+    }
+
+    OnClickStepOver(event) {
+        if(! this.running && ! this.step_over_mode) {
+            this.global_counter = 0;
+            this.OnClickPlay(event);
+            this.scrollplane.EnableSidepanel(false);
+        }
+        if(this.show_run_pointer) {
+            this.running = false;
+            this.skip_wait = false;
+            this.StepOver();
+        }
+    }
+
+    OnClickStop(event) {
+        this.running = false;
+        this.show_run_pointer = false;
+        this.step_over_mode = false;
+        this.skip_wait = false;
+        this.scrollplane.EnableSidepanel(true);
+        this.scrollplane.StopRunning();
+    }
+
+    OnClickReset(event) {
+        this.OnClickStop(event);
+        this.application_core.logoCore.Reset();
+    }
+
     ChangeBackgroundColor(event){
         this.background_color_index = (this.background_color_index + 1) % COLOR.COLOR_LIST.length;
         this.background_color = COLOR.COLOR_LIST[this.background_color_index];
     }
 
-    EventPos(event) {
-        return [Math.round((event.clientX - this.canvasRect.left) / (this.canvasRect.right - this.canvasRect.left) * this.canvas.width),
-                    Math.round((event.clientY - this.canvasRect.top) / (this.canvasRect.bottom - this.canvasRect.top) * this.canvas.height)];
+    RunCode(skip_wait = false) {
+        if(this.reset) {
+            this.global_counter = 0;
+            this.reset = false;
+            this.timer.wait(0.5);
+            this.scrollplane.runPointer.SetPosition(-50, -50);
+        }
+
+        if(this.scrollplane.HasNext(this.global_counter)) {
+            this.scrollplane.EnableSidepanel(false);
+            if(this.timer.is_waiting()) {
+                return;
+            }
+            this.global_counter = this.scrollplane.Play(this.global_counter);
+            if(!skip_wait) {
+                this.timer.wait(0.5);
+            }
+        } else {
+            if(this.timer.is_waiting()) {
+                return;
+            }
+            this.running = false;
+            this.scrollplane.EnableSidepanel(true);
+            this.scrollplane.StopRunning();
+            this.show_run_pointer = false;
+            this.skip_wait = false;
+            if(skip_wait) {
+                this.wait_next_draw = true;
+            }
+        }
     }
 
     Compile() {
@@ -222,6 +291,31 @@ export class GUI {
         this.compile_needed = true;
     }
 
+    StepOver() {
+        this.step_over_mode = true;
+        if(this.scrollplane.HasNext(this.global_counter)) {
+            this.global_counter = this.scrollplane.Play(this.global_counter);
+        } else {
+            this.scrollplane.EnableSidepanel(true);
+            this.show_run_pointer = false;
+            this.step_over_mode = false;
+        }
+    }
 
+    StartRunningCode() {
+        if(this.step_over_mode) {
+            this.step_over_mode = false;
+            this.running = true;
+            return;
+        }
+        this.application_core.logoCore.Reset();
+        this.reset = true;
+        this.running = true;
+        this.show_run_pointer = true;
+        if(this.compile_needed) {
+            this.Compile();
+            this.compile_needed = false;
+        }
+    }
 
 }
