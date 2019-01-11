@@ -38,7 +38,7 @@ pip install {modul_neve}
 
 - Python 3
     - Pygame
-    - Pillowű
+    - Pillow
 
 ##### Futatási parancs
 
